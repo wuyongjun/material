@@ -1,0 +1,70 @@
+<form class="panel panel-default post" ng-submit="submit()">
+  <div class="panel-heading">
+    <div class="panel-title">&nbsp;
+        <!-- <i class="fa fa-trash-o pull-right btn" ng-click="removeComment()"></i> -->
+        <a class="pull-right btn" ng-click="removeComment()" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+          <i class="fa fa-trash-o"></i>&nbsp;删除
+        </a>
+        <a class="pull-right btn" ng-click="upComment()" ng-if="!comment.is_display" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+          <i class="fa fa-paper-plane-o"></i>&nbsp;上墙
+        </a>
+        <a class="pull-right btn" ng-click="downComment()" ng-if="comment.is_display" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+          <i class="fa fa-paper-plane" ></i>&nbsp;下墙
+        </a>
+        <!-- <i class="fa fa-paper-plane-o pull-right btn" ng-click="upComment()" ng-if="!comment.is_display"></i>
+        <i class="fa fa-paper-plane pull-right btn" ng-click="downComment()" ng-if="comment.is_display"></i> -->
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="user-profile">
+      <div class="icon" style="text-align: center;">
+        <img ng-src="{{getIcon(comment.user)}}?width=100&height=100"
+            ng-class="comment.user.managed_community ? '' : 'clickable'"
+            ng-click="sendMessage(comment.user)" style="width:80%;height:80%;" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'"/>
+        <img ng-src="{{getIcon(comment.user)}}?width=100&height=100"
+            style="width:80%;height:80%;" ng-hide="user.role.name === 'ADMIN' || user.role.name === 'USER'"/>
+      </div>
+      <div class="name">
+        {{getName(comment.user)}}
+      </div>
+    </div>
+    <div class="post-container">
+      <p class="post-content">{{comment.content}}</p>
+      <div class="images col-md-12" ng-if="comment.images && comment.images.length>0">
+        <img ng-repeat="image in comment.images"
+            ng-src="{{image}}?width=160&height=160" ng-click="viewImage(image)"
+            class="col-md-4" style="width:160px;height:160px;"/>
+      </div>
+      <div class="col-md-12" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+        <a class=" btn reply-icon"
+            ng-click="editing=!editing;replyTo=null">
+          <i class="fa fa-reply"></i>
+          &nbsp;回复
+        </a>
+        <!-- <i class="fa fa-reply btn reply-icon"
+            ng-click="editing=!editing;replyTo=null"></i> -->
+      </div>
+      <div class="replies col-md-12"
+          ng-if="comment.replies && comment.replies.length>0">
+        <div ng-repeat="reply in comment.replies" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'"
+            class="reply" ng-click="replyReply(reply)" style="border-bottom: 1px solid #e0e0e0;margin: 6px 0;" ng-if="viewmore || $index < 5">
+                {{getName(reply.user)}}
+            <span ng-if="reply.reply_to"> 回复 {{getName(reply.reply_to)}}</span>
+            : {{reply.content}}
+        </div>
+        <div ng-repeat="reply in comment.replies" ng-hide="user.role.name === 'ADMIN' || user.role.name === 'USER'"
+            style="border-bottom: 1px solid #e0e0e0;margin: 6px 0;" ng-if="viewmore || $index < 5">
+                {{getName(reply.user)}}
+            <span ng-if="reply.reply_to"> 回复 {{getName(reply.reply_to)}}</span>
+            : {{reply.content}}
+        </div>
+        <div ng-if="!viewmore && comment.replies.length > 5">
+          <a class="btn btn-default" ng-click="expand();">更多</a>
+        </div>
+      </div>
+      <input ng-if="editing" name="reply" type="text"
+          class="form-control col-sm-8 reply-input" ng-model="$parent.replyText"
+          placeholder="回复 {{getName(replyTo)}}" >
+    </div>
+  </div>
+</form>

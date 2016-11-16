@@ -1,0 +1,28 @@
+.image-fixed-warp {
+   display: inline-block;
+   padding: 0 !important;
+   text-align: center;
+   vertical-align: middle;
+   overflow-y: hidden;
+   overflow-x: hidden;
+  img {
+    display: none;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: none !important;
+    max-height: none !important;
+
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+
+    &.show {
+      display: block;
+    }
+  }
+}

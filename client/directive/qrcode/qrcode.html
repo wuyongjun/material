@@ -1,0 +1,10 @@
+ <div><a href class="btn btn-default create-qrcode" ng-click="createQrcode()"  ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">生成二维码</a></div>
+ <br>
+ <div ng-if="qrcode">
+   <div class="qrcode">
+     <qrcode version="{{qrcode.v}}" error-correction-level="M" size="300" data="{{qrcode.data}}"></qrcode>
+   </div>
+   <div class="pull-left">
+      <a href="#" class="btn btn-default qrcode-import">导出</a>
+   </div>
+ </div>
