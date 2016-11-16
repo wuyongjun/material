@@ -1,0 +1,108 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="VerifyCtrl">
+	<div class="row">
+		<!--导航部分-->
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header"></div>
+			<div class="collapse navbar-collapse" id="navbar-item">
+				<ul class="nav navbar-nav">
+					<li>
+						<a ui-sref="party_info.info_conllection">设置问题</a>
+					</li>
+					<li class="active">
+						<a ui-sref="party_info.verify">待审核列表</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="row" ng-if="grades.length !== 0">
+		<div class="col-md-12">
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>
+						<h5>按学年筛选</h5>
+					</legend>
+					<div class="row">
+						<div class="col-md-2" style="text-align:left;padding-left:50px;" ng-repeat="grade in grades">
+							<input type="radio" name="grade" value="{{grade.id}}" ng-model="checked_grade" ng-click="get_checked_grade(checked_grade)"/>
+							<font title="{{grade.name}}" ng-bind="grade.name | substr:6:5"></font>
+						</div>
+					</div><br/>
+					<div class="row">
+						<div class="col-md-12" style="text-align: right;">
+							<a ng-click="exOratrGrade()">{{operGrade}}</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div><br ng-if="grades.length !== 0"/>
+	<div class="row" ng-if="groups.length !== 0">
+		<div class="col-md-12">
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>
+						<h5>按身份筛选</h5>
+					</legend>
+					<div class="row">
+						<div class="col-md-2" style="text-align:left;padding-left:50px;" ng-repeat="identity in identities">
+							<input type="radio" name="identity" value="{{identity.id}}" ng-model="checked_identity" ng-click="get_checked_identity(checked_identity)"/>
+							<font title="{{identity.name}}" ng-bind="identity.name | substr:6:5"></font>
+						</div>
+					</div><br/>
+				</fieldset>
+			</form>
+		</div>
+	</div><br ng-if="groups.length !== 0" />
+	<div class="row">
+		<div class="col-md-12">
+			<span class="label label-info">
+				总申请人数：&nbsp;<font ng-bind="person_sum || 0"></font>
+			</span>
+		</div>
+	</div><br/>
+	<div class="row">
+		<table ng-table="tableParams" class="table table-striped table-responsive">
+			<tbody>
+				<tr ng-repeat="person in $data">
+					<td data-title="'i微校昵称'" header-class="text-left">
+						<a ui-sref="party_info.apply_person_info({id: person.id})">
+							<font ng-bind="person.user_obj.nickname"></font>
+						</a>
+					</td>
+					<td data-title="'姓名'" header-class="text-left">
+						<font ng-bind="person.user_obj.name"></font>
+					</td>
+					<td data-title="'身份'" header-class="text-left">
+						<font ng-if="identity[person.status]" ng-bind="identity[person.status]"></font>
+						<font ng-if="!identity[person.status]" color="#B8BEC3">未采集</font>
+					</td>
+					<td data-title="'电话'" header-class="text-left">
+						<font ng-bind="person.user_obj.phone"></font>
+					</td>
+					<td data-title="'职务'" header-class="text-left">
+						<font ng-if="person.duty_obj.name" ng-bind="person.duty_obj.name"></font>
+						<font ng-if="!person.duty_obj.name" color="#B8BEC3">未采集</font>
+					</td>
+					<td data-title="'申请时间'" header-class="text-left">
+						<font ng-bind="person.create_time | date: 'yyyy-MM-dd HH:mm'"></font>
+					</td>
+					<td data-title="'操作'">
+						<center>
+							<label type="button" class="btn btn-success btn-checkbox" ng-click="approve(person.id)">
+								<span>
+									<i class="fa fa-plus" aria-hidden="true"></i> 录入
+								</span>
+							</label>&nbsp;
+							<label type="button" class="btn btn-danger btn-checkbox" ng-click="refuse(person.id, person.user_obj)">
+								<span>
+									<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 信息有误
+								</span>
+							</label>
+						</center>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

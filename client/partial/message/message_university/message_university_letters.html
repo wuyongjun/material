@@ -1,0 +1,61 @@
+<div class="col-lg-12 col-md-12 col-sm-12" ng-controller="CreateLetterUniversityCtrl">
+	<div class="row">
+		<textarea class="form-control" ng-model="message.content" rows="7" placeholder="请在此输入要发送的私信内容"></textarea><br/>
+	</div>
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend>
+					<h4>发送范围</h4>
+				</legend>
+				<!-- <div class="row">
+					<div class="col-md-3">
+						<form-input data-title="'省'" data-name="'province'">
+							<select name="province_scope" id="province_scope" class="form-control" ng-init="provinceArray[0].id" ng-model="search_params.province_scope_id" ng-options="r.id as r.city for r in provinceArray" ng-change="change_province()">
+							</select>
+						</form-input>	
+					</div>
+					<div class="col-md-3">
+						<form-input data-title="'市'" data-name="'city'">
+							<select class="form-control" name="city_scope" id="city_scope" ng-model="search_params.city_scope_id" ng-options="r.id as r.city for r in cityArray" ng-change="change_city()">
+							</select>
+						</form-input>
+					</div>
+					<div class="col-md-6">
+						<form-input data-title="'学校'" data-name="'university'">
+							<select class="form-control" name="university_scope" id="university_scope" ng-model="search_params.university_scope_id" ng-options="r.id as r.name for r in universityArray" ng-change="change_university()">
+							</select>
+						</form-input>
+					</div>
+				</div> -->
+				<!--查找结果-->
+				<div class="row">
+					<div class="col-md-3" style="text-align:left;padding-left:50px;" ng-repeat="community in communitys">
+						<input type="checkbox" ng-model="choose_item" ng-checked="choose_all" ng-click="choose_community(community.id, choose_item)"/> 
+						<font title="{{community.name}}" ng-bind="community.name | substring"></font>
+					</div>
+				</div>
+				<div class="row" ng-show="show_community">
+					<div class="col-md-2 col-md-offset-4">
+						<br/><button class="btn btn-default center-block more-btn" ng-click="load_more()">加载更多社团</button><br/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2" style="text-align:center;">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="choose_all" ng-click="choose_communitys(choose_all)" ng-checked="choose_all" ng-disabled="communitys.length === 0"> 全选
+							</label>
+						</div>
+					</div>
+					<!-- <div class="col-md-6 col-md-offset-2 form-inline">
+						<input class="form-control" placeholder="活动关键词搜索">&nbsp;&nbsp;&nbsp;<button class="btn btn-info" ng-click="search_community()"><i class="fa fa-search"></i> 查询</button>
+					</div> -->
+				</div>
+			</fieldset>
+		</form><br/>
+	</div>
+	<div class="row">
+		<button class="btn btn-info pull-right" ng-click="send_letter()">发送</button>
+	</div>
+</div>

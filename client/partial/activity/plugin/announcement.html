@@ -1,0 +1,41 @@
+  <div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <!-- 返回操作将返回到活动概况页面 -->
+      <a class="btn btn-default" ui-sref="activity_item({ id: activity.id })">
+        <i class="fa fa-reply"></i> 返回</a>
+    </div>
+  </div>
+  <div ng-controller="AnnouncementCtrl">
+    <!--添加发布内容空值验证-->
+    <form method="POST" ng-submit="submit()"
+          class="form-horizontal" role="form"
+          name="annoForm" enctype="multipart/form-data" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <textarea class="form-control" id="content" ng-model="content"
+          name="content" rows="5" autocomplete="off" placeholder="活动地点，时间，临时突发状况可以通过公告板第一时间推送给所有关注本活动的小伙伴们。"></textarea>
+      <button class="btn btn-primary pull-right announcement-submit"
+          type="submit">发布</button>
+    </form>
+    <!-- <textarea class="form-control" id="content" ng-model="content"
+          name="content" rows="5" autocomplete="off" ng-required="true"></textarea>
+    <button class="btn btn-primary pull-right announcement-submit"
+        type="button" ng-click="submit()">发布</button> class="announcement-content" -->
+    <table ng-table="tableParams"
+        class="table table-striped table-responsive">
+      <tbody>
+        <tr ng-repeat="announcement in $data">
+          <td data-title="'内容'" header-class="text-left">
+            {{announcement.content}}
+          </td>
+          <td data-title="'发布时间'" header-class="text-left">
+            {{announcement.create_time | date : 'yyyy-MM-dd HH:mm'}}
+          </td>
+          <td data-title="''" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+            <a ng-click="delete(announcement.id)"
+                class="fa fa-trash-o btn">&nbsp;删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

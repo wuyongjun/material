@@ -1,0 +1,60 @@
+<div ng-controller="MessagesMemCtrl">
+	<div class="row">
+		<h4>发送消息给社团成员</h4>
+		<textarea class="form-control" ng-model="message.content" rows="5"></textarea><br/>
+	</div>
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend>
+					<h4>部门</h4>
+				</legend>
+				<div class="row">
+					<div class="col-md-2" ng-repeat="department in departments">
+						<label type="button" class="btn btn-default btn-checkbox" style="margin-bottom:3px;width:100px;"
+							ng-click="chose_department(department)" chosen-status="department.chosen" chosen>
+							<span>
+								<font ng-bind="department.name | substr: 4 : 3" title="{{department.name}}"></font>
+							</span>
+						</label>
+					</div>
+				</div>
+				<br/>
+			</fieldset>
+		</form><br/>
+	</div>
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend>
+					<h4>部门成员</h4>
+				</legend>
+				<!--查找结果-->
+				<div class="row">
+					<div class="col-md-3" style="text-align:left;padding-left:50px;" ng-repeat="member in members">
+						<input type="checkbox" ng-model="choose_item" ng-checked="choose_all" ng-click="choose_member(member.id, choose_item)"/> 
+						<font title="{{member.name}}" ng-bind="member.name | substring"></font>
+					</div>
+				</div>
+				<div class="row" ng-show="show_member">
+					<div class="col-md-2 col-md-offset-4">
+						<br/><button class="btn btn-default center-block more-btn" ng-click="load_more()">加载更多社团</button><br/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2" style="text-align:center;">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="choose_all" ng-click="choose_members(choose_all)" ng-checked="choose_all" ng-disabled="members.length === 0"> 全选
+							</label>
+						</div>
+					</div>
+				</div>
+				<br/>
+			</fieldset>
+		</form><br/>
+	</div>
+	<div class="row">
+		<button class="btn btn-info pull-right" type="button" ng-click="send()">发送</button>
+	</div>
+</div>

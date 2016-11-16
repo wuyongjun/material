@@ -1,0 +1,123 @@
+<div ng-controller="CommunityCtrl">
+  <div  ng-if="community"  class="tabs-left hidden-print">
+    <ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+      <li d-sref="'community'">
+          <a ui-sref="community">社团信息</a>
+      </li>
+      <li d-sref="'community.members'">
+          <a ui-sref="community.members({ page: 1 })">社员管理</a>
+      </li>
+      <li d-sref="'community.department'">
+          <a ui-sref="community.department">部门管理</a>
+      </li>
+      <li d-sref="'community.duty'">
+          <a ui-sref="community.duty">职务管理</a>
+      </li>
+      <li d-sref="'community.register'">
+          <a ui-sref="community.register">招新管理</a>
+      </li>
+      <!-- <li d-sref="'community.election'">
+          <a ui-sref="community.election({ id: community.id })">换届管理</a>
+      </li> -->
+    </ul>
+  </div>
+  <div id="content">
+    <div ui-view>
+      <div class="col-lg-7 col-lg-offset-3 col-md-8 col-md-offset-3 col-sm-9 col-sm-offset-3">
+        <form method="POST" ng-if="!su" name="communityInfo"
+            class="form-horizontal community-form"
+            role="form" enctype="multipart/form-data" ng-submit="submit()">
+                <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="panel-title">社团信息</div>
+            </div>
+            <div class="panel-body">
+              <form-input data-title="'社团名称'" data-name="'community_name'">
+                <input name="community_name" id="community_name"
+                    ng-model="community.name" 
+                    class="form-control" type="text"
+                    readonly>
+              </form-input>
+              <form-input data-title="'学校名称'" data-name="'university'">
+                <input name="university" id="university"
+                    ng-model="community.university.name" 
+                    class="form-control" type="text"
+                    readonly>
+              </form-input>
+              
+              <form-input data-title="'社团介绍'"
+                  data-name="'community_description'">
+                <textarea class="form-control" id="community_description"
+                    ng-model="community.description"
+                    name="community_description" rows="10" autocomplete="off" required>
+                </textarea>
+                <span class="form-error" ng-show="show_description">
+                  *社团简介请限制在200字符内
+                </span>
+              </form-input>
+              <form-input data-title="'社团管理密码'" data-name="'community_password'">
+                <input name="community_password" id="community_password"
+                    ng-model="community.password_code" 
+                    class="form-control" type="text"
+                    readonly><br/>
+                <div class="bs-callout bs-callout-warning col-sm-12">
+                  <p>社团管理密码具有唯一性，用于在 i 微校App中的社团管理部分，请谨慎保管。</p>
+                </div> 
+              </form-input>
+              <form-input data-title="'社团LOGO'" data-name="'logo'">
+                <div class="fileinput fileinput-new" data-provides="fileinput" >
+                  <div ng-if="community.logo" class="fileinput-new thumbnail" style="height:150px;width:150px">
+                    <img ng-src="{{community.logo.substring(0)}}?width=150&height:150" image-fixed>
+                  </div>
+                  <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                  <div>
+                    <span class="btn btn-default btn-file" data-toggle="tooltip" data-placement="bottom" title="请保持最佳宽高比，图片大小不能超过1M" tool-tip>
+                      <span class="fileinput-new">选择照片</span>
+                      <span class="fileinput-exists">更换</span>
+                      <input type="file" name="logo" data-file="community.logo" required>
+                    </span>
+                    <a href="#" class="btn btn-default fileinput-exists"
+                        data-dismiss="fileinput">删除</a>
+                  </div>
+                </div>
+              </form-input>
+            </div></div>
+          <button class="btn btn-primary form-control" type="submit" ng-disabled="show_description">保存</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div ng-if="su">
+    <table ng-table="tableParams"
+        class="table table-striped table-responsive">
+      <tbody>
+      <tr ng-repeat="admin in $data">
+        <td data-title="'社团名称'" header-class="text-left">
+          {{admin.community.name}}
+        </td>
+        <td data-title="'社团描述'" header-class="text-left">
+          {{admin.community.description}}
+        </td>
+        <td data-title="'管理员'"  header-class="text-left">
+          {{admin.user.name}}
+        </td>
+        <td data-title="'邮箱'"  header-class="text-left">
+          {{admin.user.email}}
+        </td>
+        <td data-title="'联系电话'"  header-class="text-left">
+          {{admin.user.phone}}
+        </td>
+        <td data-title="'证件照'"  header-class="text-left">
+          <a class="btn" ng-click="preview(admin.user.photo_id)">预览</a>
+        </td>
+        <td data-title="'Logo'"  header-class="text-left">
+          <a class="btn" ng-click="preview(admin.community.logo)">预览</a>
+        </td>
+        <td data-title="'批准'"  header-class="text-left">
+          <a class="fa fa-check btn" ng-click="confirm(admin.user.email)"></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

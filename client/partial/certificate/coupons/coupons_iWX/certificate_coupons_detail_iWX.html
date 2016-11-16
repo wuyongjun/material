@@ -1,0 +1,66 @@
+<div class="col-sm-12 col-md-12 col-lg-12" ng-controller="CouponsDetailIwxCtrl">
+	<!--操作按钮部分-->
+	<br/>
+	<div class="row">
+		<div class="col-md-5 col-md-offset-3">
+			<span class="label label-info" style="font-size:150%;">
+				<font>凭证总数：50</font>
+			</span>&nbsp;&nbsp;
+			<span class="label label-warning" style="font-size:150%;">
+				<font>剩余数量：20</font>
+			</span>
+		</div>
+	</div><br/>
+	<div class="row">
+		<a class="btn btn-info pull-right" ng-href="/api/admin/community/users/export.csv">导出列表</a>
+	</div>
+	<!--电子凭证详细信息表格部分-->
+	<div class="row">
+		<table class="table table-striped table-responsive" ng-table="tableParams">
+			<tbody>
+				<tr ng-repeat="coupon in $data">
+					<td data-title="'编号'" header-class="text-left">
+						{{$index + 1}}
+					</td>
+					<td data-title="'使用者昵称'" header-class="text-left">
+						喜欢是淡淡的爱
+					</td>
+					<td data-title="'使用状态'" header-class="text-left">
+						<span ng-class="coupon_status[coupon.status].label">{{coupon_status[coupon.status].text}}</span>
+					</td>
+					<td data-title="'相关活动'" header-class="text-left">
+						民大棋王争霸赛
+					</td>
+					<td data-title="'使用时间'" header-class="text-left">
+						2015-6-8 16:11
+					</td>
+					<td data-title="'操作'" header-class="text-left">
+						<label type="button" class="btn btn-info btn-checkbox" ng-click="takeback_coupon()">
+							<span>
+								收回礼券
+							</span>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

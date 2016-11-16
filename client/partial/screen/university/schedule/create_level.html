@@ -1,0 +1,30 @@
+<div class="modal-header">
+	<h3 class="modal-title">新建播放等级</h3>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<form class="form-horizontal" role="form" name="levelForm">
+				<form-input data-title="'等级名称'" data-name="'name'">
+					<input class="form-control" ng-model="level.name" maxlength="10" />
+				</form-input>
+				<div class="form-group">
+					<label class="col-sm-3 control-label" for="name">播放时间</label>
+					<div class="col-sm-5">
+						<div class="input-group">
+							<input type="number" class="form-control" ng-model="level.length" step="15" min="15" />
+							<span class="input-group-addon">秒</span>
+						</div>
+						<div ng-if="error" class="form-error">
+							* 播放时间不能少于15秒
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-info" ng-click="ok()" ng-disabled="btnOk">确&nbsp;定</button>
+	<button class="btn btn-default" ng-click="cancel()">关&nbsp;闭</button>
+</div>

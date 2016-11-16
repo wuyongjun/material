@@ -1,0 +1,285 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col-xs-9 col-sm-9" 
+	ng-controller="QuestionnaireCtrl">
+	<div class="activity-button-bar">
+		<div class="btn-group">
+			<a class="btn btn-default" ui-sref="activity_item({ id: activity.id })">
+				<i class="fa fa-reply"></i> 返回</a>&nbsp;&nbsp;
+		</div>
+		<div class="btn-group" ng-show="(user.role.name === 'ADMIN' || user.role.name === 'USER') && update">
+			<a class="btn btn-danger" ng-click="delQuestionnaire(questionnaire.id)" data-toggle="tooltip" 
+				data-placement="bottom" title="删除后问卷数据将保存到数据库中。" tool-tip>
+				<i class="fa fa-close"></i> 删除本次问卷</a>&nbsp;
+		</div>
+		<div class="btn-group" ng-show="(user.role.name === 'ADMIN' || user.role.name === 'USER') && update">
+			<a ng-if="!questionnaire.publish_time" class="btn btn-default" ng-click="pubQuestionnaire(questionnaire.id)" data-toggle="tooltip" data-placement="bottom" title="发布该问卷，使用户可在手机app上进行答题，问卷发布后不能再对该问卷进行编辑。" tool-tip>
+				<i class="fa fa-volume-up"></i> 发布本次问卷</a>&nbsp;
+			<a ng-if="questionnaire.publish_time && questionnaire.status === 'USE'" class="btn btn-warning" ng-click="finishQuestionnaire(questionnaire.id)" data-toggle="tooltip" data-placement="bottom" title="结束该问卷，停止手机app上的答题活动。" tool-tip>
+				<i class="fa fa-ban"></i> <font>结束本次问卷</font>
+			</a>&nbsp;
+		</div>
+		<div class="btn-group">
+			<a class="btn btn-default" ng-click="statView()">
+				<i class="fa fa-table"></i> 问卷统计</a>
+		</div>
+	</div>
+	<!--问卷插件基本信息-->
+	<div class="row">
+		<form class="panel panel-default form-horizontal">
+			<div class="panel-heading">
+				<div class="panel-title">问卷概况</div>
+			</div>
+			<div class="bs-callout bs-callout-warning col-md-10 col-md-offset-1"  style="margin-top:10px;">
+				<h4>问卷功能解释</h4>
+				<p>
+					1、一个用户只能回答一次；<br/>
+					2、不支持跳题，开始问答后需回答完每一个问题；<br/>
+					3、问卷一旦发布，就不可更改，可以将本次问卷结束，创建一个新的问卷，结束问卷不影响问卷的统计结果；<br/>
+					4、添加的礼券种类代表每一个回答完的用户可同时获得的数量，例如，添加了两种礼券，回答后每一个用户将会获得两种礼券各一张，先到先得。<br/>
+					5、当礼券已领取数量大于0时，该礼券就无法修改。<br/>
+					6、编辑好问卷所有信息后，记得点选发布问卷噢！
+				</p>
+			</div>
+			<div class="panel-body">
+				<!--标题不能为空或50个字符以内-->
+				<form-input data-title="'问卷标题'" data-name="'questionnaire_title'">
+					<input ng-model="questionnaire.title" class="form-control" type="text" placeholder="请输入问卷标题">
+				</form-input>
+				<!--描述不能为空或100个字符以内-->
+				<form-input data-title="'问卷描述'" data-name="'questionnaire_description'">
+					<textarea class="form-control" id="description"
+						ng-model="questionnaire.describe"
+						name="questionnaire_description" rows="5" autocomplete="off" placeholder="请填写问卷描述">
+					</textarea>
+				</form-input>
+				<!--须知不能为空或100个字符以内-->
+				<form-input data-title="'问卷须知'" data-name="'questionnaire_note'">
+					<textarea class="form-control" id="note"
+						ng-model="questionnaire.notice"
+						name="questionnaire_note" rows="5" autocomplete="off" placeholder="请填写问须知">
+					</textarea>
+				</form-input>
+				<!--开始时间可以早于活动开始时间，结束时间不能晚于活动结束时间-->
+				<form-input data-title="'问卷开始时间'" data-name="'questionnaire_start_time'">
+					<datetimepicker datetime="questionnaire.start_time"></datetimepicker>
+				</form-input>
+				<form-input data-title="'问卷结束时间'" data-name="'questionnaire_end_time'">
+					<datetimepicker datetime="questionnaire.end_time"></datetimepicker>
+				</form-input><br/>
+				<form-input data-title="'最晚兑奖时间'" data-name="'finish_time'">
+					<datetimepicker datetime="questionnaire.exchange_time"></datetimepicker>
+				</form-input><br/>
+				<!--礼券部分-->
+				<div class="panel panel-info"  ng-if="update" my-collapse>
+					<!--当礼券数量超过三个的时候才显示“收起”按钮-->
+					<span class="btn pull-right" ng-show="questionnaire.prizes.length >= 3">
+						<i class="fa fa-chevron-up"></i>&nbsp;收起
+					</span>
+					<span class="btn pull-right" ng-if="user.role.name === 'ADMIN' || user.role.name === 'USER'" ng-click="addCertificate(questionnaire.id)">
+						<i class="fa fa-plus"></i>&nbsp;添加礼券
+					</span>
+					<div class="panel-heading">
+						<div class="panel-title">
+							礼券信息
+						</div>
+					</div>
+					<div class="panel-body">
+						<!--该处循环显示礼券数组-->
+						<div class="panel panel-default" ng-repeat="gift in questionnaire.prizes">
+							<div class="panel-body" style="padding-bottom:0px;">
+								<div class="row coupons-info">
+									<div class="col-sm-4">
+										<p>礼劵名称：<font ng-bind="gift.goods.title"></font></p>
+										<p>赞助商：<font ng-bind="gift.goods.sponsor_name"></font></p>
+										<p>有效期至：<font ng-bind="gift.goods.end_time | date: 'yyyy-MM-dd HH:mm'"></font></p>
+										<p class="count"><span>礼券数量：<font ng-bind="gift.num"></font></span>
+										<p class="count"><span>已领取数量：<font ng-bind="gift.remain"></font></span>
+										<div ng-if="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+											<span class="btn btn-default btn-sm" ng-click="modifyCerNumber(questionnaire.id, gift)">
+												修改数量
+											</span>
+											<span ng-if="gift.remain !== 0" class="btn btn-default btn-sm" disabled="disabled">
+												正在使用
+											</span>
+											<span ng-if="gift.remain === 0" class="btn btn-danger btn-sm" ng-click="delCertificate(questionnaire.id, gift.id)">
+												删除礼券
+											</span>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="thumbnail" style="height:180px;width:180px;">
+											<img ng-src="{{gift.goods.sponsor_logo}}?width=90&height=90" style="height:100%;width:100%;cursor:pointer;" ng-click="viewImage(gift.goods.sponsor_logo)" image-fixed>
+										</div>
+										<p class="text-center" style="width: 180px;">赞助商 Logo</p>
+									</div>
+									<div class="col-sm-4">
+										<div class="thumbnail" style="height:180px;width:180px;">
+											<img ng-src="{{gift.goods.image}}?width=90&height=90"  style="height:100%;width:100%;cursor:pointer;" ng-click="viewImage(gift.goods.image)" image-fixed>
+										</div>
+										<p class="text-center" style="width: 180px;">物品图片</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+				<button class="btn btn-primary form-control form-submit-button"
+					type="submit" ng-click="createQuestionnaire()" ng-if="!update">创建问卷
+				</button>
+				<button class="btn btn-primary form-control form-submit-button"
+					type="submit" ng-click="updateQuestionnaire()" ng-if="update && !questionnaire.publish_time">更新问卷
+				</button>
+			</div>
+		</form>
+	</div>
+	<!--问卷插件问题信息-->
+	<div class="row" ng-if="update && !questionnaire.publish_time && (user.role.name === 'ADMIN' || user.role.name === 'USER')">
+		<form class="panel panel-default form-horizontal">
+			<div class="panel-heading">
+				<div class="panel-title">添加问题</div>
+			</div>
+			<div class="panel-body">
+				<form-input data-title="'问题类型'" data-name="'question_type'">
+					<select name="question_type" class="form-control" ng-model="question.rubric_type"
+						ng-options="r.id as r.name for r in typeArray" ng-change="change_type()">
+					</select>
+				</form-input>
+				<form-input data-title="'问题内容'" data-name="'question_content'">
+					<textarea class="form-control" id="content"
+						ng-model="question.rubric"
+						name="content" rows="5" autocomplete="off" placeholder="请填写问题内容">
+					</textarea>
+				</form-input>
+				<!--选择题选项-->
+				<div ng-if="question.rubric_type === 'RCQ' || question.rubric_type === 'MCQ'">
+					<div class="form-group form-inline" ng-repeat="option in question.answers track by $index">
+						<label class="col-sm-3 control-label">选项&nbsp;{{$index + 1}}</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="option" ng-model="question.answers[$index]" style="width: 90%;">
+							<button class="btn btn-danger" ng-click="removeOption($index)">
+								<i class="glyphicon glyphicon-remove"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div ng-if="question.rubric_type === 'RCQ' || question.rubric_type === 'MCQ'">
+					<form-input data-title="'是否支持其他选项'" data-name="'other_option'">
+						<input type="checkbox" data-toggle="toggle" data-on="是" data-off="否" data-onstyle="success" data-offstyle="danger"
+						ng-model="question.answer_type" bootstrapswitch>
+					</form-input>
+				</div>
+				<div class="row" ng-if="question.rubric_type === 'RCQ' || question.rubric_type === 'MCQ'">
+					<div class="col-sm-3 col-sm-offset-1">
+						<button class="btn btn-default" title="添加选项" ng-click="addOption()"><i class="fa fa-plus"></i></button>
+					</div><br/>
+				</div>
+			</div>
+			<div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+				<button class="btn btn-primary form-control form-submit-button"
+					type="submit" ng-click="addQuestion()">添加问题
+				</button>
+			</div>
+		</form>
+	</div>
+	<!--已添加的问题-->
+	<div class="row" ng-if="update">
+		<table ng-table="tableParams"
+			class="table table-striped table-responsive coupons">
+			<body>
+				<tr ng-repeat="rubric in $data">
+					<td data-title="''">
+						<form class="panel panel-default form-horizontal">
+							<span class="btn pull-right" ng-click="removeQuestion(rubric.id)" 
+								ng-show="!questionnaire.publish_time && (user.role.name === 'ADMIN' || user.role.name === 'USER')">
+								<i class="fa fa-trash"></i> 删除问题
+							</span>
+							<div class="panel-heading">
+								<div class="panel-title">问题&nbsp;{{$index + 1}}</div>
+							</div>
+							<div class="panel-body">
+								<form-input data-title="'问题类型'" data-name="'question_type'">
+									<select name="question_type" class="form-control" ng-model="rubric.rubric_type"
+										ng-options="r.id as r.name for r in typeArray">
+									</select>
+								</form-input>
+								<form-input data-title="'问题内容'" data-name="'question_content'">
+									<textarea class="form-control" id="content"
+										ng-model="rubric.rubric"
+										name="content" rows="5" autocomplete="off" placeholder="请填写问题内容">
+									</textarea>
+								</form-input>
+								<!--选择题选项-->
+								<div ng-if="rubric.rubric_type === 'RCQ' || rubric.rubric_type === 'MCQ'">
+									<div class="form-group form-inline" ng-repeat="option in rubric.answers">
+										<label class="col-sm-3 control-label">选项&nbsp;{{$index + 1}}</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" name="option" ng-model="rubric.answers[$index].answer_content" style="width: 90%;" readonly="readonly">
+											<button class="btn btn-danger" ng-click="removeOptionUpd(rubric, $index, option.id)" ng-if="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+												<i class="glyphicon glyphicon-remove"></i>
+											</button>
+										</div>
+									</div>
+									<!--要添加的新选项-->
+									<div class="form-group form-inline" ng-repeat="option in rubric.newOptions track by $index">
+										<label class="col-sm-3 control-label">新增选项&nbsp;{{$index + 1}}</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" name="option" ng-model="rubric.newOptions[$index]" style="width: 90%;">
+											<button class="btn btn-danger" ng-click="delOption($parent.$index, $index)">
+												<i class="glyphicon glyphicon-remove"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div ng-if="rubric.rubric_type === 'RCQ' || rubric.rubric_type === 'MCQ'">
+									<!-- <form-input data-title="'是否支持其他选项'" data-name="'other_option'">
+										<input type="checkbox" data-toggle="toggle" data-on="是" data-off="否" data-onstyle="success" data-offstyle="danger"
+										ng-model="rubric.answer_type" disabled bootstrapswitch>
+									</form-input> -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label" for="other_option">是否支持其他选项</label>
+										<div class="col-sm-8" style="margin-top: 5px;">
+											<span class="label label-success" ng-show="rubric.answer_type==='OTHER'">
+												<font ng-bind="answer_type_hash[rubric.answer_type]"></font>
+											</span>
+											<span class="label label-danger" ng-show="rubric.answer_type==='NORMAL'">
+												<font ng-bind="answer_type_hash[rubric.answer_type]"></font>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row" ng-if="(rubric.rubric_type === 'RCQ' || rubric.rubric_type === 'MCQ') && (user.role.name === 'ADMIN' || user.role.name === 'USER')">
+									<div class="col-sm-3 col-sm-offset-1">
+										<button class="btn btn-default" title="添加选项" ng-click="addOptionUpd($parent.$index)"><i class="fa fa-plus"></i></button>
+									</div><br/>
+								</div>
+							</div>
+							<div ng-show="(user.role.name === 'ADMIN' || user.role.name === 'USER') && !questionnaire.publish_time">
+								<button class="btn btn-primary form-control form-submit-button"
+									type="submit" ng-click="updateQuestion(rubric)">修改问题
+								</button>
+							</div>
+						</form>
+					</td>
+				</tr>
+			</body>
+		</table>
+	</div>
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirm()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

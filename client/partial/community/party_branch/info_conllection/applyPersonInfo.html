@@ -1,0 +1,126 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="ApplyPerInCtrl">
+	<p class="hidden-print">
+		<a ui-sref="party_info.verify" class="btn-default btn">
+			<i class="fa fa-reply"></i> 返回
+		</a>&nbsp;
+		<a ng-click="approve(user)" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> 录入</a>&nbsp;
+		<a ng-click="refuse(user)" class="btn btn-danger"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 信息有误</a>
+	</p><br/>
+	<p>
+		<style>
+			table {
+				border: 1px solid #dddddd;
+			}
+		</style>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">信息采集表</div>
+			</div>
+
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="basic-info">
+							<table class="table col-md-12">
+								<tbody>
+									<tr>
+										<td class="col-md-3" rowspan="6"><img ng-src="{{user.user_obj.icon}}/thumbnail" style="width:100%"></td>
+										<td class="col-md-2">i微校账号</td>
+										<td>{{user.user_obj.nickname}}</td>
+										<td class="col-md-2">真实姓名</td>
+										<td class="col-md-3">{{user.user_obj.name}}</td>
+									</tr>
+									<tr>
+										<td>性别</td>
+										<td>
+											<span ng-switch="user.user_obj.sex">
+											<span ng-switch-when="MALE">男</span>
+											<span ng-switch-when="FEMALE">女</span>
+											</span>
+										</td>
+										<td>学校</td>
+										<td>{{user.user_obj.university.name}}</td>
+									</tr>
+									<tr>
+										<td>专业</td>
+										<td>{{user.user_obj.major}}</td>
+										<td>入学时间</td>
+										<td>{{user.user_obj.admission_date}}</td>
+									</tr>
+									<tr>
+										<td>电话</td>
+										<td>{{user.user_obj.phone}}</td>
+										<td>身份</td>
+										<td>
+											<span ng-switch="user.status">
+												<span ng-switch-when="FORMAL">正式党员</span>
+												<span ng-switch-when="POSITIVE">积极分子</span>
+												<span ng-switch-when="PREPARE">预备党员</span>
+												<span ng-switch-when="NULLIFY"><font color="#B8BEC3">未采集</font></span>
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td>加入学年</td>
+										<td>
+											<font ng-if="user.year_obj.name" ng-bind="user.year_obj.name"></font>
+											<font ng-if="!user.year_obj.name" color="#B8BEC3">未采集</font>
+										</td>
+										<td>所属小组</td>
+										<td>
+											<font ng-if="user.group_obj.name" ng-bind="user.group_obj.name"></font>
+											<font ng-if="!user.group_obj.name" color="#B8BEC3">未采集</font>
+										</td>
+									</tr>
+									<tr>
+										<td>担任职务</td>
+										<td>
+											<font ng-if="user.duty_obj.name" ng-bind="user.duty_obj.name"></font>
+											<font ng-if="!user.duty_obj.name" color="#B8BEC3">未采集</font>
+										</td>
+										<td></td>
+										<td></td>
+									</tr>            
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+	      
+				<div ng-repeat="answer in user.answers" class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title">问题 {{$index+1}}</div>
+					</div>
+					<div ng-switch="answer.question.type" class="panel-body">
+						<div ng-switch-when="SINGLE_CHOICE">
+							<strong>{{answer.question.question}}</strong>
+							<p ng-repeat="option in answer.question.options track by $index">
+								<input type="radio" disabled ng-checked="{{option==answer.answer[0]}}">
+								<font ng-class="{'myAnaswer':answer.answer.indexOf(option) != -1}">&nbsp;{{option}}</font><br/>
+							</p>
+						</div>
+						<div ng-switch-when="MULTI_CHOICE">
+							<strong>{{answer.question.question}}</strong>
+								<p ng-repeat="option in answer.question.options track by $index">
+									<input type="checkbox" disabled ng-checked="{{answer.answer.indexOf(option) != -1}}">
+									<font ng-class="{'myAnaswer':answer.answer.indexOf(option) != -1}">&nbsp;{{option}}</font><br/>
+								</p>
+						</div>
+						<div ng-switch-when="TEXT">
+							<strong>{{answer.question.question}}</strong>
+							<p>
+								{{answer.answer}}
+							</p>
+						</div>
+						<div ng-switch-when="IMAGES">
+							<strong>{{answer.question.question}}</strong>
+							<p ng-repeat="url in answer.answer track by $index">
+								<img style="width:450px;" ng-src="{{url}}"/>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</p>
+</div> 

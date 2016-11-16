@@ -1,0 +1,240 @@
+html {
+	
+}
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+body {
+	font-family: '微软雅黑';
+	font-size: 62.5%;
+	line-height: 1.5;
+	background-color: #fff;
+}
+body, ul, li {
+	padding: 0;
+	margin: 0;
+}
+/**轮播控件css*/
+.banner {
+  position: relative;
+  overflow: auto;
+}
+
+.banner li {
+  list-style: none;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.banner li img {
+  display: none;
+  position: relative;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 500%;
+  
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.banner li img.show {
+  display: block;
+}
+
+.banner ul li {
+  float: left;
+}
+
+.banner .dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  text-align: center;
+  /*z-index: 200;*/
+}
+
+.banner .dots li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+
+  text-indent: -999em;
+
+  border: 2px solid #fff;
+  border-radius: 6px;
+
+  cursor: pointer;
+  opacity: .4;
+  /*float: right;*/
+  -webkit-transition: background .5s, opacity .5s;
+  -moz-transition: background .5s, opacity .5s;
+  transition: background .5s, opacity .5s;
+}
+
+.banner .dots li.active {
+  background: #3CBFE0;
+  /*float: right;*/
+  opacity: 1;
+}
+/**下载按钮css*/
+.arrow_right {
+    float: right;
+    width: 9px;
+    margin-top: 4px;
+}
+.logo_iwx {
+    float: left;
+    width: 45px;
+    margin-top: 13px;
+    margin-right: 2px;
+}
+.download {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0px 20px 0 20px;
+    clear: both;
+    background: #3cbfe0;
+    width: 100%;
+    height: 75px;
+    cursor: pointer;
+}
+.download_iwx {
+    cursor: pointer;
+}
+.download_iwx_btn {
+    color: #fff;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    padding-bottom: 25px;
+}
+.clear {
+    clear: both;
+}
+/**身边事信息部分css样式*/
+.nearby {
+	background: #f0eff5;
+}
+.nearby .title {
+	width: 100%;
+	padding: 20px 10px 10px 10px;
+}
+.nearby .title .nearby_label {
+	float: left;
+	width: 25%;
+	font-size: 3.5em;
+	text-align: center;
+}
+.nearby .title .nearby_title {
+	float: left;
+	width: 75%;
+	font-size: 3.5em;
+	color: #333;
+}
+.nearby .info {
+	width: 100%;
+	padding: 0px 10px 10px 10px;
+}
+.nearby .info .logo {
+	float: left;
+	width: 15%;
+}
+.nearby .info .logo .nearby_logo {
+	width: 100%;
+	border-radius: 50%;
+	padding: 5px;
+}
+.nearby .info .publisher {
+	float: left;
+	width: 85%;
+	padding-top: 3%;
+}
+.nearby .info .publisher .pub_name {
+	float: left;
+	color: #575757;
+	font-size: 3.2em;
+}
+.nearby .info .publisher .publish_time {
+	float: right;
+	color: #989898;
+	font-size: 2.75em;
+}
+.nearby .content {
+	width: 100%;
+	padding: 0px 10px 10px 10px;
+	color: #575757;
+	font-size: 3.3em;
+}
+.stat_num {
+	background: #f0eff5;
+	padding: 10px;
+	color: red;
+	font-size: 2.75em;
+	font-weight: bold;
+}
+.stats {
+	margin-bottom: 75px;
+}
+.stats .stat_person {
+	width: 100%;
+	padding: 10px;
+}
+.stats .stat_person .logo {
+	float: left;
+	width: 15%;
+}
+.stats .stat_person .logo .stat_logo {
+	width: 100%;
+	border-radius: 50%;
+	padding: 5px;
+}
+.stats .stat_person .name_time {
+	float: left;
+	width: 85%;
+	padding-top: 3%;
+}
+.stats .stat_person .name_time .stat_name {
+	float: left;
+	color: #575757;
+	font-size: 3.2em;
+}
+.stats .stat_person .name_time .stat_time {
+	float: right;
+	color: #989898;
+	font-size: 2.75em;
+}
+.stats .stat_content {
+	width: 100%;
+	padding-left: 17%;
+	color: #575757;
+	font-size: 3.3em;
+	padding-bottom: 10px;
+}
+.title_hr {
+	margin: 10px 0px 10px 0px;
+	border-top: 1px solid #afafaf;
+}
+.stat_hr {
+	margin: 0px 0px 0px 0px;
+	border-top: 3px solid #fff;
+}
+.stat_info_hr {
+	margin: 10px 0px 0px 0px;
+	border-top: 1px solid #afafaf;
+}

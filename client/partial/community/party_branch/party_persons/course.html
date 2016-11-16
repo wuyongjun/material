@@ -1,0 +1,156 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="CourseCtrl">
+	<div class="row">
+		<div class="col-md-6">
+			<a class="btn btn-default" ui-sref="party_info.party_persons"><i class="fa fa-reply"></i> 返回</a>&nbsp;
+			<!-- <a class="btn btn-info" ><i class="fa fa-download" aria-hidden="true"></i> 导出电子版</a> -->
+			<a class="btn btn-default" target="_blank" ng-href="{{'/api/political/undergo/page#' + personId + '*' + auth_token}}"><i class="fa fa-print"></i>打印</a>
+		</div>
+		<div class="col-md-6" style="text-align: right;">
+			<button class="btn btn-info" ng-click="addActSummary(personId)"><i class="fa fa-plus" aria-hidden="true"></i> 添加活动总结</button>&nbsp;
+			<button class="btn btn-info" ng-click="addCourseSummary(personId)"><i class="fa fa-plus" aria-hidden="true"></i> 添加党建历程</button>
+		</div>
+	</div><br/>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title"><font ng-bind="person.user_obj.name"></font>的党建历程</div>
+				</div>
+				<div class="panel-body">
+					<!--个人基本信息-->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="basic-info">
+								<table class="table col-md-12">
+									<tbody>
+										<tr>
+											<td class="col-md-3" rowspan="5"><img ng-src="{{person.user_obj.icon}}/thumbnail" style="width: 100%;"></td>
+											<td class="col-md-2">真实姓名</td>
+											<td class="col-md-2"><font ng-bind="person.user_obj.name"></font></td>
+											<td class="col-md-2">身份</td>
+											<td class="col-md-2">
+												<span ng-switch="person.status">
+													<span ng-switch-when="FORMAL">正式党员</span>
+													<span ng-switch-when="PREPARE">预备党员</span>
+													<span ng-switch-when="POSITIVE">积极份子</span>
+													<span ng-switch-when="NULLIFY"><font color="#B8BEC3">未采集</font></span>
+												</span>
+											</td>
+										</tr>
+										<tr>
+											<td class="col-md-2">性别</td>
+											<td class="col-md-2">
+												<span ng-switch="person.user_obj.sex">
+													<span ng-switch-when="MALE">男</span>
+													<span ng-switch-when="FEMALE">女</span>
+												</span>
+											</td>
+											<td class="col-md-2">专业</td>
+											<td class="col-md-2"><font ng-bind="person.user_obj.major"></font></td>
+										</tr>
+										<tr>
+											<td class="col-md-2">电话</td>
+											<td class="col-md-2"><font ng-bind="person.user_obj.phone"></font></td>
+											<td class="col-md-2">入学时间</td>
+											<td class="col-md-2"><font ng-bind="person.user_obj.admission_date"></font></td>
+										</tr>
+										<tr>
+											<td class="col-md-2">加入学年</td>
+											<td class="col-md-2">
+												<font ng-if="person.year_obj.name" ng-bind="person.year_obj.name"></font>
+												<font ng-if="!person.year_obj.name" color="#B8BEC3">未采集</font>
+											</td>
+											<td class="col-md-2">所属分组</td>
+											<td class="col-md-2">
+												<font ng-if="person.group_obj.name" ng-bind="person.group_obj.name"></font>
+												<font ng-if="!person.group_obj.name" color="#B8BEC3">未采集</font>
+											</td>
+										</tr>
+										<tr>
+											<td class="col-md-2">担任职务</td>
+											<td class="col-md-2">
+												<font ng-if="person.duty_obj.name" ng-bind="person.duty_obj.name"></font>
+												<font ng-if="!person.duty_obj.name" color="#B8BEC3">未采集</font>
+											</td>
+											<td class="col-md-2"></td>
+											<td class="col-md-2"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!--党建历程信息-->
+					<form class="panel panel-default form-horizontal" ng-repeat="course in courses" my-collapse>
+						<span class="btn pull-right">
+							<div ng-if="!course.isDisplay"><i class="fa fa-chevron-down"></i>&nbsp;展开</div>
+							<div ng-if="course.isDisplay"><i class="fa fa-chevron-up"></i>&nbsp;收起</div>
+						</span>
+						<span class="btn pull-right" ng-click="delCourse(course)"><i class="fa fa-trash-o"></i>&nbsp;删除</span>
+						<div class="panel-heading">
+							<div class="panel-title">
+								<font ng-bind="course.create_time | date: 'yyyy-MM-dd HH:mm'"></font>
+							</div>
+						</div>
+						<!-- ng-class="{true: 'isDisplay', false: 'isNotDisplay'}[{{course.isDisplay}}]" -->
+						<div id="{{course.id}}" class="panel-body" ng-class="{true: 'isDisplay', false: 'isNotDisplay'}[{{course.isDisplay}}]">
+							<br/>
+							<div class="row">
+								<div ng-repeat="label in course.label">
+									<span class="label label-info" style="float: left;margin-bottom: 10px;margin-left: 15px;">
+										<font size="3" ng-bind="label.name"></font>
+									</span>
+								</div>
+							</div><br ng-if="course.activity_obj"/>
+							<div class="row" ng-if="course.activity_obj">
+								<div class="col-sm-6">
+									<p>活动名称：<font ng-bind="course.activity_obj.subject"></font></p>
+									<p>活动地点：<font ng-bind="course.activity_obj.location"></font></p>
+									<p>活动开始时间：<font ng-bind="course.activity_obj.start_time | date: 'yyyy-MM-dd HH:mm'"></font></p>
+									<p>活动结束时间：<font ng-bind="course.activity_obj.end_time | date: 'yyyy-MM-dd HH:mm'"></font></p>
+									<span class="label label-success" ng-repeat="plugin in course.activity_obj.plugins" 
+										style="float: left;margin-bottom: 10px;margin-left: 5px;">
+										<font ng-bind="plugin.name"></font>
+									</span>
+								</div>
+								<div class="col-sm-6">
+									<div class="thumbnail" style="width: 300px;height: 200px;">
+										<img ng-src="{{course.activity_obj.poster}}?width=200&height=200" style="width: 100%;height: 100%" image-fixed>
+									</div>
+									<p class="text-center" style="width: 300px">活动海报</p>
+								</div>
+							</div><br/>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="well" style="height: 500px;overflow-y: auto;">
+										<div ng-bind-html="course.content | trusthtml"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form><br/>
+					<button class="btn btn-default center-block more-btn" ng-click="loadMoreCourses()" ng-disabled="loadMoreBtn" ng-show="loadMore">
+						<font ng-bind="loadCourseBtn"></font>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,287 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-font-smoothing: antialiased;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: STHeiti,'微软雅黑','Microsoft Yahei',Helmet,Freesans,sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+}
+ul, li {
+	padding: 0;
+	margin: 0;
+}
+.banner {
+  position: relative;
+  overflow: auto;
+}
+
+.banner li {
+  list-style: none;
+  /*height: 240px;*/
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.banner li img {
+  display: none;
+  position: relative;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 500%;
+  
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.banner li img.show {
+  display: block;
+}
+
+.banner ul li {
+  float: left;
+}
+
+.banner .dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  text-align: center;
+  /*z-index: 200;*/
+}
+
+.banner .dots li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+
+  text-indent: -999em;
+
+  border: 2px solid #fff;
+  border-radius: 6px;
+
+  cursor: pointer;
+  opacity: .4;
+  /*float: right;*/
+  -webkit-transition: background .5s, opacity .5s;
+  -moz-transition: background .5s, opacity .5s;
+  transition: background .5s, opacity .5s;
+}
+
+.banner .dots li.active {
+  background: #fff;
+  /*float: right;*/
+  opacity: 1;
+}
+.menu {
+	z-index: 200;
+	width: 100%;
+	height: 50px;
+	/*background: url(../images/bg_white.PNG) repeat;*/
+	background: white;
+	border-bottom:1px solid rgb(230, 230, 230);
+}
+.menu_activity {
+	width: 50%;
+	height: 100%;
+	float: left;
+	text-align: center;
+	padding-top: 13px;
+	color: #3cbfe0;
+	font-size: 13px;
+}
+.menu_org {
+	width: 50%;
+	height: 100%;
+	float: left;
+	text-align: center;
+	padding-top: 13px;
+	color: #333;
+	font-size: 13px;
+
+}
+.clear {
+	clear: both;
+}
+.menu_select_a {
+	width: 100%;
+	height: 8px;
+	background: #3cbfe0;
+	margin-top: 9px;
+}
+.menu_select_o {
+	width: 100%;
+	height: 8px;
+	background: #3cbfe0;
+	margin-top: 9px;
+	display: none;
+}
+.split {
+    background: rgb(230, 230, 230); 
+    width: 100%; 
+    height: 10px;
+}
+.shade {
+    position: absolute; 
+    width: 100%;
+}
+.cover {
+    width: 100%;
+    float: left;
+}
+.title {
+    position: absolute; 
+    margin-top: 44%;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    margin-left: 25%;
+    text-shadow: -5px -3px 5px grey;
+}
+.top_title {
+	font-size: 13px;
+	text-shadow: -5px -3px 5px grey;
+	color: white;
+	position: absolute;
+	margin-top: -4%;
+}
+.activity {
+    padding: 5px 20px 0 20px;
+    clear: both;
+}
+.activity-content {
+    color: #333;
+    padding: 5px;
+    height: 100%;
+    /*font-weight: bold;*/
+}
+.logo_time {
+    float: left;
+    width: 15px;
+    margin-top: 1px;
+}
+.logo_loc {
+    float: left;
+    width: 13px;
+    margin-left: 1px;
+}
+/*组织列表部分样式*/
+.org_row_pic {
+	display: table;
+	padding: 5px;
+	border-bottom: 1px solid rgb(230, 230, 230);
+	width: 100%;
+	height: 125px;
+	clear: both;
+}
+.org_row_nopic {
+	display: table;
+	padding: 5px;
+	border-bottom: 1px solid rgb(230, 230, 230);
+	width: 100%;
+	height: 125px;
+	clear: both;
+}
+.org_logo_div {
+	float: left;
+	width: 20%;
+	height: 100%;
+}
+.org_content_div {
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+.org_content_div_l {
+	float: left;
+	width: 80%;
+	height: 100%;
+	margin-bottom: 8px;
+}
+.org_comm_name_div {
+	margin: 7px 0px 7px 0px;
+	height: 48px;
+	display: table-cell;
+	vertical-align: middle;
+}
+.org_comm_name {
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+}
+.org_comm_dep {
+	font-size: 13px;
+	color: #999;
+}
+.org_post_div {
+	float: right;
+	width: 30%;
+	height: 100%;
+}
+.org_post {
+	width: 100%;
+	padding: 5px 5px 5px 15px;
+}
+/*活动列表部分样式*/
+.act_info {
+	width: 100%;
+}
+.act_post {
+	width: 20%;
+	height: 13%;
+	border-radius: 50%;
+	margin-top: -10%;
+	position: absolute;
+	z-index: 150;
+	border: 2px solid #fff;
+	margin-left: 3%;
+	-moz-transform: translate(-415%);
+}
+.act_loc_time {
+	float: left;
+	width: 60%;
+	height: 100%;
+	margin-left: 23%;
+}
+.act_comm {
+	float: left;
+	padding: 5px;
+	font-size: 13px;
+	color: #666;
+}
+.act_time {
+	float: left;
+	padding: 5px;
+	font-size: 13px;
+	color: #666;
+}
+.loading {
+	display: none;
+	text-align: center;
+	padding: 10px 0px 10px 0px;
+}
+.load_img {
+	width: 13px;
+}
+.finish {
+	text-align: center;
+	padding: 10px 0px 10px 0px;
+}

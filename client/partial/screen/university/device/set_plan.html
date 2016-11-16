@@ -1,0 +1,53 @@
+<div class="modal-header">
+	<h4 class="modal-title">指定计划</h4>
+</div>
+<div class="modal-body">
+	<div class="col-sm-12">
+		<div ng-if="planNumber !== 0">
+			<table class="table table-striped table-responsive coupons">
+				<thead>
+					<th style="padding-left:22px;">#</th>
+					<th>计划名称</th>
+					<th>开始时间</th>
+					<th>结束时间</th>
+					<th>重复周期</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="plan in plans">
+						<td style="padding-left:22px;">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" ng-model="checked_item" ng-checked="plan.checked" ng-click="choosePlan(plan.id, checked_item)"/>
+								</label>
+							</div>
+						</td>
+						<td>
+							<font ng-bind="plan.name"></font>
+						</td>
+						<td>
+							<font ng-bind="plan.wakeup_time"></font>
+						</td>
+						<td>
+							<font ng-bind="plan.sleep_time"></font>
+						</td>
+						<td>
+							<font ng-bind="plan.repeating_weekdays"></font>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div ng-if="planNumber === 0">
+			<p style="text-align: center;"><br/>
+				<font style="font-weight: bold;" size="5" color="#cccccc">
+					当前没有计划
+				</font>
+			</p>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="ok()" ng-if="planNumber !== 0">确&nbsp;定</button>
+	<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="createPlan()" ng-if="planNumber === 0">创建计划</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">取&nbsp;消</button>
+</div>

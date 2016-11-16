@@ -1,0 +1,29 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="UnpublishLogCtrl">
+	<div class="row" ng-repeat="sysinfo in sysinfos">
+		<div class="col-md-10 col-md-offset-1">
+			<form class="panel panel-info form-horizontal" my-collapse>
+				<span class="btn pull-right">
+					<i class="fa fa-chevron-up"></i>&nbsp;收起
+				</span>
+				<div class="panel-heading">
+					<div><font ng-bind="sysinfo.sender_obj.nickname"></font>&nbsp;&nbsp;<font ng-bind="sysinfo.create_time | date: 'yyyy-MM-dd HH:mm'"></font></div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<h4><font ng-bind="sysinfo.title"></font></h4>
+						</div>
+					</div><br/>
+					<div class="row" ng-if="sysinfo.content">
+						<div class="col-sm-12">
+							<p class="well">理由：<font ng-bind="sysinfo.content"></font></p>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div><br/>
+	<button class="btn btn-default center-block more-btn" ng-click="loadMoreInfos()" ng-disabled="loadMoreBtn" ng-show="loadMore">
+		<font ng-bind="loadSysinfoBtn"></font>
+	</button>
+</div>

@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-font-smoothing: antialiased;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: STHeiti,'微软雅黑','Microsoft Yahei',Helmet,Freesans,sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+}
+
+body, ul, li {
+  padding: 0;
+  margin: 0;
+}
+
+.banner {
+  position: relative;
+  overflow: auto;
+}
+
+.banner li {
+  list-style: none;
+  height: 320px;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.banner li img {
+  display: none;
+  position: relative;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.banner li img.show {
+  display: block;
+}
+
+.banner ul li {
+  float: left;
+}
+
+.banner .dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  text-align: center;
+}
+
+.banner .dots li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+
+  text-indent: -999em;
+
+  border: 2px solid #fff;
+  border-radius: 6px;
+
+  cursor: pointer;
+  opacity: .4;
+  float: right;
+  -webkit-transition: background .5s, opacity .5s;
+  -moz-transition: background .5s, opacity .5s;
+  transition: background .5s, opacity .5s;
+}
+
+.banner .dots li.active {
+  background: #fff;
+  float: right;
+  opacity: 1;
+}
+
+.banner .info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  padding: 20px;
+}
+
+.banner .info h1 {
+  font-size: 28px;
+  font-weight: 300;
+  text-align: center;
+  /*color: #4affdb;*/
+}
+
+.banner .info p {
+  line-height: 20px;
+  font-size: 14px;
+  color: #fefefe;
+}
+
+.banner .info .nickname {
+  position: absolute;
+  bottom: 8px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.content {
+  padding: 12px 18px 72px;
+}
+
+.content p {
+  font-size: 18px;
+  text-indent:2em;
+  color: #666;
+}
+
+.footer-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  padding: 0 20px;
+  line-height: 60px;
+  font-size: 20px;
+  background-color: #3CBFE0;
+  color: #fff;
+  text-decoration: none
+}
+
+.footer-btn:before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  right: 20px;
+  height: 12px;
+  width: 12px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+h1 {
+  font-size: 28px;
+  font-weight: 300;
+  text-align: center;
+  /*color: #4affdb;*/
+}
+
+/*ios 提示图片样式*/
+#ios_popweixin {
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  position:fixed;
+  z-index:1000;
+  background:rgba(0,0,0,.5);
+  top:0;
+  left:0;
+  display:none;
+}
+#ios_popweixin .tip {
+  width:100%;
+  /*background:#fff;*/
+  z-index:1001;
+}
+.top2bottom {
+  -webkit-animation:top2bottom 1.2s ease;
+  -moz-animation:top2bottom 1.2s ease;
+  -o-animation:top2bottom 1.2s ease;
+  animation:top2bottom 1.2s ease;
+  -webkit-animation-fill-mode:backwards;
+  -moz-animation-fill-mode:backwards;
+  -o-animation-fill-mode:backwards;
+  animation-fill-mode:backwards
+}
+.animate-delay-1 {
+  -webkit-animation-delay:1s;
+  -moz-animation-delay:1s;
+  -o-animation-delay:1s;
+  animation-delay:1s
+}
+@-webkit-keyframes top2bottom {
+  0% {
+    -webkit-transform:translateY(-300px);
+    opacity:.6
+  }
+  100% {
+    -webkit-transform:translateY(0px);
+    opacity:1
+  }
+}
+@keyframes top2bottom {
+  0% {
+    transform:translateY(-300px);
+    opacity:.6
+  }
+  100% {
+    transform:translateY(0px);
+    opacity:1
+  }
+}
+/*android 提示图片样式*/
+#android_popweixin {
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  position:fixed;
+  z-index:1000;
+  background:rgba(0,0,0,.5);
+  top:0;
+  left:0;
+  display:none;
+}
+#android_popweixin .tip {
+  width:100%;
+  /*background:#fff;*/
+  z-index:1001;
+}
+.transparent_class {
+  color: #fff;   
+  filter:alpha(opacity=1);   
+  -moz-opacity:0.1;   
+  -khtml-opacity: 0.1;   
+  opacity: 0.1;
+}

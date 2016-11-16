@@ -1,0 +1,57 @@
+<div ng-controller="MessagesCtrl">
+  <div class="tabs-left">
+    <ul class="nav nav-tabs col-sm-3 col-md-3 col-lg-3" 
+      style="max-width: none;border: 2px solid #D9DDDE;padding: 20px 10px 20px 10px;height: initial;border-radius: 2%;">
+      <div treecontrol class="tree-light"
+        tree-model="dataForTheTree"
+        options="treeOptions"
+        on-selection="showSelected(node)"
+        selected-node="node3"
+        >
+        <span class="message_tree" ng-if="node.nickname == '对话列表'">{{node.nickname}}</span>
+        <span class="message_tree" ng-if="node.nickname == 'i微校管理员'">{{node.nickname}}</span>
+        <span class="message_tree" ng-if="node.nickname == '学校管理员'">{{node.nickname}}</span>
+        <span class="message_tree" ng-if="node.nickname == '本社成员' && messages.length != 0" ui-sref="message.members">{{node.nickname}}</span>
+        <span class="message_tree" ng-if="node.nickname == '非本社成员' && noncommMembers.length != 0">{{node.nickname}}</span>
+        <span class="message_tree" ng-if="node.nickname == '集市消息' && bazaarMembers != 0">{{node.nickname}}</span>
+        <span title="{{node.nickname}}" class="message_tree" ng-if="node.parent_id === 1" ui-sref="message.iwx({ id: node.id })">
+          {{node.nickname}}
+        </span>
+        <span title="{{node.nickname}}" class="message_tree" ng-if="node.parent_id === 2" ui-sref="message.university({ id: node.university_id })">
+          {{node.nickname}}
+        </span>
+        <span title="{{node.nickname}}" class="message_tree" ng-if="node.parent_id === 3" ui-sref="message.user({ id: node.user_id })">
+          {{node.nickname}}
+        </span>
+        <span title="{{node.nickname}}" class="message_tree" ng-if="node.parent_id === 4" ui-sref="message.user({ id: node.user_id })">
+          {{node.nickname}}
+        </span>
+        <!--和社团进行过集市消息通信的用户-->
+        <span title="{{node.name}}" class="message_tree" ng-if="node.parent_id === 5" ui-sref="message.bazaar_user({ id: node.id })">
+          {{node.name}}
+        </span>
+        <span title="{{node.topic}}" class="message_tree" ng-if="!node.parent_id" ui-sref="message.bazaar_topic({ id: node.id, user_id: node.user_id })">
+          {{node.topic}}
+        </span>
+        <span ng-if="(node.parent_id === 3 || node.parent_id === 4 || node.parent_id === 5 || !node.parent_id) && node.count > 0" class="badge">
+          {{node.count}}
+        </span>
+      </div><br/>
+    </ul>
+  </div>
+  <div ui-view class="col-lg-7 col-lg-offset-4 col-md-7
+      col-md-offset-4 col-sm-8 col-sm-offset-4">
+    <div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">消息管理</div>
+        </div>
+        <div class="panel-body">
+          <div class="question-table">
+            <p class="text-muted">选取左侧列表用户免费发送消息</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-font-smoothing: antialiased;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: '';
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+body {
+  font-family: STHeiti,'微软雅黑','Microsoft Yahei',Helmet,Freesans,sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #44bfde;
+}
+
+body, ul, li {
+  padding: 0;
+  margin: 0;
+}
+
+.header {
+  padding: 40px;
+}
+
+.header .broke-wall {
+  display: block;
+  float: left;
+  width: 180px;
+  height: 60px;
+  text-indent: -999px;
+  background-image: url(../images/broke-wall.png);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.header .iweixiao {
+  display: block;
+  float: left;
+  margin-left: 40px;
+  width: 90px;
+  height: 30px;
+  text-indent: -999px;
+  background-image: url(../images/iWeixiao_font_white.png);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.header .logo {
+  display: block;
+  float: right;
+  width: 100px;
+  height: 100px;
+  margin-top: -40px;
+  margin-bottom: -20px;
+  background-image: url(../images/logo.png);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.item {
+  margin: 0 40px 30px;
+  padding: 15px 30px;
+  background-color: #a0dfef;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+.item.show {
+  opacity: 1;
+}
+
+.item img {
+  display: block;
+  float: left;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #2897af;
+}
+
+.item .info {
+  margin-left: 150px;
+}
+
+.item .info h3 {
+  font-size: 28px;
+  color: #2897af;
+}
+
+.item .info p {
+  line-height: 72px;
+  font-size: 56px;
+  color: #2897af;
+}
+
+

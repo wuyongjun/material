@@ -1,0 +1,82 @@
+
+*************************************************************************
+Change Log
+2016.10.21 16:00 edited E.1 加了一个expired参数。 days=3&expired=1表示 3天后过期的， days=3&expired=0 表示三天后还有效的。 expired=1表示当前己过期的。
+2016.10.18 08:00 edited b.2.1 加入一个可选参数 notify notify=1时，则通知终端有新展板加入。用在素材库的加入播放列表按纽调用时。
+                        b.2.1.1 加入一个可选参数，notify=1,通知终端有展板被删除。用在播放列里删除按纽
+2016.10.17 16:00 added D.3.1
+2016.10.13 18:00 added G 部分
+				added: D.3, D.4, D.5
+
+2016.10.13 08:00 D edtied 取展板数量的api改为/screens/numbers
+
+2016.10.12 15:37 F.2 edited
+
+2016.10.11 22:00 add b.2.0.1
+				 playlist返回的数据里，多了一个'days_left'表示这个展板余下的播放时间。
+2016.10.11 17:20 add b.4
+2016.10.11 16:18 add f.4
+2016.10.11 16:00 add f-setction
+
+2016.10.11 11:00 b.2.1.1 参数改为contents=2,34,2,38,10
+				 b.2.1 返回 {'content':"",'priority':''}
+				 
+2016.10.10 14:30 add b.2.0
+2016.10.10 add b.2.3
+
+*************************************************************************
+
+a.电子展板社团管理员接口需求：
+    a.1、展板列表返回信息需带有拒绝理由（当信息为"DECLINED"时）；（DONE）
+    a.3、根据展板id获取展板信息接口；(/contents/<int:content_id>, GET) （DONE）
+    a.4、展板信息更新接口。('/<int:region_id>/editor/<int:editor_id>/contents/<int:content_id>', PUT)
+
+
+b、电子展板校团委管理接口需求：
+审核管理部分：
+    b.1、待审核展板信息列表：
+	    b.1.1通过---->添加允许播放时间参数；(参数加"start_time","end_time") (content里要带上申请人的社团id)
+        b.1.2 拒绝---->添加拒绝理由参数。(参数"message")
+    b.2、已通过展板信息列表：
+	    b.2.0 取默认播放列表的所有展板内容 ('/playlist/contents/', methods=['GET'])
+	    b.2.0.1 取播放里所有有效的展板（正在播放的)('/playlist/contents/?s=playing, GET)
+	    b.2.1 将展板添加至播放列表接口；(('/playlist/contents/', POST,参数为"content_id","priority_id","notify"可选,如果notify=1,则通知终端加了一个新展板)
+	    b.2.1.1 将展板从播放列表删除('/playlist/contents/, DELETE, 参数为'contents=1,2,3,4,5,6,7) 可选参数，notify=1,通知终端有展板被删除。用在播放列里删除按纽
+	    b.2.1.2 修改己加入到播放列表的展板的播放等级('/playlist/contents/<int:content_id>', PUT,参数为"priority_id")
+        b.2.2 展板返回信息中应包含播放状态信息。
+	    b.2.3 通知广告屏刷新列表。(‘/playlist/notification’ post) 本地编辑播放列表，如果列表有变化 点确定的时候调用这个接口
+	
+    b.3  可用展板：
+	    b.3.1 取所有可用的展板，应该是有效的，未加入到任何列表的。(/<int:school_id>/contents?s=usable&dyas=7)分页取 	days可选，7代表，7天后仍有效的展板，-7为七天前效的展板
+    b.4 修改展板可播放时间
+	    b.4.1 修改展板可播放时间 ('/<int:region_id>/contents/<int:content_id>', methods=['PUT'],参数 start_time, end_time)
+
+C.播放等级
+    c.1 新建('/priorities/', POST, 'name', 'length')（DONE）
+    c.2 delete(/priorities/<int:priority_id>, DELETE, ）（DONE）
+    c.3 update(('/priorities/<int:priority_id>', PUT, 'name', 'length')两个参数可选（DONE）
+    c.4 query all priorities ('/priorities', GET) （DONE）
+
+D.终端
+    D.1 取学校终端数量('/screens/numbers' ,GET) 返回{"v" = 10, "h" = 20}v为竖，h 为横
+    D.2	取学校终端列表('/screens, GET)
+    D.3 设置屏幕计划:('/screens/plans', POST, screens=[1,3,4,5], plans=[10,11]) 10，11这两个计划分别加到1,3,4,5里。
+    D.3.1 设置某一个屏幕计划:('/screens/<int:screen_id>/plans', PUT, plans=[10,11]) 屏幕screen_id的计划变成10,11.
+    D.4 远程重启设备:('/screens/<int:screen_id>?action=restart, POST)
+    D.5 远程重启选中设备: ('/screens?action=restart, POST, screens=[1,2,3,4,5])
+
+E.素材库
+    E.1 取素材库所有conent (/<int:school_id>/contents) (GET, s=l, days=7，expired=1 或 0)分页取 l为素材库， days=3&expired=1表示 3天后过期的， days=3&expired=0 表示三天后还有效的。 days=0&expired=1表示当前己过期的。
+ 
+F 校管理员插播，新建素材
+    F.1 校管理员插播一个展板 ('/contents/<int:content_id>/spot', methods=['POST'],参数 priority_id)  返回插播纪录
+    F.2 校管理员建展板，并加到素材库或插播 （/<int:school_id>/chief_editor/<int:editor_id>/contents', methods=['POST']）参数和社团管理员建新展板一致，多了（插播:'to':'spots','priority_id'| 加到素材库: 'to':'library')
+    F.3 ('/spots/' GET) 取所有插播的历史
+    F.4 某一条插播日志详情 /spots/<int:spot_id>', methods=['GET']
+ 
+G.开关机计划
+    G.1.所有计划 (/plans, GET)
+    G.2.新建计划 (/plans, POST,参数 name, wakeup_time:10:00, sleep_time: 16:00, repeating_weekdays:1,2,3,4,5,6,7) 只支持1-7
+    G.3,修改计划 (/plans/<int:plan_id>, PUT,参数同上，均可选，但不能为空，但wakeup_time和sleep_time要成对出现)
+    G.4.删除计蚜 (/plans/<int:plan_id>, DELETE,删除某条id)
+    G.5.查看某一条计划 (/plans/<int:plan_id>, GET)

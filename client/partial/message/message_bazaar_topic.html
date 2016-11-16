@@ -1,0 +1,55 @@
+<div ng-controller="MesBazTopicCtrl">
+	<!--话题首张图片-->
+	<!-- <div class="row" ng-if="topic.images[0]">
+		<div class="col-sm-10 col-sm-offset-1">
+			<center>
+				<img class="img-thumbnail" ng-src="{{topic.images[0]}}" title="点击查看原图" style="width: 300px;height: 200px;" ng-click="viewImage(topic.images[0])">
+				<p style="margin: 10px 0px 15px 0px;">
+					<font title="{{topic.topic}}" ng-bind="topic.topic"></font>
+				</p>
+			</center>
+		</div>
+	</div> -->
+	<div class="row">
+		<center>
+			<div class="owl-carousel owl-theme">
+				<div class="item" ng-repeat="item in items" repeat-finish> 
+					<img class="img-thumbnail" style="width: 240px;height: 140px;" ng-src="{{item}}" ng-click="viewImage(item)">
+				</div>
+			</div>
+			<p style="margin: 10px 0px 15px 0px;">
+				<h4><font title="{{topic.topic}}" ng-bind="topic.topic"></font></h4>
+			</p>
+		</center>
+	</div><br/>
+	<!--信息发送框-->
+	<div class="row">
+		<textarea class="form-control" ng-model="content" rows="5"></textarea><br/>
+    	<button class="btn btn-info pull-right" type="button" ng-click="send()">发送</button><br/><br/>
+	</div>
+	<!--聊天信息部分-->
+	<div class="row">
+		<div class="message-panel">
+			<div ng-repeat="message in messages" class="message-container">
+				<div ng-if="message.direction == 'FROM_USER'">
+					<img ng-if="message.user.icon" ng-src="{{message.user.icon}}/thumbnail"
+						class="message-icon pull-left"
+						ng-attr-title="{{message.user.nickname}}" ng-click="viewImage(message.user.icon)"/>
+					<p class="nickname">&nbsp;{{message.user.nickname}}</p>
+					<div class="user_message message"
+						ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}">
+						{{message.content}}
+					</div>
+				</div>
+				<div ng-if="message.direction == 'FROM_COMMUNITY'">
+					<img ng-if="message.community.logo" ng-src="{{message.community.logo}}/thumbnail"
+						class="message-icon pull-right"
+						ng-attr-title="{{message.community.name}}"/>
+					<div class="community_message message with-newlines"
+						ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}"><div ng-if="message.status === 'NEW'"><font ng-bind="message.content"></font></div><div ng-if="message.status === 'READ'"><font ng-bind="message.content"></font>&nbsp;<font style="color: white;">--</font>&nbsp;<font ng-bind="messageStatus[message.status]" class="message_status"></font></div></div>
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-default center-block more-btn" ng-click="loadMore()" ng-disabled="load_more_btn">{{load_btn_content}}</button>
+	</div>
+</div>

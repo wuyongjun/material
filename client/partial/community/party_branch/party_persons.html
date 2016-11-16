@@ -1,0 +1,117 @@
+<div ng-controller="PartyPersonCtrl" class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3">
+	<div class="row">
+		<div class="col-md-12" style="text-align: right;">
+			<button class="btn btn-info " ng-click="grade()"><i class="fa fa-table" aria-hidden="true"></i> 学年设置</button>
+			<button class="btn btn-info " ng-click="duty()"><i class="fa fa-table" aria-hidden="true"></i> 职务设置</button>
+			<button class="btn btn-info " ng-click="group()"><i class="fa fa-table" aria-hidden="true"></i> 分组设置</button>
+		</div>
+	</div><br/>
+	<!--查询条件-->
+	<div class="row" ng-if="grades.length !== 0">
+		<div class="col-md-12">
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>
+						<h5>按学年查询</h5>
+					</legend>
+					<div class="row">
+						<div class="col-md-2" style="text-align:left;padding-left:50px;" ng-repeat="grade in grades">
+							<input type="radio" name="grade" value="{{grade.id}}" ng-model="checked_grade" ng-click="get_checked_grade(checked_grade)"/>
+							<font title="{{grade.name}}" ng-bind="grade.name | substr:6:5"></font>
+						</div>
+					</div><br/>
+					<div class="row">
+						<div class="col-md-12" style="text-align: right;">
+							<a ng-click="exOratrGrade()">{{operGrade}}</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div><br/>
+	<div class="row" ng-if="groups.length !== 0">
+		<div class="col-md-12">
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>
+						<h5>按分组查询</h5>
+					</legend>
+					<div class="row">
+						<div class="col-md-2" style="text-align:left;padding-left:50px;" ng-repeat="group in groups">
+							<input type="radio" name="group" value="{{group.id}}" ng-model="checked_group" ng-click="get_checked_group(checked_group)"/>
+							<font title="{{group.name}}" ng-bind="group.name | substr:6:5"></font>
+						</div>
+					</div><br/>
+					<div class="row">
+						<div class="col-md-12" style="text-align: right;">
+							<a ng-click="exOratrGroup()">{{operGroup}}</a>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div><br/>
+	<!--导出人员信息表格-->
+	<div class="row">
+		<div class="col-md-12">
+			<a class="btn btn-info pull-right" ng-href="/api/political/users/out/{{'人员列表信息' + date}}.csv"><i class="fa fa-download" aria-hidden="true"></i> 导出表格</a>
+		</div>
+	</div>
+	<!--人员信息表格-->
+	<div class="row">
+		<div class="col-md-12">
+      <div class="table-container">
+          <table ng-table="tableParams" class="table table-striped table-responsive">
+            <tbody>
+              <tr ng-repeat="person in $data">
+                <td data-title="'i微校昵称'" header-class="text-left">
+                  <font ng-bind="person.user_obj.nickname"></font>
+                </td>
+                <td data-title="'姓名'" header-class="text-left">
+                  <font ng-bind="person.user_obj.name"></font>
+                </td>
+                <td data-title="'身份'" header-class="text-left">
+                  <font ng-if="identity[person.status]" ng-bind="identity[person.status]"></font>
+                  <font ng-if="!identity[person.status]" color="#B8BEC3">未采集</font>
+                </td>
+                <td data-title="'电话'" header-class="text-left">
+                  <font ng-bind="person.user_obj.phone || '暂无电话'"></font>
+                </td>
+                <td data-title="'职务'" header-class="text-left">
+                  <font ng-if="person.duty_obj.name" ng-bind="person.duty_obj.name"></font>
+                  <font ng-if="!person.duty_obj.name" color="#B8BEC3">未采集</font>
+                </td>
+                <td data-title="'小组'" header-class="text-left">
+                  <font ng-if="person.group_obj.name" ng-bind="person.group_obj.name"></font>
+                  <font ng-if="!person.group_obj.name" color="#B8BEC3">未采集</font>
+                </td>
+                <td data-title="'学年'" header-class="text-left">
+                  <font ng-if="person.year_obj.name" ng-bind="person.year_obj.name"></font>
+                  <font ng-if="!person.year_obj.name" color="#B8BEC3">未采集</font>
+                </td>
+                <td data-title="'操作'">
+                  <!-- <center> -->
+                  <label type="button" class="btn btn-info btn-checkbox" ng-click="course(person.user_obj.id)">
+                    <span>
+                      <i class="fa fa-list" aria-hidden="true"></i> 党建历程
+                    </span>
+                  </label>&nbsp;
+                  <label type="button" class="btn btn-info btn-checkbox" ng-click="change(person)" style="width: 100px;">
+                    <span>
+                      <i class="fa fa-user" aria-hidden="true"></i> 变&nbsp;&nbsp;更
+                    </span>
+                  </label>&nbsp;
+                  <!-- <label type="button" class="btn btn-info btn-checkbox" ng-click="letter(person)" style="width: 100px;margin-top: 6px;">
+                    <span>
+                      <i class="fa fa-envelope" aria-hidden="true"></i> 私&nbsp;&nbsp;信
+                    </span>
+                  </label> -->
+                  <!-- </center> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+		</div>
+	</div>
+</div>

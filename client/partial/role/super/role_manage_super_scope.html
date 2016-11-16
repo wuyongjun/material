@@ -1,0 +1,91 @@
+<div class="modal-header">
+	<h4 class="modal-title">用户管理范围</h4>
+</div>
+<div class="modal-body">
+	<!--搜索并添加管理学校部分-->
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>
+						<h4>添加管理学校</h4>
+					</legend>
+					<!--查找学校-->
+					<div class="row">
+						<div class="col-md-6">
+							<form-input data-title="'省'" data-name="'province'">
+								<select name="province_scope" id="province_scope" class="form-control" ng-init="provinceArray[0].id" ng-model="user.province_scope_id" ng-options="r.id as r.city for r in provinceArray" ng-change="change_province()">
+								</select>
+							</form-input>	
+						</div>
+						<div class="col-md-6">
+							<form-input data-title="'市'" data-name="'city'">
+								<select class="form-control" name="city_scope" id="city_scope" ng-model="user.city_scope_id" ng-options="r.id as r.city for r in cityArray" ng-change="change_city()">
+								</select>
+							</form-input>
+						</div>
+					</div>
+					<!--对应省市的学校列表-->
+					<div class="row">
+						<div class="col-md-3" ng-repeat="university in universitys">
+							<input type="checkbox" ng-model="choose_item" ng-checked="choose_all" ng-click="choose_university(university.id, choose_item)" ng-disabled="university_hash[university.id]"/> {{university.name}}
+						</div>
+					</div>
+					<div class="row" ng-show="more_university">
+						<div class="col-md-2 col-md-offset-4">
+							<br/><button class="btn btn-default center-block more-btn" ng-click="load_more_university()">加载更多学校</button><br/>
+						</div>
+					</div>
+					<div class="row" ng-show="more_university">
+						<div class="col-md-2" style="text-align:center;">
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" ng-model="choose_all" ng-click="choose_universitys(choose_all)"> 全选
+								</label>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form><br/>
+		</div>
+	</div>
+	<!--已添加的学校-->
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>
+						<h4>已添加学校</h4>
+					</legend>
+					<table class="table table-striped table-responsive" ng-table="tableParams">
+						<tbody>
+							<tr ng-repeat="university in $data">
+								<td data-title="'编号'" style="text-align:center;">
+									<font ng-bind="$index + 1"></font>
+								</td>
+								<td data-title="'学校'" style="text-align:center;">
+									<font ng-bind="university.university.name"></font>
+								</td>
+								<td data-title="'所属地'" style="text-align:center;">
+									<font ng-bind="university.geography.city"></font>
+								</td>
+								<td data-title="'操作'" style="text-align:center;">
+									<label type="button" class="btn btn-danger btn-checkbox" ng-click="delete_university(university.id, university.university_id)">
+										<span>
+											删除
+										</span>
+									</label>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</fieldset>
+			</form>
+		</div>
+		
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="add_university();">添加</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">关闭</span></button>
+</div>

@@ -1,0 +1,58 @@
+<div ng-controller="ProfileUniCtrl">
+	<div class="tabs-left">
+		<ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+			<li d-sref="'profile_university'">
+				<a ui-sref="profile_university">基本信息</a>
+			</li>
+			<li d-sref="'profile_university.change_password'">
+				<a ui-sref="profile_university.change_password">密码修改</a>
+			</li>
+		</ul>
+	</div>
+	<div id="content">
+		<div ui-view>
+			<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-3 col-sm-9 col-sm-offset-3 profile-panel">
+				<form class="form-horizontal" role="form" enctype="multipart/form-data" ng-submit="save_manager_info()">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">管理员信息</div>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="email">邮箱</label>
+								<div class="col-sm-9">
+									<input class="form-control" id="email" name="email" readonly="true" type="text" ng-model="user.email">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="nickname">昵称</label>
+								<div class="col-sm-9">
+									<input class="form-control" id="nickname" name="nickname" type="text" readonly="true" ng-model="user.nickname">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label" for="icon">头像</label>
+								<div class="col-sm-9">
+									<div class="fileinput fileinput-new" data-provides="fileinput">
+										<div class="fileinput-new thumbnail" style="width:100%">
+											<img ng-src="{{user.icon.substring(0)}}?width=160&height=160">
+										</div>
+										<div class="fileinput-preview fileinput-exists thumbnail"></div>
+										<div>
+											<span class="btn btn-default btn-file">
+											<span class="fileinput-new">选择照片</span>
+											<span class="fileinput-exists">更换</span>
+											<input type="file" name="icon" data-file="user.icon"></span>
+											<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">删除</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button class="btn btn-primary form-control form-submit-button" type="submit">保存</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

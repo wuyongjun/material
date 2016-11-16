@@ -1,0 +1,42 @@
+<div class="modal-header">
+	<h4 class="modal-title"><font ng-bind="obj.name"></font>成员</h4>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-md-12">
+			<div ng-if="isHasMembers">
+				<table class="table table-striped table-responsive coupons" ng-table="tableParams">
+					<tbody>
+						<tr ng-repeat="member in $data">
+							<td>
+								<div class="logo" style="height:70px;width:70px">
+									<img ng-src="{{member.user_obj.icon}}" style="height: 100%;width: 100%;">
+								</div>
+							</td>
+							<td>
+								<font ng-bind="member.user_obj.nickname"></font>
+							</td>
+							<td>
+								<font ng-bind="member.user_obj.name"></font>
+							</td>
+							<td>
+								<span class="label label-success" ng-if="member.status === 'FORMAL'">正式党员</span>
+								<span class="label label-success" ng-if="member.status === 'PREPARE'">预备党员</span>
+								<span class="label label-info" ng-if="member.status === 'POSITIVE'">积极份子</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div ng-if="!isHasMembers">
+				<p style="text-align: center;"><br/><br/><br/>
+					<font style="font-weight: bold;font-size: 50px;">暂无成员</font>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<!-- <button type="button" class="btn btn-info" ng-if="isHasMembers">导出表格</button> -->
+	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="close()"><span aria-hidden="true">关&nbsp;闭</span></button>
+</div>

@@ -1,0 +1,73 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="ApproveCtrl">
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<!--导航部分-->
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header"></div>
+				<div class="collapse navbar-collapse" id="navbar-item">
+					<ul class="nav navbar-nav">
+						<li>
+							<a ui-sref="terminal_university">待审核列表</a>
+						</li>
+						<li class="active">
+							<a ui-sref="terminal_university.approve">已通过列表</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<table class="table table-striped table-responsive" ng-table="tableParams">
+				<tbody>
+					<tr ng-repeat="screen in $data">
+						<td data-title="'展板名称'" header-class="text-left">
+							<font ng-bind="screen.title"></font>
+						</td>
+						<td data-title="'横向展板'" header-class="text-left">
+							<div class="thumbnail" style="width: 100px;height: 57px;">
+								<img ng-src="{{server + screen.landscape_poster}}?width=100&height=57" ng-click="viewImage(server + screen.landscape_poster)" 
+									style="width: 100%;height: 100%;" image-fixed>
+							</div>
+						</td>
+						<td data-title="'立式展板'" header-class="text-left">
+							<div class="thumbnail" style="width: 57px;height: 100px;">
+								<img ng-src="{{server + screen.portrait_poster}}?width=57&height=100" ng-click="viewImage(server + screen.portrait_poster)" 
+									style="width: 100%;height: 100%;" image-fixed>
+							</div>
+						</td>
+						<td data-title="'申请播放时间'" header-class="text-left">
+							<font ng-bind="screen.start_time | date: 'yyyy-MM-dd HH:mm'"></font> ~ 
+							<font ng-bind="screen.end_time | date: 'yyyy-MM-dd HH:mm'"></font>
+						</td>
+						<td data-title="'允许播放时间'" header-class="text-left">
+							<font ng-bind="screen.approved_start_time | date: 'yyyy-MM-dd HH:mm'"></font> ~ 
+							<font ng-bind="screen.approved_end_time | date: 'yyyy-MM-dd HH:mm'"></font>
+						</td>
+						<td data-title="'申请组织'" header-class="text-left">
+							<font ng-bind="screen.author_name"></font>
+						</td>
+						<td data-title="'状态'" header-class="text-left">
+							<span class="label label-default" ng-if="screen.play_status === 'NOT_PLAYING'">未播放</span>
+							<span class="label label-success" ng-if="screen.play_status === 'PLAYING'">播放中</span>
+							<span class="label label-danger" ng-if="screen.play_status === 'ENDED'">已结束</span>
+						</td>
+						<!-- <td data-title="'操作'" header-class="text-left">
+							<label type="button" class="btn btn-info" ng-click="addToDisplayList(screen)" ng-if="screen.status === 'IS_NOT_DISPLAY'">
+								<span>
+									<i class="fa fa-plus" aria-hidden="true"></i> 添加进播放列表
+								</span>
+							</label>
+							<label type="button" class="btn btn-danger" ng-click="remove(screen)">
+								<span>
+									<i class="fa fa-trash-o" aria-hidden="true"></i> 移&nbsp;除
+								</span>
+							</label>
+						</td> -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

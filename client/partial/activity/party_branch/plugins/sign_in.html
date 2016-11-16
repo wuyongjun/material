@@ -1,0 +1,214 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9" ng-controller="PartySigninCtrl">
+	<div class="activity-button-bar">
+		<div class="btn-group">
+			<!-- 返回操作将返回到活动概况页面 -->
+			<a class="btn btn-default" ui-sref="party_act_item({ id: activity.id })">
+				<i class="fa fa-reply"></i> 返回
+			</a>
+		</div>&nbsp;
+		<div class="btn-group" ng-if="signIn && signIn.id && signIn.id > 0" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+			<!--添加完成本次签到按钮-->
+			<a class="btn btn-primary" ng-click="finishSignIn()" data-toggle="tooltip" data-placement="bottom" title="手机客户端用户无法继续进行签到，但签到功能仍然在手机客户端展示。" tool-tip>
+				<i class="glyphicon glyphicon-stop"></i> 结束本次签到</a>
+			<a class="btn btn-danger" ng-click="deleteSignIn()" data-toggle="tooltip" data-placement="bottom" 
+				title="彻底删除签到功能，之前保存的签到内容全部清空。" tool-tip>
+				<i class="fa fa-close"></i> 删除签到功能
+			</a>
+			<!-- <a class="btn btn-warning" ng-click="closeSignIn()" data-toggle="tooltip" data-placement="bottom" 
+				title="暂时将签到功能从手机客户端下架不显示，再次打开签到功能时，之前保存的签到内容依旧存在，可继续编辑。" tool-tip>
+				<i class="fa fa-eye"></i> 暂时关闭本次签到
+			</a> -->
+		</div>&nbsp;
+		<div class="btn-group" ng-if="signIn && signIn.id && signIn.id > 0">
+			<a class="btn btn-default" ng-click="result()">
+				<i class="fa fa-share"></i> 查看签到结果</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<form role="form" enctype="multipart/form-data">
+				<div class="panel panel-default form-horizontal">
+					<div class="panel-heading">
+						<div class="panel-title">签到概况</div>
+					</div>
+					<div class="panel-body">
+						<form-input data-title="'签到结束时间'" data-name="'end_time'">
+							<datetimepicker datetime="signIn.end_time" starttime="signIn.sign_in_start_time"></datetimepicker>
+						</form-input>
+						<form-input data-title="'赞助商名称'" data-name="'sponsor_name'">
+							<input ng-model="signIn.sponsor_name" class="form-control" type="text" placeholder="请将赞助商名称限制在15个汉字以内" regexp="sponser_name" blur>
+						</form-input>
+						<form-input data-title="'赞助商Logo'" data-name="'sponsor_logo'">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div ng-if="signIn.sponsor_logo" class="fileinput-new thumbnail">
+									<img ng-src="{{signIn.sponsor_logo}}" style="width: 178px;">
+								</div>
+								<div class="fileinput-preview fileinput-exists thumbnail"></div>
+								<div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+									<span class="btn btn-default btn-file" data-toggle="tooltip" data-placement="bottom" title="图片大小不能超过1M" tool-tip>
+										<span class="fileinput-new">选择照片</span>
+										<span class="fileinput-exists">更换</span>
+										<input type="file" name="sponsor_logo" data-file="signIn.sponsor_logo">
+									</span>
+									<a href="#" class="btn btn-default fileinput-exists"
+										data-dismiss="fileinput">删除</a>
+								</div>
+							</div>
+						</form-input>
+						<!--先创建签到插件后再进行人员绑定，根据签到id判断显示状况-->
+						<div ng-if="signIn.id">
+							<form-input data-title="'签到模式'" data-name="'sign_in_modal'">
+								<div class="col-sm-2">
+									<label class="radio-inline">
+										<input type="radio" name="sign_in_modal" id="online" value="online" ng-checked="signIn.modal === 'online'" 
+											ng-click="signInModal('online')"> 线上
+									</label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline">
+										<input type="radio" name="sign_in_modal" id="offline" value="offline" ng-checked="signIn.modal === 'offline'" 
+											ng-click="signInModal('offline')"> 线下
+									</label>
+								</div>
+							</form-input>
+							<div ng-if="signIn.modal === 'offline'">
+								<form-input data-title="'签到二维码'" data-name="'logo'">
+									<sign-in-qrcode data="signIn" user="user"></sign-in-qrcode>
+								</form-input>
+							</div>
+						
+							<form-input data-title="'是否指定参与者'" data-name="'participant'">
+								<div class="col-sm-2">
+									<label class="radio-inline">
+										<input type="radio" name="participant" id="isPart" value="isPart" ng-checked="signIn.participant === 'isPart'"
+											ng-click="isSpecifyPerson('isPart')"> 是
+									</label>
+								</div>
+								<div class="col-sm-2">
+									<label class="radio-inline">
+										<input type="radio" name="participant" id="isNotPart" value="isNotPart" ng-checked="signIn.participant === 'isNotPart'"
+											ng-click="isSpecifyPerson('isNotPart')"> 否
+									</label>
+								</div>
+							</form-input><br/>
+							<div ng-if="signIn.participant === 'isPart'">
+								<div class="row">
+									<div class="col-sm-10 col-sm-offset-1">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<div class="panel-title">参与者筛选条件</div>
+											</div>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-sm-12">
+														<form class="form-horizontal">
+															<fieldset>
+																<legend>
+																	<h5>参与者职务</h5>
+																</legend>
+																<div class="row">
+																	<div class="col-sm-4" style="text-align:left;padding-left:50px;" ng-repeat="duty in duties">
+																		<input type="radio" name="duty" value="{{duty.id}}" ng-model="checked_duty" 
+																			ng-click="getCheckedDuty(checked_duty)" ng-checked="duty.checked"/>
+																		<font title="{{duty.name}}" ng-bind="duty.name | substr:6:5"></font>
+																	</div>
+																</div><br/>
+																<div class="row">
+																	<div class="col-sm-12" style="text-align: right;">
+																		<a ng-click="exOratrDuty()">{{operDuty}}</a>
+																	</div>
+																</div>
+															</fieldset>
+														</form>
+													</div>
+												</div><br/>
+												<div class="row">
+													<div class="col-sm-12">
+														<form class="form-horizontal">
+															<fieldset>
+																<legend>
+																	<h5>参与者分组</h5>
+																</legend>
+																<div class="row">
+																	<div class="col-sm-4" style="text-align:left;padding-left:50px;" ng-repeat="group in groups">
+																		<input type="radio" name="group" value="{{group.id}}" ng-model="checked_group" 
+																			ng-click="getCheckedGroup(checked_group)" ng-checked="group.checked"/>
+																		<font title="{{group.name}}" ng-bind="group.name | substr:6:5"></font>
+																	</div>
+																</div><br/>
+																<div class="row">
+																	<div class="col-sm-12" style="text-align: right;">
+																		<a ng-click="exOratrGroup()">{{operGroup}}</a>
+																	</div>
+																</div>
+															</fieldset>
+														</form>
+													</div>
+												</div><br/>
+												<div class="row">
+													<div class="col-sm-12">
+														<form class="form-horizontal">
+															<fieldset>
+																<legend>
+																	<h5>参与者身份</h5>
+																</legend>
+																<div class="row">
+																	<div class="col-sm-4" style="text-align:left;padding-left:50px;" ng-repeat="identity in identityArray">
+																		<input type="radio" name="identity" value="{{identity.id}}" ng-model="checked_identity" 
+																			ng-click="getCheckedIdentity(checked_identity)" ng-checked="identity.checked"/>
+																		<font title="{{identity.name}}" ng-bind="identity.name | substr:6:5"></font>
+																	</div>
+																</div><br/>
+															</fieldset>
+														</form>
+													</div>
+												</div><br/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--指定参与人筛选结果-->
+								<div class="row">
+									<div class="col-sm-10 col-sm-offset-1">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<div class="panel-title">候选参与者</div>
+											</div>
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-md-3" style="text-align:left;padding-left:50px;" ng-repeat="person in persons">
+														<input type="checkbox" name="person" id="person" value="{{person.id}}" ng-model="checked_person" 
+															ng-click="getCheckedPerson(person.id, checked_person)"
+															ng-checked="person.checked"/> 
+															<font title="{{person.name}}" ng-bind="person.name | substr:6:5"></font>
+													</div>
+												</div><br/>
+												<div class="row">
+													<div class="col-sm-8 col-sm-offset-4">
+														<button class="btn btn-default btn-sm" ng-click="savePersons()" 
+															ng-disabled="personIdChosen.length === 0 && personIdRemove.length === 0">
+															保 存
+														</button>&nbsp;&nbsp;
+														<button class="btn btn-default btn-sm" ng-click="loadMore()" ng-disabled="btn">
+															<font ng-bind="loadBtn"></font>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <button class="btn btn-primary form-control form-submit-button" type="submit" ng-click="create()" ng-if="!update">创&nbsp;建</button>
+					<button class="btn btn-primary form-control form-submit-button" type="submit" ng-click="change()" ng-if="update">更&nbsp;新</button> -->
+					<button class="btn btn-primary form-control form-submit-button" type="submit" ng-click="save()">
+						<font ng-bind="saveBtn"></font>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

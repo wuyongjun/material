@@ -1,0 +1,40 @@
+<div class="modal-header">
+	<h4 class="modal-title">社团管理员候选人<font style="font-size: 10px;color: rgb(60, 194, 227);">（管理员属性不可用代表已是其他社团管理员）</font></h4>
+</div>
+<div class="modal-body">
+	<table class="table table-striped table-responsive" ng-table="tableParams">
+		<tbody>
+			<tr ng-repeat="community_member in $data">
+				<td style="padding-left:14px;">
+					<div class="radio">
+						<label>
+							<input type="radio" name="member" id="member" value="{{community_member.user.id}}" ng-model="checked_user" ng-click="get_checked_user(checked_user)" ng-disabled="community_member.user.role.name == 'ADMIN'"/>
+						</label>
+					</div>
+				</td>
+				<td data-title="'照片'" header-class="text-left">
+					<div class="logo" style="height:70px;width:70px">
+						<img ng-src="{{community_member.user.photo_id}}" style="height:100%;width:100%;" ng-click="viewImage(community_member.user.photo_id)">
+					</div>
+				</td>
+				<td data-title="'用户名'" header-class="text-left">
+					<font ng-bind="community_member.user.name"></font>
+				</td>
+				<td data-title="'手机'" header-class="text-left">
+					<font ng-bind="community_member.user.phone"></font>
+				</td>
+				<td data-title="'邮箱'" header-class="text-left">
+					<font ng-bind="community_member.user.email"></font>
+				</td>
+				<td data-title="'管理员属性'" header-class="text-left">
+					<span ng-if="community_member.user.role.name == 'USER'" class="label label-success">可用</span>
+					<span ng-if="community_member.user.role.name == 'ADMIN'" class="label label-danger">不可用</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="choose_member()" ng-disabled="choose_member_btn">确定</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">关闭</span></button>
+</div>

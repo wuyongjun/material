@@ -1,0 +1,26 @@
+<div ng-controller="MessAdminIwxCtrl">
+	<textarea class="form-control" ng-model="content" rows="5"></textarea><br/>
+	<button class="btn btn-info pull-right" type="button" ng-click="send()">发送</button><br/><br/>
+	<div class="message-panel">
+		<div ng-repeat="message in messages" class="message-container">
+			<div ng-if="message.mes_type == 'IWX'">
+				<img ng-if="message.user.icon" ng-src="{{message.user.icon}}/thumbnail"
+					class="message-icon pull-left"/>
+				<p class="nickname">&nbsp;{{message.user.nickname}}</p>
+				<div class="user_message message"
+					ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}">
+					{{message.content}}
+          </div>
+			</div>
+			<div ng-if="message.mes_type == 'COMMUNITY'">
+				<img ng-if="community.logo" ng-src="{{community.logo}}/thumbnail"
+					class="message-icon pull-right"
+					ng-attr-title="{{community.name}}"/>
+					<div class="community_message message with-newlines"
+						ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}">{{message.content}}
+					</div>
+			</div>
+		</div>
+	</div>
+	<button class="btn btn-default center-block more-btn" ng-click="loadMore()">加载更多消息</button>
+</div>

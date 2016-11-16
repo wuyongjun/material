@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">添加新功能</h4>
+</div>
+<div class="modal-body">
+  <div class="row" ng-repeat="plugin in plugins_alivable" ng-if="plugin.id !== 'discuss'">
+    <div class="col-md-2">
+      <center>
+        <div style="margin-top:42px;">
+          <image ng-src="{{plugin.icon_path}}" style="width:30px;height:30px;"/>
+        </div>
+      </center>
+    </div>
+    <div class="col-md-3">
+      <br/><br/>
+      <a class="btn btn-primary" style="width:100px;" ng-click="addPlugin(plugin.id)">
+        {{plugin.name}}&nbsp;&nbsp;<i class="glyphicon glyphicon-plus-sign"></i>
+      </a>
+    </div>
+    <div class="col-md-7">
+      <textarea  class="bs-callout bs-callout-info text-muted" rows="6" style="width:100%;border-radius:4px;padding:10px;border-left-color:#337ab7;resize:none;" readonly="true">{{plugin.note}}</textarea>
+    </div>
+  </div>
+</div>

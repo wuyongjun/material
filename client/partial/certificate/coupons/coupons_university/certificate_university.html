@@ -1,0 +1,109 @@
+<div class="col-sm-12 col-md-12 col-lg-12" ng-controller="certificateUniversityCtrl">
+	<!--导航栏部分-->
+	<div class="row">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header"></div>
+			<div class="collapse navbar-collapse" id="navbar-item">
+				<ul class="nav navbar-nav">
+					<li d-sref="'certificate_coupons_university'">
+						<a ui-sref="certificate_coupons_university">电子凭证列表</a>
+					</li>
+					<li d-sref="'certificate_coupons_university.create'">
+						<a ui-sref="certificate_coupons_university.create">新建电子凭证</a>
+					</li>
+				</ul>
+			</div>
+		</nav><br/>
+	</div>
+	<div id="content" ui-view>
+		<div class="row">
+			<form class="form-horizontal">
+				<div class="col-md-3" style="margin-top:8px;">
+					<center>
+					<span class="label label-info" style="font-size:100%;">
+						学校：<font ng-bind="university"></font>
+					</span>
+					</center>
+				</div>
+				<div class="col-md-5">
+					<form-input data-title="'社团'" data-name="'community'">
+						<select name="community" id="community" class="form-control">
+							<option>青春吉他协会</option>
+						</select>
+					</form-input>
+				</div>
+				<div class="col-md-4 form-inline">
+					<input class="form-control" placeholder="活动关键词搜索">&nbsp;&nbsp;&nbsp;<button class="btn btn-info"><i class="fa fa-search"></i> 查询</button>
+				</div>
+			</form>
+		</div>
+		<!--操作按钮部分-->
+		<div class="row">
+			<br/><br/>
+			<a class="btn btn-info pull-right" ng-href="">导出列表</a>
+		</div>
+		<div class="row">
+			<table class="table table-striped table-responsive" ng-table="tableParams">
+				<tbody>
+					<tr ng-repeat="coupon in $data">
+						<td data-title="'编号'" header-class="text-left">
+							{{$index + 1}}
+						</td>
+						<td data-title="'社团名称'" header-class="text-left">
+							中央民族大学吉他协会
+						</td>
+						<td data-title="'凭证名称'" header-class="text-left">
+							黄焖鸡
+						</td>
+						<td data-title="'物品图片'" header-class="text-left">
+							<div class="logo" style="height:80px;width:80px">
+								<img ng-src="/static/images/example.png" style="height:100%;width:100%;" ng-click="viewImage(award.goods_info.image)">
+							</div>
+						</td>
+						<td data-title="'赞助商Logo'" header-class="text-left">
+							<div class="logo" style="height:80px;width:80px">
+								<img ng-src="/static/images/example.png" style="height:100%;width:100%;" ng-click="viewImage(award.goods_info.image)">
+							</div>
+						</td>
+						<td data-title="'赞助商名称'" header-class="text-left">
+							658938241@qq.com
+						</td>
+						<td data-title="'凭证数量'" header-class="text-left">
+							100
+						</td>
+						<td data-title="'操作'" header-class="text-left">
+							<label type="button" class="btn btn-info btn-checkbox" ng-click="detail_coupon(coupon.id)">
+								<span>
+									使用详情 <i class="fa fa-list"></i>
+								</span>
+							</label>
+							<label type="button" class="btn btn-danger btn-checkbox" ng-click="delete_coupon(coupon.id)">
+								<span>
+									删除 <i class="fa fa-trash-o"></i>
+								</span>
+							</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

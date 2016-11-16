@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>抽奖</title>
+  <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/bower_components/animate.css/animate.css">
+  <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.css">
+  <link rel="stylesheet" href="/static/styles/draw.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body class="container">
+  <div class="header">
+    <div class="row">
+      <div class="col-md-2" style="text-align: center;">
+        <!--显示奖项的名称范围-->
+        <div class="dropdown">
+          <!-- <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-expanded="true"> -->
+          <div id="lotterieName"></div>
+          <!-- </button> -->
+        </div>
+      </div>
+      <!--显示抽奖结果列表-->
+      <div class="col-md-10">
+        <div class="notice" id="lotterieNotice"></div>
+      </div>
+    </div>
+  </div>
+  <div class="warp">
+    <div id="circle" class="circle">
+      <div class="btn"><a class="start" href="#"><span><font size="5">点击开始进行抽奖</font></span></a></div>
+      <div class="items"></div>
+      <div class="done"></div>
+      <div class="backdrop show"></div>
+    </div>
+  </div>
+
+  <script id="circleTpl" type="text/x-handlebars-template" charset="utf-8">
+    {% raw %}
+    <ul>
+      {{#each items}}
+      <li><img src="{{avatar}}"></li>
+      {{/each}}
+    </ul>
+    {% endraw %}
+  </script>
+
+  <script id="doneTpl" type="text/x-handlebars-template" charset="utf-8">
+    {% raw %}
+    <img src="{{avatar}}">
+    <div>
+      <p>No.{{number}}<br/>{{name}}</p>
+    </div>
+    {% endraw %}
+  </script>
+
+  <div id="loader" class="pageload pageload-loading pageload-show"></div>
+  <!-- <div class="footer clearfix">
+    <span class="iweixiao"></span>
+  </div> -->
+  <div class="company_logo">
+    <img style="width: 100%;" src="/static/images/iWeixiao_font_white.png">
+  </div>
+  <div class="footer clearfix">
+    <div id="draw_btn" class="draw_btn">
+      <a class="start" href="#">
+        <span>开始</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+        </div>
+        <div class="modal-body">
+          <center>
+            <br/><p id="message"></p><br/>
+          </center>
+        </div>
+        <div class="modal-footer">
+          <center>
+            <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="confirm_del" type="button" class="btn btn-info" data-dismiss="modal">确定删除</button>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /static/bower_components/jquery/dist/jquery.js -->
+  <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/static/bower_components/handlebars/handlebars.js"></script>
+  <script type="text/javascript" src="/static/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/static/scripts/draw.js"></script>
+</body>
+</html>

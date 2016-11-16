@@ -1,0 +1,36 @@
+<div ng-controller="MesBazUserCtrl">
+	<!--描述语言-->
+	<div class="row">
+		<center>
+			<p>
+				<h4>你和这位同学讨论过的所有校园集市内容都在这里</h4>
+			</p>
+		</center>
+	</div>
+	<!--所有相关主题的首张图片分页列表-->
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend>
+					<h5>讨论过的宝贝</h5>
+				</legend>
+				<div class="row">
+					<div class="col-sm-6" ng-repeat="topic in topics">
+						<center>
+							<img class="img-thumbnail" title="点击查看原图" style="width: 300px;height: 200px;" ng-src="{{topic.images[0] || '/static/images/placeholder.png'}}" ng-click="imageView(topic.images[0])"><br/>
+							<p style="margin: 10px 0px 15px 0px;">
+								<a ui-sref="message.bazaar_topic({ id: topic.id, user_id: bazaar_user_id })">
+									<font title="{{topic.topic}}" ng-bind="topic.topic | substr: 21 : 20"></font>
+								</a>
+							</p>
+						</center>
+					</div>
+				</div>
+				<div class="row">
+					<br/>
+					<button class="btn btn-default center-block more-btn" ng-click="loadMoreTopic()" ng-disabled="more_topic">{{load_topic_content}}</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

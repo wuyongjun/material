@@ -1,0 +1,28 @@
+<div class="col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1"
+    ng-controller="CertificateCouponsDetailsCtrl">
+    <div class="certificate-button-bar">
+      <div class="btn-group">
+        <a class="btn btn-default" ui-sref="certificate_coupons"><i class="fa fa-reply"></i> 返回</a>
+      </div>
+    </div>
+  <table ng-table="tableParams"
+      class="table table-striped table-responsive coupons">
+    <tbody>
+      <tr ng-repeat="user in $data">
+        <td  data-title="'编号'" header-class="text-left">
+          <!-- {{user.number}} -->{{$index + 1}}
+        </td>
+        <td  data-title="'昵称'" header-class="text-left">
+          {{user.user.name}}
+        </td>
+        <td  data-title="'状态'" header-class="text-left">
+          {{user.status|couponStatus}}
+        </td>
+        <td data-title="''" class="text-right">
+          <a ng-click="privateLetter(user.user.id)" class=" btn  btn-default">私信</a>
+          <a ng-click="takeback(user.id)" class="btn  btn-default">收回电子礼劵</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

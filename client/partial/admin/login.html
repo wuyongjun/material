@@ -1,0 +1,29 @@
+<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1" ng-controller="LoginCtrl">
+  <form method="POST" ng-submit="submit()"
+    class="form-horizontal login-form" role="form"
+    name="loginForm">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">管理员登录</div>
+    </div>
+    <div class="panel-body">
+      <form-input data-title="'邮箱'" data-name="'email'">
+        <input name="email" id="email" ng-model="user.email" 
+            class="form-control" type="text"
+            required>
+      </form-input>
+      <form-input data-title="'密码'" data-name="'password'">
+        <input name="password" id="password" ng-model="user.password" 
+            class="form-control" type="password"
+            required>
+      </form-input>
+
+      <form-input data-title="''" data-name="''">
+        <input class="btn btn-primary" id="submit" name="submit"
+            type="submit" value="登录">
+        <a class="btn" ng-click="resetPassword()">找回密码</a>
+      </form-input>
+    </div>
+  </div>
+  </form>
+</div>

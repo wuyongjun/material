@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>i微校-校园集市</title>
+  <link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles/community-discover-sale-sharing.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body class="container">
+  <div id='ios_popweixin'>
+    <div class='tip top2bottom'>
+      <img align="center" src='/static/images/safari.png' style="width:100%;height:100%" />
+    </div>
+  </div>
+  <div id='android_popweixin'>
+    <div class='tip top2bottom'>
+      <img align="center" src='/static/images/android_note.png' style="width:100%;height:100%"/>
+    </div>
+  </div>
+  {% if topic.image %}
+  <div class="banner">
+    <ul>
+      {% for im in topic.image %}
+        <li><img align="center" src="{{ im }}"></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  <div class="content">
+    <h2>{{ topic.topic }}</h2><br/>
+    <h4>
+      {% if topic.price %}
+      <font>￥{{ topic.price }}</font>
+      {% endif %}
+      <font id="browsers"><i class="fa fa-eye"></i> 浏览{{ topic.browsers }}次</font>
+    </h4><br/>
+    <hr><br/>
+    <div>
+      <div id="community_logo">
+        <img id="logo_img" src="/images/{{ topic.community_obj.logo }}">
+      </div>
+      <div id="community_name_icon">
+        <div id="name_icon">
+          <img id="community_icon" src="/static/images/community_icon.png">
+          <font id="community_name">{{ topic.community_obj.name }}</font>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div id="community_content">
+      {{ topic.content }}
+    </div>
+  </div>
+  <a href="#" class="btn footer-btn">
+    来 i 微校感受新型校园生活~
+  </a>
+  <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.unslider/src/unslider.js"></script>
+  <script type="text/javascript" src="/static/scripts/community-discover-sale-sharing.js"></script>
+</body>
+</html>

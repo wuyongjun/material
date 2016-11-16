@@ -1,0 +1,52 @@
+<div>
+	<div class="tabs-left">
+		<ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+			<li d-sref="'create_bazaar'">
+				<a ui-sref="create_bazaar">新建市集内容</a>
+			</li>
+		</ul>
+	</div>
+	<div ui-view>
+		<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9">
+			<div class="activity-button-bar">
+				<div class="btn-group">
+					<a class="btn btn-default" ui-sref="activity.bazaar({ id: user.managed_community.id, currentPage:1, page: 1 })">
+						<i class="fa fa-reply"></i> 返回
+					</a>
+				</div>
+			</div><br/>
+			<div class="row">
+				<div class="col-sm-6">
+					<center>
+						<button ui-sref="sale_bazaar({ id: '-1' })" class="btn btn-default btn-lg" style="width: 70%;height: 60px;">
+							转让
+						</button>
+					</center>
+				</div>
+				<div class="col-sm-6">
+					<center>
+						<button ui-sref="purchase_bazaar({ id: '-1' })" class="btn btn-default btn-lg" style="width: 70%;height: 60px;">
+							求购
+						</button>
+					</center>
+				</div>
+			</div><br/><br/><br/>
+			<div class="row">
+				<div class="col-sm-6">
+					<center>
+						<button ui-sref="lost_bazaar({ id: '-1' })" class="btn btn-default btn-lg" style="width: 70%;height: 60px;">
+							丢东西了
+						</button>
+					</center>
+				</div>
+				<div class="col-sm-6">
+					<center>
+						<button ui-sref="pick_bazaar({ id: '-1' })" class="btn btn-default btn-lg" style="width: 70%;height: 60px;">
+							捡到东西了
+						</button>
+					</center>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

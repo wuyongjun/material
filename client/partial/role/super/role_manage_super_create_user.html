@@ -1,0 +1,66 @@
+<div class="col-sm-12 col-md-12 col-lg-12" ng-controller="RoleManageSuperCtrl">
+	<form class="form-horizontal" name="userForm" ng-submit="create_user()" novalidate>
+		<div class="form-group">
+			<label class="col-md-1 control-label" style="padding-top:5px;" for="username">用户名称</label>
+			<div class="col-md-8">
+				<input type="text" class="form-control" id="username" ng-model="user.username" placeholder="请输入用户名称，长度至少为3的汉字或字母，或数字，下划线的组合" regexp="regexp_username" ng-blur>
+				<span class="" aria-hidden="true"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-1 control-label" style="padding-top:5px;" for="username">用户邮箱</label>
+			<div class="col-md-8">
+				<input type="email" class="form-control" id="username" ng-model="user.email" placeholder="请输入用户邮箱" regexp="regexp_email" ng-blur>
+				<span class="" aria-hidden="true"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-1 control-label" style="padding-top:5px;" for="password">初始密码</label>
+			<div class="col-md-8">
+				<input type="password" class="form-control" id="password" placeholder="请输入初始密码，长度为6-18的字母或数字，或字母，数字，下划线的组合" name="password" regexp="regexp_password" ng-model="user.password" ng-blur>
+				<span class="" aria-hidden="true"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-1 control-label" style="padding-top:5px;" for="confirmPassword">确认密码</label>
+			<div class="col-md-8">
+				<input type="password" class="form-control" id="confirmPassword" name="rePassword" password="user.password" ng-model="user.rePassword" regexp="regexp_password" placeholder="请再次输入初始密码，并确保两次密码输入一致" ng-repassword>
+				<span class="" aria-hidden="true"></span>
+			</div>
+		</div>
+		<!-- <div class="form-group">
+			<label class="col-md-1" style="padding-top:5px;" for="usernote">用户备注</label>
+			<div class="col-md-8">
+				<textarea id="usernote" style="width:100%;border-radius:4px;padding:10px;resize:none;" rows="6" placeholder="请输入备注信息"></textarea>
+			</div>
+		</div> class="form-control"-->
+		<div class="form-group">
+			<label class="col-md-1 control-label" style="padding-top:5px;" for="role">用户类型</label>
+			<div class="col-md-4">
+				<!-- <select2 style="width:100%;height:100%;" name="role_scope" id="role_scope" ng-model="user.role_scope" ng-options="r.name for r in roleArray">
+				</select2> -->
+				<select class="form-control" name="role_scope" id="role_scope" ng-model="user.role_scope" ng-options="r.name for r in roleArray">
+				</select>
+			</div>
+		</div>
+		<!-- <div class="form-group">
+			<label class="col-md-1 control-label" style="padding-top:5px;" for="scope">管理范围</label>
+			<div class="col-md-3">
+				<select name="province_scope" id="province_scope" class="form-control" ng-init="provinceArray[0].id" ng-model="user.province_scope_id" ng-options="r.id as r.city for r in provinceArray" ng-change="change_province()">
+				</select>
+			</div>
+			<div class="col-md-3">
+				<select class="form-control" name="city_scope" id="city_scope" ng-model="user.city_scope_id" ng-options="r.id as r.city for r in cityArray" ng-change="change_city()">
+				</select>
+			</div>
+			<div class="col-md-4">
+				<select2 style="width:100%;height:100%;" name="university_scope" id="university_scope" ng-model="user.university_scope_id" ng-options="r.id as r.name for r in universityArray" multiple>
+				</select2>
+			</div>
+		</div><br/> -->
+		<div class="col-md-8 col-md-offset-4">
+			<button type="submit" class="btn btn-info">新建</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="button" class="btn btn-info" ng-click="cancel()" ng-reset>取消</button>
+		</div>
+	</form>
+</div>

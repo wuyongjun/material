@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h4 class="modal-title">用户信息</h4>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" name="userForm" novalidate>
+    <div class="form-group">
+      <label class="col-md-2 control-label" style="padding-top:5px;" for="username">用户名称</label>
+      <div class="col-md-10">
+        <input type="text" class="form-control" id="username" ng-model="user_info.username" placeholder="请输入用户名称，长度至少为3的汉字或字母，或数字，下划线的组合" regexp="regexp_username" ng-blur>
+        <span class="" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 control-label" style="padding-top:5px;" for="mail">用户邮箱</label>
+      <div class="col-md-10">
+        <input type="email" class="form-control" id="mail" ng-model="user_info.mail" placeholder="请输入用户邮箱" regexp="regexp_email" ng-blur>
+        <span class="" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 control-label" style="padding-top:5px;" for="password">初始密码</label>
+      <div class="col-md-10">
+        <input type="password" class="form-control" id="password" placeholder="长度为6-18的字母或数字，或字母，数字，下划线的组合" name="password" regexp="regexp_password" ng-model="user_info.password" ng-blur>
+        <span class="" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 control-label" style="padding-top:5px;" for="confirmPassword">确认密码</label>
+      <div class="col-md-10">
+        <input type="password" class="form-control" id="confirmPassword" name="rePassword" password="user_info.password" ng-model="user_info.rePassword" regexp="regexp_password" placeholder="请确保两次密码输入一致" ng-repassword>
+        <span class="" aria-hidden="true"></span>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-info" data-dismiss="modal" ng-click="update_user();">修改</button>
+  <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">取消</span></button>
+</div>

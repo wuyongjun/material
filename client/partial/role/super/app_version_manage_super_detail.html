@@ -1,0 +1,65 @@
+<div ng-controller="VerManageDetCtrl">
+	<div class="row">
+		<div class="activity-button-bar">
+			<div class="btn-group">
+				<a class="btn btn-default" ui-sref="version_manage_super.app">
+					<i class="fa fa-reply"></i> 返回
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<form class="form-horizontal" name="versionForm">
+			<fieldset>
+				<legend>
+					<h4>发布新版本</h4>
+				</legend>
+				<!--版本号-->
+				<div class="row">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="version">版本号</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" name="version" ng-model="version.version" placeholder="要发布的版本号"
+								ng-pattern="/^[A-Za-z0-9_|\-|\.]+$/" required>
+							<div ng-show="versionForm.version.$invalid && versionForm.version.$dirty" class="form-error">
+								*请正确填写要发布的版本号，版本号可由字母、数字、“.”、“-”或“_”组成
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--URL地址-->
+				<div class="row">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="url">URL地址</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="text" name="url" ng-model="version.url" placeholder="可供下载的URL地址"
+								ng-pattern="/^https{0,1}:\/\//" required>
+							<div ng-show="versionForm.url.$invalid && versionForm.url.$dirty" class="form-error">
+								*请正确填写可供下载的URL地址
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--版本简介-->
+				<div class="row">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="describe">版本简介</label>
+						<div class="col-sm-8">
+							<textarea class="form-control" name="describe" placeholder="要发布的版本简介" rows="8"
+							ng-model="version.describe" required></textarea>
+							<div ng-show="versionForm.describe.$invalid && versionForm.describe.$dirty" class="form-error">
+								*请填写要发布的版本简介
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--发布按钮-->
+				<div class="row">
+					<center>
+						<button class="btn btn-default" ng-click="publish()" ng-disabled="versionForm.$invalid">发&nbsp;&nbsp;布</button>
+					</center>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>

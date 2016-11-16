@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+
+  -webkit-font-smoothing: antialiased;
+
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  font-family: STHeiti,'微软雅黑','Microsoft Yahei',Helmet,Freesans,sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+}
+.clear {
+  clear: both;
+}
+.split {
+  background: rgb(230, 230, 230); 
+  width: 100%;
+  height: 10px;
+}
+.shade {
+    position: absolute; 
+    width: 94%;
+}
+.title {
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    text-shadow: -5px -3px 5px grey;
+    display: table-cell;
+    vertical-align: middle;
+}
+.comm_info {
+  padding: 25px 15px 0px 15px;
+}
+.comm_logo {
+  float: left;
+  width: 25%;
+}
+.logo_img {
+  width: 86.25px;
+  height: 86.25px;
+}
+.comm_title_btn {
+  float: left;
+  width: 70%;
+  padding-left: 35px;
+}
+.comm_title {
+  height: 50px;
+  color: white;
+  font-size: 16px;
+  display: table;
+  /*text-shadow: 0px 0px 3px grey;*/
+}
+.dep_btn {
+  color: white;
+  padding-top: 3%;
+}
+.dep_btn_content {
+  /*width: 60px;
+  height: 30px;*/
+  border: 1px solid;
+  border-radius: 6px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px 10px 5px 10px;
+  font-size: 10px;
+  /*box-shadow: 0px 0px 3px grey;
+  text-shadow: 0px 0px 3px grey;*/
+}
+.dep_content {
+  float: left;
+  width: 100%;
+  /*height: 100px;*/
+  color: white;
+  display: table;
+  padding: 10px 0px 10px 0px;
+  font-size: 13px;
+  /*text-shadow: 0px 0px 3px grey;*/
+}
+.up_btn {
+  text-align: center;
+}
+.up_btn_img {
+  width: 15px;
+}
+.act_row {
+  width: 100%;
+  padding: 0 3% 0 3%;
+}
+.comm_act_title {
+  width: 100%;
+  padding: 5px 10px 5px 10px;
+}
+.comm_act_subject {
+  position: absolute;
+  width: 90%;
+  height: 40px;
+  margin-top: 39%;
+  margin-left: 5%;
+  display: table;
+}
+.act_split {
+  background: white;
+  width: 100%;
+  height: 10px;
+}
+.loading {
+  display: none;
+  text-align: center;
+  padding: 10px 0px 10px 0px;
+}
+.load_img {
+  width: 13px;
+}
+.finish {
+  text-align: center;
+  padding: 10px 0px 10px 0px;
+}
+.comm_shade {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 0px;
+  /*opacity: 0.7;*/
+}

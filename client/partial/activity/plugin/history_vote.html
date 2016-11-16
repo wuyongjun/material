@@ -1,0 +1,37 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9"
+    ng-controller="HistoryVoteCtrl">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <a class="btn btn-default" ng-click="returnToVote()">
+        <i class="fa fa-reply"></i> 返回</a>
+    </div>
+  </div>
+  <div class="panel panel-default" ng-repeat="vote in historyVote">
+    <div class="panel-heading">
+      <div class="panel-title">投票编号:{{$index + 1}}</div>
+    </div>
+
+    <div class="panel-body">
+	  	<dl class="dl-horizontal">
+        <dt>投票标题</dt>
+        <dd style="margin-bottom:5px;">{{vote.title}}</dd>
+	      <dt>投票开始时间</dt>
+	      <dd style="margin-bottom:5px;">{{vote.vote_start_time | date: 'yyyy-MM-dd HH:mm'}}</dd>
+	      <dt>投票结束时间</dt>
+	      <dd style="margin-bottom:5px;">{{vote.vote_end_time | date: 'yyyy-MM-dd HH:mm'}}</dd>
+	      <dt>投票范围</dt>
+	      <dd style="margin-bottom:5px;">{{vote.vote_scope.name}}</dd>
+	      <dt>投票说明</dt>
+	      <dd>
+          <textarea class="form-control" id="content"
+            ng-model="vote.vote_description"
+            name="vote_description" rows="3" autocomplete="off" readonly="readonly">
+          </textarea>
+	      </dd>
+	    </dl>
+    </div>
+    <button class="btn btn-primary form-control form-submit-button"
+        type="button" ng-click="candidateList(vote.id)"><i class="fa fa-share"> 查看候选项</i> 
+    </button>
+  </div>
+</div>

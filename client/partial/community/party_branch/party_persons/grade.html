@@ -1,0 +1,61 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="GradeCtrl">
+	<div class="row">
+		<div class="col-md-6">
+			<a class="btn btn-default" ui-sref="party_info.party_persons"><i class="fa fa-reply"></i> 返回</a>
+		</div>
+		<div class="col-md-6">
+			<button class="btn btn-info pull-right" ng-click="createGrade()"><i class="fa fa-plus" aria-hidden="true"></i> 新建学年</button>
+		</div>
+	</div><br/>
+	<div class="row">
+		<table ng-table="tableParams" class="table table-striped table-responsive">
+			<tbody>
+				<tr ng-repeat="grade in $data">
+					<td data-title="'编号'" header-class="text-left">
+						<font ng-bind="$index + 1"></font>
+					</td>
+					<td data-title="'学年名称'" header-class="text-left">
+						<font ng-bind="grade.name"></font>
+					</td>
+					<td data-title="'当前人数'" header-class="text-left">
+						<font ng-bind="grade.num"></font>(<a ng-click="members(grade)">查看成员</a>)
+					</td>
+					<td data-title="'创建时间'" header-class="text-left">
+						<font ng-bind="grade.create_time | date: 'yyyy-MM-dd HH:mm'"></font>
+					</td>
+					<td data-title="'操作'">
+						<center>
+							<label type="button" class="btn btn-info btn-checkbox" ng-click="edit(grade)">
+								<span>
+									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 编&nbsp;辑
+								</span>
+							</label>&nbsp;
+							<label type="button" class="btn btn-danger btn-checkbox" ng-click="delete(grade.id)">
+								<span>
+									<i class="fa fa-trash-o" aria-hidden="true"></i> 删&nbsp;除
+								</span>
+							</label>
+						</center>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

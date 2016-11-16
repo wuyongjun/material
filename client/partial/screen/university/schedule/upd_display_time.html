@@ -1,0 +1,18 @@
+<div class="modal-header">
+	<h3 class="modal-title"><font ng-bind="title"></font></h3>
+</div>
+<div class="modal-body">
+	<form method="POST" ng-submit="save()" class="form-horizontal" role="form"
+		name="timeForm">
+		<form-input data-title="'开始播放时间'" data-name="'start_time'">
+			<datetimepicker datetime="screen.approved_start_time" starttime="screen.current"></datetimepicker>
+		</form-input>
+		<form-input data-title="'结束播放时间'" data-name="'end_time'">
+			<datetimepicker datetime="screen.approved_end_time" starttime="screen.approved_start_time"></datetimepicker>
+		</form-input>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-info" ng-click="ok()">确定</button>
+	<button class="btn btn-warning" ng-click="cancel()">取消</button>
+</div>

@@ -1,0 +1,110 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background-image: url(../images/draw-bg.png);
+  background-position: center;
+  background-size: cover;
+  /*background-repeat: no-repeat;*/
+}
+.draw-winner {
+  position: absolute;
+  top: 16%;
+  /*bottom: 10%;*/
+  right: 4%;
+  left: 4%;
+  padding: 60px;
+  min-height: 500px;
+  background-color: rgba(255,255,255,.8);
+}
+
+.draw-winner .title {
+  display: block;
+  line-height: 40px;
+  font-size: 35px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.draw-winner .photo {
+  display: block;
+  background-color: #999;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.draw-winner .winner {
+  display: block;
+  line-height: 40px;
+  font-size: 35px;
+  margin-top: 6px;
+  margin-left: 20px;
+}
+/*.draw-winner .winner-item {
+  margin-bottom: 35px;
+}
+
+.draw-winner .winner-item .title  {
+  display: block;
+  float: left;
+  width: 30%;
+  line-height: 40px;
+  font-size: 30px;
+  //padding-left: 150px;
+  //padding-right: 150px;
+  margin-top: 6px;
+}
+
+.draw-winner .winner-item .notice {
+  position: absolute;
+  right: 20px;
+  left: 0;
+}
+
+.draw-winner .winner-item .notice .item {
+  display: block;
+  float: left;
+  width: 40%;
+  height: 100%;
+  padding: 6px 12px;
+  font-size: 30px;
+  padding-left: 150px;
+}
+
+.draw-winner .winner-item .notice .item .avatar {
+  float: left;
+  display: block;
+  background-color: #999;
+  margin-right: 8px;
+  margin-top: -3px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.draw-winner .winner-item .notice .item .avatar img {
+  width: 100%;
+  height: 100%;
+}
+
+.draw-winner .winner-item .notice .item span {
+  display: block;
+  float: left;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: '';
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}*/

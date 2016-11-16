@@ -1,0 +1,30 @@
+<form class="form-horizontal">
+	<div class="modal-header">
+		<h4 class="modal-title">身份变更</h4>
+	</div>
+	<div class="modal-body">
+		<div class="col-md-12">
+			<form-input data-title="'姓名'" data-name="'name'">
+				<input type="text" class="form-control" ng-model="person.user_obj.name" readonly="readonly" />
+			</form-input>
+			<form-input data-title="'身份'" data-name="'identity'">
+				<select name="identity" id="identity" class="form-control" ng-model="changeObj.status" ng-options="r.id as r.name for r in identityArray"></select>
+			</form-input>
+			<form-input data-title="'职务'" data-name="'duty'">
+				<select name="duty" id="duty" class="form-control" ng-model="changeObj.duty" ng-options="r.id as r.name for r in dutyArray"></select>
+			</form-input>
+			<form-input data-title="'学年'" data-name="'grade'">
+				<select name="grade" id="grade" class="form-control" ng-model="changeObj.year" ng-options="r.id as r.name for r in gradeArray"></select>
+			</form-input>
+			<form-input data-title="'分组'" data-name="'group'">
+				<select name="group" id="group" class="form-control" ng-model="changeObj.group" ng-options="r.id as r.name for r in groupArray"></select>
+			</form-input>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-info" ng-click="ok()">
+			确定
+		</button>
+		<button class="btn btn-default" data-dismiss="modal" ng-click="cancel()">取消</button>
+	</div>
+</form>

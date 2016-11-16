@@ -1,0 +1,87 @@
+<div id="welcome" ng-controller="WelcomeCtrl">
+  <div class="container" ng-show="user.role.name === 'ADMIN' || user.role.name === 'UN_ADMIN'">
+    <div class="row" ng-show="user.role.name === 'ADMIN'">
+      <div class="col-md-12">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="panel-title">
+              系统消息
+              <a class="pull-right" ui-sref="sysMesAndInfo({ id: -1 })">查看更多&nbsp;&nbsp;<i class="fa fa-angle-right"></i></a>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="list-group">
+              <a ui-sref="sysMesAndInfo({ id: message.id })" class="list-group-item" ng-repeat="message in system_messages">
+                <span class="badge">new</span>
+                <font ng-bind="message.title"></font>&nbsp;&nbsp;<font ng-bind="message.create_time | date: 'yyyy-MM-dd HH:mm'"></font>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="line"/>
+    <div class="lower">
+      <!-- <div class="icon-text">
+        <img src="/static/images/icon_1.png" class="icon">
+        <p>校园最新活动一手掌握</p>
+      </div>
+      <div class="icon-text">
+        <img src="/static/images/icon_2.png" class="icon">
+        <p>迅速扩展你在校园社交圈</p>
+      </div>
+      <div class="icon-text">
+        <img src="/static/images/icon_3.png" class="icon">
+        <p>参与活动内容实时讨论</p>
+      </div> -->
+      
+      <div class="row" style="text-align: center;">
+        <div class="col-md-3 col-sm-3">
+          <div ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'">
+            <font class="stat-font" ng-bind="stat_data_admin.activities_count"></font>
+            <p>本社团活动总数</p>
+          </div>
+          <div ng-show="user.role.name === 'ADMIN' && user.user_type === 'POLITICAL'">
+            <font class="stat-font">0</font>
+            <p>本党支部活动总数</p>
+          </div>
+          <div ng-show="user.role.name === 'UN_ADMIN'">
+            <font class="stat-font" ng-bind="stat_data_un.activities_count"></font>
+            <p>本校社团活动总数</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <div ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'">
+            <font class="stat-font" ng-bind="stat_data_admin.communities_count"></font>
+            <p>本校社团总数</p>
+          </div>
+          <div ng-show="user.role.name === 'ADMIN' && user.user_type === 'POLITICAL'">
+            <font class="stat-font">0</font>
+            <p>本校党支部总数</p>
+          </div>
+          <div ng-show="user.role.name === 'UN_ADMIN'">
+            <font class="stat-font" ng-bind="stat_data_un.communities_count"></font>
+            <p>本校社团总数</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          <div ng-show="user.role.name === 'ADMIN'">
+            <font class="stat-font" ng-bind="stat_data_admin.users_count"></font>
+            <p>本校手机用户总数</p>
+          </div>
+          
+          <div ng-show="user.role.name === 'UN_ADMIN'">
+            <font class="stat-font" ng-bind="stat_data_un.users_count"></font>
+            <p>本校手机用户总数</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer ng-show="user.role.name === 'ADMIN' || user.role.name === 'UN_ADMIN'">
+  <p>
+  Copyright © 2013&nbsp;BoringKiller Ltd.&nbsp;&nbsp; 京ICP备13042578号
+  <br>“北京博灵凯乐科技有限责任公司”版权所有
+  </p>
+  </footer>
+</div>

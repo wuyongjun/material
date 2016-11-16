@@ -1,0 +1,50 @@
+<!--社团分享页-->
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title id="web_title"></title>
+		<link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/static/styles/community.css">
+		<link rel="shortcut icon" type="text/css" href="/static/favicon.ico">
+	</head>
+	<body id="container">
+		<!--社团信息部分-->
+		<div id="comm_info" style="position: relative;z-index: 0;">
+			<!--logo 社团名称 简介按钮-->
+			<img class="comm_shade" src="/static/images/comm_share-gray.png">
+			<div class="comm_info">
+				<div id="comm_logo_title">
+					<div id="comm_logo" class="comm_logo">
+						<img id="logo_img" class="logo_img" src="">
+						<canvas id="logo_canvas" style="display: none;"></canvas>
+					</div>
+					<div id="comm_title_btn" class="comm_title_btn">
+						<div id="comm_title" class="comm_title"></div>
+						<div id="dep_btn" class="dep_btn">
+							<div class="dep_btn_content">简&nbsp;介</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<!--简介内容-->
+				<div id="br"><br/></div>
+				<div class="dep_content" style="display: none;">
+					<p id="dep_content"></p>
+					<div class="up_btn">
+						<img id="up_btn_img" class="up_btn_img" src="/static/images/activity-sharing-up.png">
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="split"></div>
+		<!--社团活动部分-->
+		<div id="comm_act_title" class="comm_act_title"></div>
+		<div id="comm_activty"></div>
+		<!-- <div class="split" style="position: fixed;bottom: 0px;"></div> -->
+	</body>
+	<script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="/static/scripts/community.js"></script>
+</html>

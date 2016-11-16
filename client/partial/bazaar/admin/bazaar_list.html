@@ -1,0 +1,129 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="BazaarListCtrl">
+	<div class="row">
+		<button class="btn btn-info pull-right" ng-click="createBazaar()">新建集市</button>
+	</div>
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend>
+					<h4>校园集市规则</h4>
+				</legend>
+				<p>
+					校园集市是社团发布买卖招领需求的地方，发布的信息统一展现在 i 微校的“发现”频道中，发布的内容有社团认证标示。
+				</p>
+				<p>
+					1.社团可以通过 i 微校后台的消息管理和参与发现的同学保持实时互动；
+				</p>
+				<p>
+					2.每个社团，当日发送集市消息数量限制为5条，不限市集内容的种类；
+				</p>
+				<p>
+					3.社团通过发布市集内容可以增加社团的活跃度，增强社团在 i 微校内的曝光度！
+				</p>
+			</fieldset>
+		</form>
+	</div><br/>
+	<div class="row">
+		<span class="label label-info" style="font-size: 100%;">
+			集市内容总数：&nbsp;<font ng-bind="bazaar_total"></font>
+		</span>
+	</div><br/>
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend><h4>筛选条件</h4></legend>
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-2" ng-repeat="type in bazaar_type">
+						<label type="button" class="btn btn-default btn-checkbox" style="margin-bottom:3px;width:100px;"
+							ng-click="choseBazaarType(type)" chosen-status="type.chosen" chosen>
+							<span>
+								<font ng-bind="type.name | substr: 4 : 3" title="{{type.name}}"></font>
+							</span>
+						</label>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<div class="row">
+		<br/>
+    <div class="table-container">
+		<table ng-table="tableParams" class="table table-striped table-responsive">
+			<tbody>
+				<tr ng-repeat="bazaar in $data">
+					<td data-title="'集市标题'" header-class="text-left">
+						<a ng-click="goToBazDetail(bazaar.id, bazaar.bazaar_type.alias, currentPage, act_page)"><font ng-bind="bazaar.topic"></font></a>
+					</td>
+					<td data-title="'集市种类'" header-class="text-left">
+						<span class="label label-info">
+							<font ng-bind="bazaar.bazaar_type.name"></font>
+						</span>
+					</td>
+					<td data-title="'发布时间'" header-class="text-left">
+						<font ng-bind="bazaar.publish_time | date: 'yyyy-MM-dd HH:mm'"></font>
+					</td>
+					<td data-title="'点击量'" header-class="text-left">
+						<font ng-bind="bazaar.browsers"></font>
+					</td>
+					<td data-title="'咨询数'" header-class="text-left">
+						<font ng-bind="bazaar.participators"></font>
+					</td>
+					<td data-title="'状态'" header-class="text-left">
+						<span ng-if="bazaar.publish == 0" class="label label-danger">未发布</span>
+						<span ng-if="bazaar.publish == 1" class="label label-success">已发布</span>
+					</td>
+					<td data-title="'操作'" header-class="text-left">
+						<label type="button" class="btn btn-default btn-checkbox" ng-if="!bazaar.publish"
+							ng-click="togglePubBaz(bazaar.id,bazaar.publish)" style="margin-bottom:3px;width:98px;">
+							<span>
+								发&nbsp;&nbsp;布 <i class="fa fa-volume-up"></i>
+							</span>
+						</label><font ng-if="!bazaar.publish"></font>
+						<label type="button" class="btn btn-default btn-checkbox" ng-if="bazaar.publish"
+							ng-click="togglePubBaz(bazaar.id,bazaar.publish)" style="margin-bottom:3px;">
+							<span>
+								取消发布 <i class="fa fa-ban"></i>
+							</span>
+						</label><font ng-if="bazaar.publish"></font>
+						<label type="button" class="btn btn-info btn-checkbox"
+							ng-click="goToBazDetail(bazaar.id, bazaar.bazaar_type.alias, currentPage, act_page)" style="width:86px;margin-bottom:3px;">
+							<span>
+								编&nbsp;&nbsp;辑&nbsp;&nbsp;<i class="fa fa-pencil-square-o"></i>
+							</span>
+						</label>&nbsp;
+						<label type="button" class="btn btn-danger btn-checkbox" ng-click="delBazaar(bazaar.id)" style="width:86px;margin-bottom:3px;">
+							<span>
+								删&nbsp;&nbsp;除&nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+							</span>
+						</label>&nbsp;
+						<div style="text-align: center;margin-top: 10px;">
+							<a ng-click="goToUnpubLog('bazaar', bazaar.id)">操作日志</a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+						<span class="sr-only">关闭</span>
+					</button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					<font ng-bind="confirm.message"></font>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirm();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

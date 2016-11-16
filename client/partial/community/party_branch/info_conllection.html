@@ -1,0 +1,158 @@
+<div ng-controller="infoConllectCtrl" class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3">
+	<div class="row">
+		<!--导航部分-->
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header"></div>
+			<div class="collapse navbar-collapse" id="navbar-item">
+				<ul class="nav navbar-nav">
+					<li class="active">
+						<a ui-sref="party_info.info_conllection">设置问题</a>
+					</li>
+					<li>
+						<a ui-sref="party_info.verify">待审核列表</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="row">
+		<form class="form-horizontal">
+			<div style="margin-left: 15px;">
+				<label type="button" class="btn btn-default btn-checkbox"
+            		ng-model="$parent.community.enable_register" btn-checkbox>
+					<span ng-if="$parent.community.enable_register" style="color:green">
+						已开启信息收集 <i class="fa fa-check"></i>
+					</span>
+					<span ng-if="!$parent.community.enable_register">
+						已关闭信息收集 <i class="fa fa-ban"></i>
+					</span>
+				</label>
+			</div><br/>
+			<style>
+				table {
+					border: 1px solid #dddddd;
+				}
+			</style>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">信息采集表</div>
+				</div>
+				<div class="panel-body">
+					<div class="basic-info">
+						<table class="table col-md-12">
+							<tbody>
+								<tr>
+									<td class="col-md-3" rowspan="5"><img ng-src="/static/images/default_icon_baoming.png" style="width:100%"></td>
+									<td class="col-md-2">真实姓名</td>
+									<td class="col-md-2"></td>
+									<td class="col-md-2">学校</td>
+									<td class="col-md-3"></td>
+								</tr>
+								<tr>
+									<td>性别</td>
+									<td></td>
+									<td>专业</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>电话</td>
+									<td></td>
+									<td>入学时间</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>身份</td>
+									<td></td>
+									<td>假如学年</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>所属小组</td>
+									<td></td>
+									<td>担任职务</td>
+									<td></td>
+								</tr>          
+							</tbody>
+						</table>
+					</div>
+					<div class="question-table">
+						<div ng-repeat="question in questions">
+							<div id="question{{$index+1}}" class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">问题 {{$index + 1}}
+										<a class="pull-right btn" ng-click="remove_question($index)">
+											<i class="fa fa-trash-o"></i>&nbsp;删除
+										</a>
+									</div>
+								</div>
+								<div class="panel-body">
+									<div class="form-group" ng-if="false">
+										<label class="col-sm-2 control-label">标题</label>
+										<div class="col-sm-10">
+											<input name="title" id="title" ng-model="question.title" 
+												class="form-control" type="text">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">问题</label>
+										<div class="col-sm-10">
+											<textarea class="form-control" id="question" ng-model="question.question"
+												name="question" rows="5" autocomplete="off">
+											</textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label">问题类型</label>
+										<div class="col-sm-10">
+											<select class="form-control" id="type" name="type" ng-model="question.type"
+												ng-options="type.id as type.name for type in types">
+											</select>
+										</div>
+									</div>
+
+									<div ng-if="question.type === 'SINGLE_CHOICE' || question.type === 'MULTI_CHOICE'">
+										<div class="form-group form-inline" ng-repeat="option in question.options track by $index">
+											<label class="col-sm-2 control-label">选项{{$index + 1}}</label>
+											<div class="col-sm-10">
+												<input name="option" id="option" ng-model="question.options[$index]"
+													type="text" class="form-control" style="width:85%;"/>
+												<button class="btn btn-danger" ng-click="removeOption($parent.$index, $index)">
+													<i class="glyphicon glyphicon-remove"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+
+									<button ng-if="question.type === 'SINGLE_CHOICE' || question.type === 'MULTI_CHOICE'" class="btn btn-default" 
+										ng-click="addOption($parent.$index)"><i class="fa fa-plus" aria-hidden="true"></i> 添加选项</button>
+									<!-- <button class="btn btn-danger pull-right" ng-click="removeQuestion($index)">删除</button> -->
+								</div>
+							</div>
+						</div>
+						<button class="btn btn-info" ng-click="addQuestion()"><i class="fa fa-plus" aria-hidden="true"></i> 添加问题</button>
+						<button class="btn btn-success pull-right" ng-click="submit()"><i class="fa fa-floppy-o" aria-hidden="true"></i> 保存</button>      
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- Confirm Modal -->
+		<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+            <!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+					</div>
+					<div class="modal-body">
+						{{confirm.message}}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

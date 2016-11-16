@@ -1,0 +1,197 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="ActSummaryCtrl">
+	<div class="row">
+		<div class="col-md-12">
+			<a class="btn btn-default" ui-sref="party_info.activity({ personId: personId })"><i class="fa fa-reply"></i> 返回</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<center>
+				<h3><font ng-bind="activity.name"></font>总结</h3>
+			</center>
+		</div>
+	</div><br/>
+	<!--活动统计信息-->
+	<div class="row">
+		<div class="col-md-12">
+			<form class="panel panel-default form-horizontal" my-collapse>
+				<span class="btn pull-right">
+					<i class="fa fa-chevron-down"></i>&nbsp;展开
+				</span>
+				<div class="panel-heading">
+					<div class="panel-title">
+						基本信息
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">活动点击数</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="browse_num"></font>
+								</div> 
+							</div>
+						</div>
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">活动收藏数</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="activity.fav_count"></font>
+								</div> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!--活动插件信息-->
+	<div class="row">
+		<div class="col-md-12" ng-repeat="plugin in activity.plugins">
+			<form class="panel panel-default form-horizontal" my-collapse>
+				<span class="btn pull-right">
+					<i class="fa fa-chevron-down"></i>&nbsp;展开
+				</span>
+				<div class="panel-heading">
+					<div class="panel-title">
+						<font ng-bind="plugin.name"></font>
+					</div>
+				</div>
+				<div class="panel-body">
+					<div class="row" ng-if="plugin.id === 'political_sign_in' && signIn">
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">签到总人数</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="signIn.political_sign_obj.sign_num"></font>
+								</div> 
+							</div>
+						</div>
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">Ta的签到号</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="signIn.index"></font>
+								</div> 
+							</div>
+						</div>
+					</div>
+					<!-- <div class="row" ng-if="plugin.id === 'sign_offline'">
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">签到总人数</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="plugin.preview.sign_in_sum"></font>
+								</div> 
+							</div>
+						</div>
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">Ta的签到号</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="plugin.preview.sign_in_number"></font>
+								</div> 
+							</div>
+						</div>
+					</div> -->
+					<!-- <div class="row" ng-if="plugin.id === 'discuss'">
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">参与讨论总人数</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="plugin.preview.person_sum"></font>
+								</div> 
+							</div>
+						</div>
+						<div class="col-md-3 text-center">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<div class="panel-title">Ta发布的讨论数</div>
+								</div>
+								<div class="panel-body">
+									<font ng-bind="plugin.preview.sum"></font>
+								</div> 
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>添加文字总结</h3>
+		</div>
+	</div><br/>
+	<!--文字总结部分-->
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-horizontal" role="form" name="summaryForm">
+				<div class="form-group">
+					<label for="labels" class="col-sm-2 control-label">选择标签：</label>
+					<div class="col-sm-10">
+						<fieldset>
+							<legend>
+								<h5>标签库</h5>
+							</legend>
+							<div class="row">
+								<!-- <div class="col-md-2"></div> -->
+								<div class="col-md-2" ng-repeat="label in labels">
+									<label type="button" class="btn btn-default btn-checkbox" style="margin-bottom:3px;width:100px;"
+										ng-click="choseLabel(label)" chosen-status="label.chosen" chosen>
+										<span>
+											<font ng-bind="label.name | substr: 4 : 3" title="{{label.name}}"></font>
+										</span>
+									</label>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4">
+						<div style="padding: 8px;margin-left: 35px;">
+							如果没有，可以新建一个标签：
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<button class="btn btn-info" ng-click="addLabel()">添加标签</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<p style="padding: 8px;margin-left: 35px;">
+							<small>ps：添加过的标签下次可以直接选择使用，标签库最多支持500个自定义标签</small>
+						</p>
+					</div>
+				</div><br/>
+				<div class="form-group">
+					<label for="labels" class="col-sm-2 control-label">历程正文：</label>
+					<div class="col-sm-10">
+						<ng-simditor content="summary.content"></ng-simditor>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-4 col-sm-offset-4">
+						<button class="btn btn-info btn-block" ng-click="saveSummary()">发&nbsp;&nbsp;布</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div><br/>
+</div>

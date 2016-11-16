@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>校园生活尽在 i微校</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="/static/styles/bootstrap.min.css">
+  <link href="/static/styles/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/static/styles/weixin_activity.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body>
+    <div id='ios_popweixin'>
+        <div class='tip top2bottom'>
+            <img align="center" style="width:100%;height:100%;" src='/static/images/safari.png'/>
+        </div>
+    </div>
+    <div id='android_popweixin'>
+        <div class='tip top2bottom'>
+            <img align="center" style="width:100%;height:100%;" src='/static/images/android_note.png'/>
+        </div>
+    </div>
+    <div class="activity-container">
+        <div class="activity-card">
+            <div class="post_div">
+                <img class="shade" src="/static/images/activity-sharing-gray.png">
+                <img class="cover" src="/images/{{ activity.cover }}" />
+                <h4 class="title">{{ activity.subject }}</h4>
+            </div>
+            <div class="activity">
+                <br/>
+                <div class="activity-content" style="font-size: 13px;">
+                    <img class="logo_time" src="/static/images/activity-shring-time.png">&nbsp;
+                    <font color="#666">{{ start_time}} - {{ end_time }}</font>
+                </div>
+                <div class="activity-content" style="font-size: 13px;">
+                    <img class="logo_loc" src="/static/images/activity-sharing-loc.png">&nbsp;
+                    <font color="#666">{{ activity.location }}</font>
+                </div>
+                <br/>
+            </div>
+            <div class="split"></div>
+            <div class="activity">
+                <br/>
+                <div class="activity-title">
+                    <img class="logo" src="/static/images/activity-sharing-group.png" style="margin-top: 2px;">&nbsp;
+                    <font color="#3b78f2">{{ activity.host.name }}</font>
+                </div>
+                <br/>
+            </div>
+            <div class="split"></div>
+            <div class="activity" style="margin-top: 10px;">
+                <div class="activity-title">
+                    <img class="logo" src="/static/images/activity_detail.png">&nbsp;
+                    <font color="#333">活动详情</font>
+                </div>
+                <div class="activity-content" style="margin-left: 32px;">
+                    {{ activity.content | safe }}
+                </div>
+                <br/>
+            </div>
+            <div class="split"></div>
+            {% for plugin in plugins["data"] %}
+                {% if plugin["id"] == "timeline" %}
+                    <div class="activity">
+                        <div class="activity-title" style="padding: 10px 0px 10px 0px;">
+                            <img class="logo" src="/static/images/timeline_new.png" style="margin-top: 2px;">&nbsp;
+                            <font color="#333">爆料墙</font>
+                            <img src="/static/images/activity-HOT.png" style="width: 35px; margin-bottom: 10px;">
+                        </div>
+                    </div>
+                    {% if timeline_list %}
+                        <div class="tl_split_top"></div>
+                        <div class="activity" style="padding: 5px 0px 0px 20px;">
+                            <div class="activity-content">
+                            {% if timeline_list[0] %}
+                                {% if timeline_list[0]["images"] %}
+                                    <div class="timeline_info">
+                                        <div>
+                                            <img class="tl_ps_logo" src="/images/{{ timeline_list[0]['icon'] }}">
+                                            <font class="tl_ps_name">{{ timeline_list[0]['nickname'] }}</font>
+                                        </div>
+                                        <div class="tl_ps_content">
+                                            {{ timeline_list[0]['content']|truncate(36, true) }}
+                                        </div>
+                                    </div>
+                                    <div class="tl_image">
+                                        <img src="/images/{{ timeline_list[0]['images'][0] }}">
+                                    </div>
+                                    <div class="clear"></div>
+                                {% else %}
+                                    <div class="tl_info_nopic">
+                                        <div>
+                                            <img class="tl_ps_logo" src="/images/{{ timeline_list[0]['icon'] }}">
+                                            <font class="tl_ps_name">{{ timeline_list[0]['nickname'] }}</font>    
+                                        </div>
+                                        <div class="tl_ps_content">
+                                            {{ timeline_list[0]['content']|truncate(36, true) }}
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                {% endif %}
+                            {% endif %}
+                            {% if timeline_list[1] %}
+                                <div class="tl_split"></div>
+                                {% if timeline_list[1]["images"] %}
+                                    <div class="timeline_info">
+                                        <div>
+                                            <img class="tl_ps_logo" src="/images/{{ timeline_list[1]['icon'] }}">
+                                            <font class="tl_ps_name">{{ timeline_list[1]['nickname'] }}</font>
+                                        </div>
+                                        <div class="tl_ps_content">
+                                            {{ timeline_list[1]['content']|truncate(36, true) }}
+                                        </div>
+                                    </div>
+                                    <div class="tl_image">
+                                        <img src="/images/{{ timeline_list[1]['images'][0] }}">
+                                    </div>
+                                    <div class="clear"></div>
+                                {% else %}
+                                    <div class="tl_info_nopic">
+                                        <div>
+                                            <img class="tl_ps_logo" src="/images/{{ timeline_list[1]['icon'] }}">
+                                            <font class="tl_ps_name">{{ timeline_list[1]['nickname'] }}</font>    
+                                        </div>
+                                        <div class="tl_ps_content">
+                                            {{ timeline_list[1]['content']|truncate(36, true) }}
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                {% endif %}
+                            {% endif %}
+                            {% if timeline_list[2] %}
+                                <div class="tl_split"></div>
+                                {% if timeline_list[2]["images"] %}
+                                    <div class="timeline_info">
+                                        <div>
+                                            <img class="tl_ps_logo" src="/images/{{ timeline_list[2]['icon'] }}">
+                                            <font class="tl_ps_name">{{ timeline_list[2]['nickname'] }}</font>
+                                        </div>
+                                        <div class="tl_ps_content">
+                                            {{ timeline_list[2]['content']|truncate(36, true) }}
+                                        </div>
+                                    </div>
+                                    <div class="tl_image">
+                                        <img src="/images/{{ timeline_list[2]['images'][0] }}">
+                                    </div>
+                                    <div class="clear"></div>
+                                {% else %}
+                                    <div class="tl_info_nopic">
+                                        <div>
+                                            <img class="tl_ps_logo" src="/images/{{ timeline_list[2]['icon'] }}">
+                                            <font class="tl_ps_name">{{ timeline_list[2]['nickname'] }}</font>    
+                                        </div>
+                                        <div class="tl_ps_content">
+                                            {{ timeline_list[2]['content']|truncate(36, true) }}
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                {% endif %}
+                            {% endif %}
+                            </div>
+                        </div><br/>
+                    {% endif %}
+                    <div class="split"></div>
+                {% endif %}
+                {% if plugin["id"] == "lottery" and plugin["preview"] %}
+                    {% if lottery_goods["1"] %}
+                        <div class="activity" style="margin-top: 10px;">
+                            <div class="activity-title">
+                                <img class="logo" src="/static/images/lottery_new.png" style="margin-top: -4px;">&nbsp;
+                                <font color="#333">现场抽奖</font>
+                            </div>
+                            <div class="activity-content">
+                                <div class="lottery_fist">
+                                    <img class="award_img" src="/images/{{ lottery_goods['1'] }}">
+                                </div>
+                                {% if lottery_goods["2"] %}
+                                    <div class="lottery_second">
+                                        <img class="award_img" src="/images/{{ lottery_goods['2'] }}">
+                                    </div>
+                                {% endif %}
+                                {% if lottery_goods["3"] %}
+                                    <div class="lottery_third">
+                                        <img class="award_img" src="/images/{{ lottery_goods['3'] }}">
+                                    </div>
+                                {% endif %}
+                                <div class="clear"></div>
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="split"></div>
+                    {% else %}
+                        <div class="activity_lottery">
+                            <div class="activity-title" style="margin-top: 10px;">
+                                <img class="logo" src="/static/images/lottery_new.png" style="margin-top: -4px;">&nbsp;
+                                <font color="#333">现场抽奖</font>
+                            </div>
+                            <div class="activity-content">
+                                <center>
+                                {% if plugin["preview"]["state"] %}
+                                    {% if plugin["preview"]["state"] == 0 %}
+                                        <font style="color: #999; font-size: 24px; font-weight: bold;">即将开始</font>
+                                    {% endif %}
+                                    {% if plugin["preview"]["state"] == 1 %}
+                                        <font style="color: #999; font-size: 16px; font-weight: bold;">奖品筹备中......</font>
+                                    {% endif %}
+                                {% else %}
+                                    <font style="color: #999; font-size: 24px; font-weight: bold;">即将开始</font>
+                                {% endif %}
+                                </center>
+                            </div>
+                            <br/>
+                        </div>
+                        <div class="split"></div>
+                    {% endif %}
+                {% endif %}
+                {% if plugin["id"] == "ticket" and plugin["preview"] %}
+                    <div class="activity" style="margin-top: 10px;">
+                        <div class="activity-title">
+                            <img class="logo" src="/static/images/ticket_new.png" style="margin-top: -1px;">&nbsp;
+                            <font color="#333">电子票</font><font style="color: #666; font-size: 13px;">&nbsp;&nbsp;共&nbsp;{{ plugin.preview.total }}&nbsp;张</font>
+                        </div>
+                        <div class="activity-content">
+                            {% if ticket_dict["status"] == True %}
+                                <div style="float: left;padding-top: 8px;">
+                                    <center>
+                                        <font style="color: #666; font-size: 13px;">已抢票：</font>
+                                    </center>
+                                </div>
+                                {% for ticket in ticket_dict["users"] %}
+                                    <div class="ticket_person">
+                                        <img class="person_logo" src="/images/{{ ticket['user']['icon'] }}">
+                                    </div>
+                                    {% if loop.index == 6 %}
+                                        <div class="ticket_point">
+                                            <img style="width: 100%;" src="/static/images/activity-sharing-point.png">
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="clear"></div>
+                            {% else %}
+                                <center>
+                                    <br/><font style="color: #999; font-size: 16px; font-weight: bold;">抢票即将开始......</font>
+                                </center>
+                            {% endif %}
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="split"></div>
+                {% endif %}
+                {% if plugin["id"] == "vote" and plugin["preview"] %}
+                    <div class="activity" style="margin-top: 10px;">
+                        <div class="activity-title">
+                            <img class="logo" src="/static/images/vote_new.png" style="margin-top: -4px;">&nbsp;
+                            <font color="#333">投票 | {{ plugin["preview"]["title"] }}</font>
+                        </div>
+                        <div class="activity-content">
+                            {% if plugin["preview"]["first"] and plugin["preview"]["first"]["img_path"] %}
+                                <div class="vote_left">
+                                    <img class="vote_img" src="{{ plugin.preview.first.img_path }}">
+                                </div>
+                                {% if plugin["preview"]["second"] and plugin["preview"]["second"]["img_path"] %}
+                                    <div class="vote_right">
+                                        <img class="vote_img" src="{{ plugin.preview.second.img_path }}">
+                                    </div>
+                                {% endif %}
+                                <div class="clear"></div> 
+                            {% else %}
+                                <center>
+                                    <br/><font style="color: #999; font-size: 16px; font-weight: bold;">敬请期待......</font>
+                                </center>
+                            {% endif %}
+                        </div>
+                        <div class="activity-content">
+                            {% if plugin["preview"]["first"] and plugin["preview"]["first"]["title"] %}
+                                <div class="vote_candi_left">
+                                  <font class="vote_candi_name">{{ plugin.preview.first.title }}</font>                         
+                                </div>
+                            {% endif %}
+                            {% if plugin["preview"]["second"] and plugin["preview"]["second"]["title"] %}
+                                <div class="vote_candi_right">
+                                  <font class="vote_candi_name">{{ plugin.preview.second.title }}</font>                              
+                                </div>
+                            {% endif %}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="split"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="activity_download download_iwx">
+        <div class="act_con_download">
+            <img class="logo_iwx" src="/static/images/activity-sharing-logo.png">
+            <p style="margin-top: 25px;">
+                <font>去&nbsp;i&nbsp;微校，开启新型校园生活</font>
+                <img class="arrow_right" src="/static/images/activity-right.png">
+            </p>
+        </div>
+    </div>
+    <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/static/scripts/weixin_activity.js"></script>
+</body>
+</html>

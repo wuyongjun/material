@@ -1,0 +1,77 @@
+<!--col-sm-11 col-sm-offset-1 col-md-11 col-md-offset-1 col-lg-10-->
+<div class="col-sm-12 col-md-11 col-md-offset-1 col-lg-10" ng-controller="RegisterIwxCtrl">
+  <form method="POST" ng-submit="submit()" class="form-horizontal register-form" role="form" enctype="multipart/form-data" name="registerForm">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">管理员信息</div>
+      </div>
+      <div class="panel-body">
+        <form-input data-title="'注册邮箱'" data-name="'email'">
+          <input name="email" id="email" ng-model="user.email" class="form-control" type="email" required>
+          <!-- <div ng-show="registerForm.email.$invalid && !registerForm.email.$pristine" class="form-error">请正确输入邮箱地址</div> -->
+        </form-input>
+        <form-input data-title="'密码'" data-name="'password'">
+          <input name="password" id="password" ng-model="user.password" class="form-control" maxlength="6" type="text" required>
+          <!-- <div ng-show="registerForm.password.$invalid && !registerForm.password.$pristine" class="form-error">请输入密码</div> -->
+        </form-input>
+        <form-input data-title="'姓名'" data-name="'name'">
+          <input name="name" id="name" ng-model="user.name" class="form-control" type="text" required>
+        </form-input>
+        <form-input data-title="'手机号码'" data-name="'phone'">
+          <input name="phone" id="phone" ng-model="user.phone" class="form-control" type="text" required>
+        </form-input>
+        <form-input data-title="'证件照'" data-name="'photo_id'">
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+            <div>
+              <span class="btn btn-default btn-file">
+              <span class="fileinput-new">选择照片</span>
+              <span class="fileinput-exists">更换</span>
+              <input type="file" name="photo_id" data-file="user.photo_id" required></span>
+              <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">删除</a>
+            </div>
+          </div>
+        </form-input>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">社团信息</div>
+      </div>
+      <div class="panel-body">
+        <form-input data-title="'社团名称'" data-name="'community_name'">
+          <input name="community_name" id="community_name" ng-model="community.community_name" class="form-control" type="text" required>
+        </form-input>
+        <form-input data-title="'学校名称'" data-name="'university'">
+          <select class="form-control" id="university" name="university"
+              ng-model="community.university"
+              ng-options="university.id as university.name for university in universities">
+          </select>
+        </form-input>
+        <form-input data-title="'社团介绍'" data-name="'community_description'">
+          <textarea class="form-control" id="community_description"
+              ng-model="community.description"
+              name="community_description" rows="5" autocomplete="off">
+          </textarea>
+        </form-input>
+        <form-input data-title="'社团LOGO'" data-name="'logo'">
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+            <div>
+              <span class="btn btn-default btn-file">
+              <span class="fileinput-new">选择照片</span>
+              <span class="fileinput-exists">更换</span>
+              <input type="file" name="logo" data-file="community.logo" required></span>
+              <a href="#" class="btn btn-default fileinput-exists"
+                  data-dismiss="fileinput">删除</a>
+            </div>
+          </div>
+        </form-input>
+      </div>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary form-control"
+          >注册</button>
+    </div>
+  </form>
+</div>

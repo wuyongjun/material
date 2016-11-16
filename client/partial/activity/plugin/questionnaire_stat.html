@@ -1,0 +1,177 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col-xs-9 col-sm-9"
+	ng-controller="QueStatCtrl">
+	<div class="activity-button-bar">
+		<div class="btn-group">
+			<a class="btn btn-default" ui-sref="activity_item.questionnaire_plugin">
+				<i class="fa fa-reply"></i> 返回</a>&nbsp;&nbsp;
+		</div>
+	</div>
+	<!--问卷下拉列表-->
+	<form class="form-horizontal">
+		<div class="row">
+			<div class="col-sm-12">
+				<form-input data-title="'选择问卷'" data-name="'questionnaire'">
+					<select class="js-example-basic-hide-search col-sm-12" activity-id="activityId" my-select2></select>
+				</form-input>
+			</div>
+		</div>
+	</form>
+	<!--问卷参与总人数-->
+	<div class="row" ng-show="people">
+		<span class="label label-info">
+			参与总人数：<font ng-bind="number"></font>
+		</span>
+	</div><br/>
+	<!--问卷统计表格-->
+	<div class="row" ng-repeat="question in questions">
+		<!--单选题或多选题-->
+		<form class="panel panel-default form-horizontal" my-collapse>
+			<span class="btn pull-right">
+				<i class="fa fa-chevron-up"></i>&nbsp;收起
+			</span>
+			<div class="panel-heading">
+				<div class="panel-title">问题 {{$index + 1}}</div>
+			</div>
+			<div class="panel-body">
+				<form-input data-title="'问题类型'" data-name="'type'">
+					<select class="form-control" name="type">
+						<option>{{typeMap[question.rubric.rubric_type]}}</option>
+					</select>
+				</form-input>
+				<form-input data-title="'问题内容'" data-name="'content'">
+					<textarea class="form-control" name="content" rows="3" autocomplete="off"
+						readonly="readonly" ng-model="question.rubric.rubric"></textarea>
+				</form-input>
+				<!--基本选项答案-->
+				<div class="panel panel-info">
+					<!--单选题或多选题-->
+					<a class="btn pull-right" ng-if="question.rubric.rubric_type == 'RCQ' || question.rubric.rubric_type == 'MCQ'" 
+						ng-href="/api/questionnaires/rubric/{{question.rubric.id}}/normal/{{questionnaire.title + '-问题' + ($index + 1) + '-选项答案'}}.csv?access_token={{auth_token}}">
+						<i class="fa fa-save"></i> 导出电子版
+					</a>
+					<!--问答题或图片题-->
+					<a class="btn pull-right" ng-if="question.rubric.rubric_type == 'SAQ' || question.rubric.rubric_type == 'PUP'"
+						ng-href="/api/questionnaires/rubric/{{question.rubric.id}}/normal/{{questionnaire.title + '-问题' + ($index + 1) + '-答案'}}.csv?access_token={{auth_token}}">
+						<i class="fa fa-save"></i> 导出全部答案电子版
+					</a>
+					<div class="panel-heading">
+						<!--单选题或多选题-->
+						<div class="panel-title" ng-if="question.rubric.rubric_type == 'RCQ' || question.rubric.rubric_type == 'MCQ'">
+							选项答案
+						</div>
+						<!--问答题或图片题-->
+						<div class="panel-title" ng-if="question.rubric.rubric_type == 'SAQ' || question.rubric.rubric_type == 'PUP'">
+							答案<font size="1">（ps：为最新的5条答案预览）</font>
+						</div>
+					</div>
+					<div class="panel-body">
+						<!--单选题或多选题-->
+						<table class="table table-bordered" ng-if="question.rubric.rubric_type == 'RCQ' || question.rubric.rubric_type == 'MCQ'">
+							<thead>
+								<th>编号</th>
+								<th>选项内容</th>
+								<th>男</th>
+								<th>女</th>
+								<th>总人数</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="option in question.rubric.answers">
+									<td>
+										<font ng-bind="$index + 1"></font>
+									</td>
+									<td>
+										<font ng-bind="option.answer_content"></font>
+									</td>
+									<td>
+										<font ng-bind="option.male"></font>
+									</td>
+									<td>
+										<font ng-bind="option.female"></font>
+									</td>
+									<td>
+										<font ng-bind="option.num"></font>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!--问答题或图片题-->
+						<table class="table table-hover" ng-if="question.rubric.rubric_type == 'SAQ' || question.rubric.rubric_type == 'PUP'">
+							<thead>
+								<th>答题者</th>
+								<th>性别</th>
+								<th>学院</th>
+								<th>专业</th>
+								<th>答案</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="answer in question.answers">
+									<td>
+										<font ng-bind="answer.user_obj.nickname"></font>
+									</td>
+									<td>
+										<font ng-bind="genderMap[answer.user_obj.sex]"></font>&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										<font ng-bind="answer.user_obj.university.name"></font>
+									</td>
+									<td>
+										<font ng-bind="answer.user_obj.major"></font>
+									</td>
+									<td ng-if="question.rubric.rubric_type == 'SAQ'">
+										<textarea class="form-control" name="content" rows="3" autocomplete="off"
+											readonly="readonly" ng-model="answer.answer_content"></textarea>
+									</td>
+									<td ng-if="question.rubric.rubric_type == 'PUP'">
+										<img ng-src="{{answer.answer_content[0]}}?width=90&height=90" ng-click="viewImage(answer.answer_content[0])" style="width: 100px;height: 100px;cursor: pointer;">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!--其他答案-->
+				<div class="panel panel-success" ng-if="(question.rubric.rubric_type == 'RCQ' || question.rubric.rubric_type == 'MCQ') && question.answers && question.answers.length !== 0">
+					<a class="btn pull-right" ng-href="/api/questionnaires/rubric/{{question.rubric.id}}/other/{{questionnaire.title + '-问题' + ($index + 1) + '-其他答案'}}.csv?access_token={{auth_token}}">
+						<i class="fa fa-save"></i> 导出电子版
+					</a>
+					<div class="panel-heading">
+						<div class="panel-title">其他答案<font size="1">（ps：为最新的5条答案预览）</font></div>
+					</div>
+					<div class="panel-body">
+						<table class="table table-hover">
+							<thead>
+								<th>答题者</th>
+								<th>性别</th>
+								<th>学院</th>
+								<th>专业</th>
+								<th>答案</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="answer in question.answers">
+									<td>
+										<font ng-bind="answer.user_obj.nickname"></font>
+									</td>
+									<td>
+										<font ng-bind="genderMap[answer.user_obj.sex]"></font>&nbsp;&nbsp;&nbsp;&nbsp;
+									</td>
+									<td>
+										<font ng-bind="answer.user_obj.university.name"></font>
+									</td>
+									<td>
+										<font ng-bind="answer.user_obj.major"></font>
+									</td>
+									<td>
+										<textarea class="form-control" rows="3" ng-model="answer.answer_content" readonly="readonly"></textarea>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<button class="btn btn-default center-block more-btn" ng-click="loadMoreQuestion()" ng-disabled="loadMoreBtn" ng-show="loadMore">
+		<font ng-bind="loadQuestionBtn"></font>
+	</button>
+</div>

@@ -1,0 +1,68 @@
+<div class="col-sm-12 col-md-12 col-lg-12" ng-controller="RoleManageSuperUserCtrl">
+	<div class="row">
+		<table class="table table-striped table-responsive" ng-table="tableParams">
+			<tbody>
+				<tr ng-repeat="user in $data">
+					<td data-title="'编号'" style="text-align:center;">
+						<font ng-bind="$index + 1"></font>
+					</td>
+					<td data-title="'用户名称'" style="text-align:center;">
+						<div ng-if="user.role.name === 'IWX_ADMIN'">
+							<a ng-click="update_user(user)"><font ng-bind="user.nickname"></font></a>
+						</div>
+						<div ng-if="!(user.role.name === 'IWX_ADMIN')">
+							<font ng-bind="user.nickname"></font>
+						</div>
+					</td>
+					<td data-title="'用户角色'" style="text-align:center;">
+						<font ng-bind="roles_table[user.role.name]"></font>
+					</td>
+					<td data-title="'用户邮箱'" style="text-align:center;">
+						<font ng-bind="user.email"></font>
+					</td>
+					<!-- <td data-title="'管理范围'" style="text-align:center;">
+						<div ng-if="user.role.name === 'IWX_ADMIN'">
+							<font ng-bind="user.university.province"></font>
+						</div>
+						<div ng-if="user.role.name === 'UN_ADMIN'">
+							<font ng-bind="user.university.name"></font>
+						</div>
+					</td> -->
+					<td data-title="'创建时间'" style="text-align:center;">
+						<font ng-bind="user.confirmed_at | date: 'yyyy-MM-dd HH:mm'"></font>
+					</td>
+					<td id="operation" data-title="'操作'" style="text-align:center;">
+						<label type="button" class="btn btn-info btn-checkbox" ng-click="manage_scope(user)" ng-if="user.role.name === 'IWX_ADMIN'">
+							<span>
+								管理范围
+							</span>
+						</label>
+						<label type="button" class="btn btn-danger btn-checkbox" ng-click="delete_user(user.id)" ng-if="user.role.name === 'IWX_ADMIN'" ng-disabled="true">
+							<span>
+								删除
+							</span>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- Confirm Modal -->
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

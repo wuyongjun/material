@@ -1,0 +1,28 @@
+<form class="form-horizontal" name="dutyForm" ng-submit="creOrUdpDuty()">
+	<div class="modal-header">
+		<h4 class="modal-title">职务信息</h4>
+	</div>
+	<div class="modal-body">
+		<div class="col-md-12">
+			<form-input data-title="'职务名称'" data-name="'name'">
+				<input type="text" class="form-control" placeholder="输入内容请控制在20个字以内" maxlength="20"
+					id="name" ng-model="duty.name" name="name" required>
+			</form-input>
+			<form-input data-title="'职务简介'" data-name="'describe'">
+				<textarea type="text" class="form-control" rows="5" style="resize:none;"  placeholder="输入内容请控制在1000个以内" maxlength="1000"
+					id="describe" ng-model="duty.describe" name="describe" required></textarea>
+			</form-input>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-info" data-dismiss="modal" ng-show="duty.id === -1" ng-disabled="dutyForm.$invalid">
+			创&nbsp;建
+		</button>
+		<button type="submit" class="btn btn-info" data-dismiss="modal" ng-show="duty.id !== -1" ng-disabled="dutyForm.$invalid">
+			修&nbsp;改
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">取&nbsp;消</span>
+		</button>
+	</div>
+</form>

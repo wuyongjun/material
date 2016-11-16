@@ -1,0 +1,63 @@
+<div ng-controller='BazListUnCtrl'>
+	<!-- 分类筛选条件 -->
+	<div class="row">
+		<form class="form-horizontal">
+			<fieldset>
+				<legend><h4>集市消息类型</h4></legend>
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-2" ng-repeat="type in bazaar_type">
+						<label type="button" class="btn btn-default btn-checkbox" style="margin-bottom:3px;width:100px;"
+							ng-click="choseBazaarType(type)" chosen-status="type.chosen" chosen>
+							<span>
+								<font ng-bind="type.name | substr: 4 : 3" title="{{type.name}}"></font>
+							</span>
+						</label>
+					</div>
+				</div>
+			</fieldset>
+		</form><br/><br/>
+	</div>
+	<div class="row">
+		<span class="label label-info" style="font-size: 100%;">
+			学生发布总数：&nbsp;<font ng-bind="personal_count"></font>
+		</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	</div><br/>
+	<!--校园集市表格信息-->
+	<div class="row">
+		<table ng-table="tableParams" class="table table-striped table-responsive">
+			<tbody>
+				<tr ng-repeat="bazaar in $data">
+					<td data-title="'集市标题'" header-class="text-left">
+						<a target="_blank" ng-href="{{'/weixin/web/bazaar/community/'+ bazaar.id +'/share'}}"><font ng-bind="bazaar.topic"></font></a>
+					</td>
+					<td data-title="'集市种类'" header-class="text-left">
+						<span class="label label-info">
+							<font ng-bind="bazaar.bazaar_type.name"></font>
+						</span>
+					</td>
+					<td data-title="'发布者'" header-class="text-left">
+						<a ng-click="publisherInfo(bazaar.user.id, 'personal')"><font ng-bind="bazaar.user.nickname"></font></a>
+					</td>
+					<td data-title="'更新时间'" header-class="text-left">
+						<font ng-bind="bazaar.update_time | date: 'yyyy-MM-dd HH:mm'"></font>
+					</td>
+					<td data-title="'点击量'" header-class="text-left">
+						<font ng-bind="bazaar.browsers"></font>
+					</td>
+					<td data-title="'咨询数'" header-class="text-left">
+						<font ng-bind="bazaar.participators"></font>
+					</td>
+					<td data-title="'操作'" header-class="text-left">
+						<label type="button" class="btn btn-danger btn-checkbox"
+							ng-click="unPubBazaar(bazaar.id, bazaar.user.id, 'USER')" style="margin-bottom:3px;">
+							<span>
+								删&nbsp;除 <i class="fa fa-trash"></i>
+							</span>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

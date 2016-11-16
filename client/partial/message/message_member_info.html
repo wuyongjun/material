@@ -1,0 +1,93 @@
+<div ng-controller="MessMemberInfoCtrl" class="col-lg-12">
+  <p class="hidden-print">
+    <a ui-sref="message.user({ id: user.user.id})" class="btn-default btn">
+      <i class="fa fa-reply"></i> 返回
+    </a>
+    <!-- <a ng-click="print()" class="btn btn-default pull-right"><i class="fa fa-print"></i>
+        打印</a> -->
+  </p>
+  <p>
+    <style>
+    table {
+        border: 1px solid #dddddd;
+    }
+    </style>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title"><!-- <image class="logo" ng-src="/static/favicon.ico" style="width:20px;height:20px;margin-bottom:4px;"></image>&nbsp; -->报名表</div>
+      </div>
+
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="basic-info">
+              <table class="table col-md-12">
+                <tbody>
+                  <tr>
+                    <td class="col-md-3" rowspan="3"><img ng-src="{{user.user.icon}}/thumbnail" style="width:100%"></td>
+                    <td class="col-md-2">姓名</td>
+                    <td class="col-md-2">{{user.user.name}}</td>
+                    <td class="col-md-2">学校</td>
+                    <td class="col-md-3">{{user.user.university.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>性别</td>
+                    <td><span ng-switch="user.user.sex">
+                    <span ng-switch-when="MALE">男</span>
+                    <span ng-switch-when="FEMALE">女</span>
+                    </span></td>
+                    <td>专业</td>
+                    <td>{{user.user.major}}</td>
+                  </tr>
+                  <tr>
+                    <td>电话</td>
+                    <td>{{user.user.phone}}</td>
+                    <td>入学时间</td>
+                    <td>{{user.user.admission_date}}</td>
+                  </tr>            
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+      
+        <div ng-repeat="answer in user.answers" class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">问题 {{$index+1}}</div>
+          </div>
+          <div ng-switch="answer.question.type" class="panel-body">
+            <div ng-switch-when="SINGLE_CHOICE">
+              <strong>{{answer.question.question}}</strong>
+              <p ng-repeat="option in answer.question.options track by $index">
+                <input type="radio" disabled
+                ng-checked="{{option==answer.answer[0]}}">
+                <font ng-class="{'myAnaswer':answer.answer.indexOf(option) != -1}">&nbsp;{{option}}</font><br/>
+              </p>
+            </div>
+            <div ng-switch-when="MULTI_CHOICE">
+              <strong>{{answer.question.question}}</strong>
+              <p ng-repeat="option in answer.question.options track by $index">
+                <input type="checkbox" disabled
+                ng-checked="{{answer.answer.indexOf(option) != -1}}">
+                <font ng-class="{'myAnaswer':answer.answer.indexOf(option) != -1}">&nbsp;{{option}}</font><br/>
+              </p>
+            </div>
+            <div ng-switch-when="TEXT">
+              <strong>{{answer.question.question}}</strong>
+              <p>
+                {{answer.answer}}
+              </p>
+            </div>
+            <div ng-switch-when="IMAGES">
+              <strong>{{answer.question.question}}</strong>
+              <p ng-repeat="url in answer.answer track by $index">
+                <img style="width:450px;" ng-src="{{url}}"/>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p>
+</div>

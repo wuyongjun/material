@@ -1,0 +1,86 @@
+<div ng-controller="OrgInfoCtrl">
+	<!--筛选条件-->
+	<br/>
+	<div class="row" ng-hide="union">
+		<div>
+			<p>
+				<font style="font-weight: bold;">
+					按组织状态查询
+				</font>
+			</p>
+		</div>
+		<div style="background: #ECEAEA;">
+			<div class="row">
+				<div class="panel-body">
+					<div class="col-md-2" ng-repeat="status in status_arr">
+						<label type="button" class="btn btn-default btn-checkbox" style="margin-bottom:3px;width:100px;"
+							ng-click="chose_status(status)" chosen-status="status.chosen" chosen>
+							<span>
+								<font ng-bind="status.descript"></font>
+							</span>
+						</label>
+		            </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--组织内容表格-->
+	<div class="row">
+		<br/>
+    <div class="table-container">
+        <table class="table table-striped table-responsive" ng-table="tableParams">
+          <tbody>
+            <tr ng-repeat="community in $data">
+              <td data-title="'组织名称'" header-class="text-left">
+                <a ng-click="org_info_detail(community)">
+                  <font ng-bind="community.community.name"></font>
+                </a>
+              </td>
+              <td data-title="'组织状态'" header-class="text-left">
+                <span ng-if="community.admin_user.confirmed_at" class="label label-success">已审核</span>
+                <span ng-if="!community.admin_user.confirmed_at" class="label label-danger">未审核</span>
+              </td>
+              <td data-title="'管理员名称'" header-class="text-left">
+                <font ng-bind="community.admin_user.name || community.user.name"></font>
+              </td>
+              <td data-title="'管理员电话'" header-class="text-left">
+                <font ng-bind="community.admin_user.phone || community.user.phone"></font>
+              </td>
+              <td data-title="'管理员邮箱'" header-class="text-left">
+                <font ng-bind="community.admin_user.email || community.user.email"></font>
+              </td>
+              <td data-title="'操作'" header-class="text-left">
+                <label ng-if="community.admin_user.confirmed_at" type="button" class="btn btn-info btn-checkbox" ng-click="private_letter(community.community.id)">
+                  <span>
+                    私信 <i class="fa fa-envelope"></i>
+                  </span>
+                </label>
+                <label ng-if="!community.admin_user.confirmed_at && !union" type="button" class="btn btn-info btn-checkbox" ng-click="approve(community.admin_user.email)">
+                  <span >
+                    批准 <i class="fa fa-plus-circle"></i>
+                  </span>
+                </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+	</div>
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+					<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+				</div>
+				<div class="modal-body">
+					{{confirm.message}}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

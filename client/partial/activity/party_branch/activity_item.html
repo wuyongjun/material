@@ -1,0 +1,114 @@
+<div ng-controller="PartyActItemCtrl">
+	<div class="tabs-left">
+		<ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+			<li d-sref="'party_act_item'">
+				<a ui-sref="party_act_item({ id: activity.id, page: page })" ng-if="editingActivityId == -1">创建新活动</a>
+				<a ui-sref="party_act_item({ id: activity.id, page: page })" ng-if="editingActivityId != -1">活动概况</a>
+			</li>
+			<!-- <li ng-hide="editingActivityId=='-1'" ui-sref-active="active">
+				<a ui-sref="party_act_item.stat_plugin">活动统计</a>
+			</li> -->
+			<li ng-repeat="plugin in act_plugin" style="cursor:pointer;" d-sref="'party_act_item.' + plugin.id + '_plugin'">
+				<a ui-sref="party_act_item.{{plugin.id}}_plugin">
+					<img class="logo" ng-src="{{plugin.icon_path}}" style="width:13px;margin-top: -2px;">&nbsp;{{plugin.name}}
+				</a>
+			</li>
+			<li ng-hide="editingActivityId=='-1' || activity.plugins.length == 1">
+				<a ng-click="_addPlugin()" style="cursor:pointer;">
+				<img src="/static/images/function_icon.png" style="width:15px;">
+					&nbsp;更多功能
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div ui-view>
+		<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-9  col-md-9 col- col-sm-9" ng-controller="PartyActItemCtrl">
+			<div class="activity-button-bar">
+				<div class="btn-group">
+					<a class="btn btn-default" ui-sref="party_act_list({ page: page })"><i class="fa fa-reply"></i> 返回</a>
+				</div>
+				&nbsp;
+				<div class="btn-group" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+					<label type="button" class="btn btn-default btn-checkbox"
+						ng-click="isPublishActivity(editingActivityId, activity.published, page)"
+						ng-model="activity.published" btn-checkbox ng-if="editingActivityId != -1">
+						<span ng-if="activity.published" style="color:green">
+							<i class="fa fa-check"></i> 已发布
+						</span>
+						<span ng-if="!activity.published">
+							<i class="fa fa-ban"></i> 未发布
+						</span>
+					</label>
+				</div>
+				&nbsp;
+				<div class="btn-group">
+					<a class="btn btn-danger" ng-if="editingActivityId != -1"
+						ng-click="delete()"><i class="fa fa-trash-o"></i> 删除</a>
+				</div>
+			</div>
+			<form class="panel panel-default form-horizontal" method="POST" ng-submit="saveActivity()" role="form" name="actForm" enctype="multipart/form-data">
+				<div class="panel-heading">
+					<div class="panel-title">活动概况</div>
+				</div>
+				<div class="panel-body">
+					<form-input data-title="'活动主题'" data-name="'subject'">
+						<input type="text" class="form-control" name="subject" ng-model="activity.subject"
+							ng-readonly="activity.is_register" placeholder="请将主题限制在25个汉字以内" regexp="sub_regexp" blur/>
+					</form-input>
+					<form-input data-title="'活动地点'" data-name="'location'">
+						<input type="text" class="form-control" name="location" ng-model="activity.location"
+							placeholder="请将地点限制在15个汉字以内" regexp="loc_regexp" blur/>
+					</form-input>
+					<form-input data-title="'开始时间'" data-name="'start_time'">
+						<datetimepicker datetime="activity.start_time"></datetimepicker>
+					</form-input>
+					<form-input data-title="'结束时间'" data-name="'end_time'">
+						<datetimepicker datetime="activity.end_time"></datetimepicker>
+					</form-input>
+					<form-input data-title="'活动内容'" data-name="'content'" ng-if="!activity.members">
+						<ng-simditor content="activity.content"></ng-simditor>
+					</form-input>
+					<form-input data-title="'活动海报'" data-name="'poster'">
+						<div class="fileinput fileinput-new" data-provides="fileinput">
+							<div ng-if="activity.poster" class="fileinput-new thumbnail" style="height:200px;width:300px">
+								<img ng-src="{{activity.poster.substring(0)}}?width=160&height=160" image-fixed>
+							</div>
+							<div class="fileinput-preview fileinput-exists thumbnail"></div>
+							<div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+								<span class="btn btn-default btn-file" data-toggle="tooltip" data-placement="bottom" title="请保持最佳宽高比，图片大小不能超过1M" tool-tip>
+									<span class="fileinput-new">选择照片</span>
+									<span class="fileinput-exists">更换</span>
+									<input type="file" name="poster" data-file="activity.poster" id="image_file">
+								</span>
+								<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">删除</a>
+							</div>
+						</div>
+					</form-input>
+					<form-input data-title="'活动可见范围'" data-name="'range'">
+						<!-- <div class="col-sm-5" ng-repeat="range in ranges">
+							<label class="radio-inline">
+								<input type="radio" name="range" value="{{range.id}}" ng-model="activity.political_show"
+									ng-click="getCheckedRange(activity.political_show)">
+									<font title="{{range.name}}" ng-bind="range.name"></font>
+							</label>
+						</div> -->
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="range" value="all" ng-checked="activity.political_show === 'all'"
+									ng-click="getCheckedRange('all')"/> 所有人可见
+							</label>
+						</div>
+						<div class="col-sm-5">
+							<label class="radio-inline">
+								<input type="radio" name="range" value="party" ng-checked="activity.political_show === 'party'"
+									ng-click="getCheckedRange('party')"/> 仅本党支部成员可见
+							</label>
+						</div>
+					</form-input>
+				</div>
+				<button class="btn btn-primary form-control form-submit-button" type="submit" ng-if="editingActivityId=='-1' && (user.role.name==='ADMIN' || user.role.name === 'USER')">创&nbsp;建</button>
+				<button class="btn btn-primary form-control form-submit-button" type="submit" ng-if="editingActivityId!='-1' && (user.role.name==='ADMIN' || user.role.name === 'USER')">更&nbsp;新</button>
+			</form>
+		</div>
+	</div>
+</div>

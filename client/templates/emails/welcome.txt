@@ -1,0 +1,5 @@
+"爱微笑"的 {{ user.name }},
+你申请的 {{ user.university.name }} {{ user.community.name }}已通过审核,请用申请时邮箱登陆 i 微校管理后台:v2.iweixiao.cn,快来 i 微校感受新型校园生活吧!
+
+敬请关注我们的微信公众号:<img src={{ url_for('/static/images/ma/gong.jpg', _external=True }} />,i 微校下载二维码:<img src={{ url_for('/static/images/ma/download.jpg', _external=True) }} />
+i 微校团队

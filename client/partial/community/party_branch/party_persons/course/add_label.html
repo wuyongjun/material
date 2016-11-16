@@ -1,0 +1,19 @@
+<form class="form-horizontal" name="labelForm" ng-submit="createLabel()">
+	<div class="modal-header">
+		<h4 class="modal-title">添加标签</h4>
+	</div>
+	<div class="modal-body">
+		<form-input data-title="'标签内容'" data-name="'name'">
+			<input type="text" class="form-control" placeholder="输入内容请控制在10个字以内" maxlength="10"
+				id="name" ng-model="label.name" name="name" required>
+		</form-input>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-info" data-dismiss="modal" ng-disabled="labelForm.$invalid">
+			保&nbsp;存
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">取&nbsp;消</span>
+		</button>
+	</div>
+</form>

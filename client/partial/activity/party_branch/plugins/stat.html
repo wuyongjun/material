@@ -1,0 +1,119 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-9  col-md-9 col-col-sm-9" ng-controller="PartyStatCtrl">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="activity-button-bar">
+				<div class="btn-group">
+					<!-- 返回操作将返回到活动概况页面 -->
+					<a class="btn btn-default" ui-sref="party_act_item({ id: activity.id, page: page })">
+					<i class="fa fa-reply"></i> 返回</a>&nbsp;&nbsp;&nbsp;
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--统计数据-->
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<!--活动基本统计信息-->
+			<h3 class="col-md-12 text-center">基本信息</h3>
+			<hr class="col-md-12" style="border-top-color:#E4DEDE;" />
+			<div class="col-md-3 text-center">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title">活动点击数</div>
+					</div>
+					<div class="panel-body">
+						<font ng-bind="summary.browse_count"></font>
+					</div> 
+				</div>
+			</div>
+
+			<div class="col-md-3 text-center">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title">活动收藏数</div>
+					</div>
+					<div class="panel-body">
+						<font ng-bind="summary.fav_count"></font>
+					</div> 
+				</div>
+			</div>
+			<!--签到统计信息-->
+			<div ng-hide="plugin_exist.sign_in">
+				<h3 class="col-md-12 text-center">活动签到（线上或线下）</h3>
+				<hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+				<div class="col-md-3 text-center">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">签到总人数</div>
+						</div>
+						<div class="panel-body">
+							<font ng-bind="summary.sign_in_count"></font>
+						</div> 
+					</div>
+				</div>
+
+				<div class="col-md-3 text-center">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">指定参与者总数</div>
+						</div>
+						<div class="panel-body">
+							<font ng-bind="summary.sign_in_special"></font>
+						</div> 
+					</div>
+				</div>
+
+				<div class="col-md-3 text-center">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">指定参与者实到总数</div>
+						</div>
+						<div class="panel-body">
+							<font ng-bind="summary.sign_in_total"></font>
+						</div> 
+					</div>
+				</div>
+			</div>
+			<!--线上讨论统计信息-->
+			<div ng-hide="plugin_exist.timeline">
+				<h3 class="col-md-12 text-center">线上讨论</h3>
+				<hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+				<div class="col-md-3 text-center">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">限定参与总人数</div>
+						</div>
+						<div class="panel-body">
+							<font ng-bind="summary.person_num"></font>
+						</div> 
+					</div>
+				</div>
+
+				<div class="col-md-3 text-center">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">总发言数</div>
+						</div>
+						<div class="panel-body">
+							<font ng-bind="summary.speak_num"></font>
+						</div> 
+					</div>
+				</div>
+
+				<div class="col-md-3 text-center">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<div class="panel-title">发言者总数</div>
+						</div>
+						<div class="panel-body">
+							<font ng-bind="summary.speaker_num"></font>
+						</div> 
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

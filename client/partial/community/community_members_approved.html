@@ -1,0 +1,55 @@
+<div ng-controller="CommunityMembersCtrl" class="col-lg-8 col-lg-offset-3 col-md-8 col-md-offset-3 col-sm-9 col-sm-offset-3">
+  
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header"></div>
+    <div class="collapse navbar-collapse" id="navbar-item">
+      <ul class="nav navbar-nav">
+        <li>
+          <a ui-sref="community.members">全部社员</a>
+        </li>
+        <li class="active">
+          <a ui-sref="community.approved">已加入社员</a>
+        </li>
+        <!-- <li>
+          <a ui-sref="community.pending">待审核社员</a>
+        </li> -->
+      </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li>
+          <a href="/api/admin/community/users/export.csv">
+            导出社团成员
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <table ng-table="tableParams"
+    class="table table-striped table-responsive">
+    <tbody>
+      <tr ng-repeat="user in $data">
+        <td data-title="'姓名'" header-class="text-left">
+          <a ui-sref="community.member({ id: user.user.id })">
+            {{user.user.name}}
+          </a>
+        </td>
+        <td data-title="'电话'" header-class="text-left">
+          {{user.user.phone}}
+        </td>
+        <!-- <td data-title="'状态'" header-class="text-left">
+          {{status[user.status]}}
+        </td> -->
+        <td data-title="'操作'" header-class="text-left">
+          <div class="btn-group">
+              <!-- <a ng-if="user.status==='PENDING'" ng-disabled="user.status == 'APPROVED'"
+                ng-click="approve(user)" class="btn btn-primary">批准</a>
+              <a ng-if="user.status==='PENDING'" ng-disabled="user.status == 'REJECTED'"
+                ng-click="reject(user)" class="btn btn-danger">拒绝</a> -->
+              <a ng-if="user.status==='APPROVED'"
+                    ng-click="private_letter(user.user.id)" class="btn btn-info">私&nbsp;信</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,47 @@
+<div class="col-sm-12 col-md-12 col-lg-12" ng-controller="RoleManageSuperCtrl">
+	<!--导航栏部分-->
+	<div class="row">
+		<nav class="navbar navbar-inverse" style="background-color: rgb(219, 218, 218);" role="navigation">
+			<div class="navbar-header"></div>
+			<div class="collapse navbar-collapse" id="navbar-item">
+				<ul class="nav navbar-nav">
+					<li d-sref="'role_manage_super'">
+						<a ui-sref="role_manage_super">角色列表</a>
+					</li>
+					<li d-sref="'role_manage_super.user'">
+						<a ui-sref="role_manage_super.user({manager_type: 3})">用户列表</a>
+					</li>
+					<li d-sref="'role_manage_super.create_user'">
+						<a ui-sref="role_manage_super.create_user">新建用户</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div id="content" ui-view>
+		<!--角色列表-->
+		<div class="row">
+			<table class="table table-striped table-responsive" ng-table="tableParams">
+				<tbody>
+					<tr ng-repeat="role in $data">
+						<td data-title="'编号'" style="text-align:center;">
+							<font ng-bind="$index + 1"></font>
+						</td>
+						<td data-title="'角色名称'" style="text-align:center;">
+							<a ng-click="user_list(role.id)"><font ng-bind="roles_table[role.name]"></font></a>
+						</td>
+						<td data-title="'角色描述'" style="text-align:center;">
+							<textarea ng-bind="role.description" style="width:100%;border-radius:4px;padding:10px;resize:none;" rows="6" ng-disabled="true"></textarea>
+						</td>
+						<td data-title="'数量'" style="text-align:center;">
+							<a ng-click="user_list(role.id)"><font ng-bind="role.count"></font></a>
+						</td>
+						<!-- <td data-title="'创建时间'" style="text-align:center;">
+							<font ng-bind="role.last_modified_time | date: 'yyyy-MM-dd HH:mm'"></font>
+						</td> -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

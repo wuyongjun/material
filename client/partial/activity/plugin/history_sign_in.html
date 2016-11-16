@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title">历史签到情况</h4>
+</div>
+<div class="modal-body">
+  <div class="row">
+  	<div class="col-md-12">
+  		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>开始/结束时间</th>
+					<th>签到人数</th>
+				</tr>
+			</thead>
+	  		<tbody>
+	  			<tr ng-repeat="item in history_sign_in">
+	  				<td>
+	  					{{$index + 1}}
+	  				</td>
+	  				<td>
+	  					{{item.sign_in_start_time | date: 'yyyy-MM-dd HH:mm'}} ~ {{item.sign_in_end_time | date: 'yyyy-MM-dd HH:mm'}}
+	  				</td>
+	  				<td>
+	  					{{item.sign_in_num}}
+	  				</td>
+	  			</tr>
+	  		</tbody>
+	  	</table>
+  	</div>
+  </div>
+</div>

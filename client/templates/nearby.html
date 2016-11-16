@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>i 微校-身边事</title>
+		<link rel="stylesheet" type="text/css" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="/static/styles/nearby.css">
+		<link rel="shortcut icon" href="/static/favicon.ico">
+	</head>
+	<body>
+		<div id='ios_popweixin'>
+			<div class='tip top2bottom'>
+				<img align="center" src='/static/images/safari.png' style="width:100%;height:100%" />
+			</div>
+		</div>
+		<!-- 身边事图片，形式为轮播 -->
+		<div class="banner">
+			<ul id="image_list"></ul>
+		</div>
+		<!-- 身边事信息 -->
+		<div class="nearby">
+			<!-- 身边事标题 -->
+			<div class="title">
+				<div class="nearby_label">
+					<span class="label label-info">身边事</span>
+				</div>
+				<div class="nearby_title">
+					<font id="nearby_title"></font>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<hr class="title_hr"/>
+			<!-- 身边事发布者和发布时间 -->
+			<div class="info">
+				<div class="logo">
+					<img id="nearby_logo" class="nearby_logo">
+				</div>
+				<div class="publisher">
+					<div class="pub_name">
+						<font id="nickname"></font>
+					</div>
+					<div class="publish_time">
+						<font id="publish_time"></font>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- 身边事内容 -->
+			<div class="content" id="content"></div>
+		</div>
+		<hr class="stat_hr"/>
+		<div class="stat_num" id="stat_num"></div>
+		<!-- 身边事评论 -->
+		<div class="stats" id="stats"></div>
+		<div class="download download_iwx">
+	        <div class="download_iwx_btn">
+	            <img class="logo_iwx" src="/static/images/activity-sharing-logo.png">
+	            <p style="margin-top: 20px;">
+	                <font>&nbsp;&nbsp;在&nbsp;i&nbsp;微校发现身边事~</font>
+	                <img class="arrow_right" src="/static/images/activity-right.png">
+	            </p>
+	        </div>
+	    </div>
+		<script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="/static/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
+		<script type="text/javascript" src="/static/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+		<script type="text/javascript" src="/static/bower_components/jquery.unslider/src/unslider.js"></script>
+		<script type="text/javascript" src="/static/scripts/nearby.js"></script>
+	</body>
+</html>

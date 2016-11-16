@@ -1,0 +1,30 @@
+<form class="form-horizontal" name="gradeForm" ng-submit="creOrUdpGrade()">
+	<div class="modal-header">
+		<h4 class="modal-title">学年信息</h4>
+	</div>
+	<div class="modal-body">
+		<div class="col-md-12">
+			<form-input data-title="'学年名称'" data-name="'name'">
+				<input type="text" class="form-control" placeholder="输入内容请控制在20个字以内" maxlength="20"
+					id="name" ng-model="grade.name" name="name" required>
+			</form-input>
+			<form-input data-title="'学年开始时间'" data-name="'starttime'">
+				<date-picker date="grade.starttime" minviewmode="years" format="YYYY" dateformat="yyyy" endtime="grade.endtime"></date-picker>
+			</form-input>
+			<form-input data-title="'学年结束时间'" data-name="'endtime'">
+				<date-picker date="grade.endtime" minviewmode="years" format="YYYY" dateformat="yyyy" starttime="grade.starttime"></date-picker>
+			</form-input>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-info" data-dismiss="modal" ng-show="grade.id === -1" ng-disabled="gradeForm.$invalid">
+			创&nbsp;建
+		</button>
+		<button type="submit" class="btn btn-info" data-dismiss="modal" ng-show="grade.id !== -1" ng-disabled="gradeForm.$invalid">
+			修&nbsp;改
+		</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">
+			<span aria-hidden="true">取&nbsp;消</span>
+		</button>
+	</div>
+</form>

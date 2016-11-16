@@ -1,0 +1,67 @@
+<div class="col-sm-12 col-md-11 col-md-offset-1 col-lg-10" ng-controller="CreateManagerCtrl">
+	<form class="form-horizontal register-form" role="form" enctype="multipart/form-data" name="createManageForm" ng-submit="create_manager()">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">管理员信息</div>
+			</div>
+			<div class="panel-body">
+				<form-input data-title="'角色'" data-name="'role'">
+					<div class="col-md-8">
+						<select name="role_scope" id="role_scope" class="form-control" ng-init="roleArray[0].id" ng-model="manager.role" ng-options="r.id as r.role_name for r in roleArray" ng-change="change_role()" required>
+						</select>
+					</div>
+				</form-input>
+				<form-input data-title="'学校'" data-name="'university'">
+					<div class="col-md-3">
+						<select name="province_scope" id="province_scope" class="form-control" ng-init="provinceArray[0].id" ng-model="manager.province_scope_id" ng-options="r.id as r.city for r in provinceArray" ng-change="change_province()">
+						</select>
+					</div>
+					<div class="col-md-3">
+						<select class="form-control" name="city_scope" id="city_scope" ng-model="manager.city_scope_id" ng-options="r.id as r.city for r in cityArray" ng-change="change_city()">
+						</select>
+					</div>
+					<div class="col-md-6">
+						<select class="form-control" name="university_scope" id="university_scope" ng-model="manager.university_id" ng-options="r.id as r.name for r in universityArray" ng-change="change_university()" required>
+						</select>
+					</div>
+				</form-input>
+				<!--校级管理员类型-->
+				<form-input data-title="'类型'" data-name="'manager_type'" ng-hide="show_community">
+					<div class="col-md-12">
+						<select name="manager_type" id="manager_type" class="form-control" ng-change="type()"
+							ng-model="manager.un_admin_type" ng-options="r.id as r.name for r in un_Man_type">
+						</select>
+					</div>
+				</form-input>
+				<form-input data-title="'管理员名称'" data-name="'manage_name'" ng-show="show_community">
+					<div class="col-md-12">
+						<input name="name" id="name" ng-model="manager.nickname" class="form-control" type="text">
+					</div>
+				</form-input>
+				<form-input data-title="'密码'" data-name="'password'">
+					<div class="col-md-12">
+						<input name="password" id="password" ng-model="manager.password" class="form-control" type="text" maxlength="6">
+						<!-- <div ng-show="createManageForm.password.$invalid && !createManageForm.password.$pristine" class="form-error">请输入密码</div> -->
+					</div>
+				</form-input>
+				<form-input data-title="'注册邮箱'" data-name="'email'">
+					<div class="col-md-12">
+						<input name="email" id="email" ng-model="manager.email" class="form-control" type="email" required>
+						<!-- <div ng-show="createManageForm.email.$invalid && !createManageForm.email.$pristine" class="form-error">请正确输入邮箱地址</div> -->
+					</div>
+				</form-input>
+				<form-input data-title="'组织名称'" data-name="'community_name'" ng-show="show_community">
+					<div class="col-md-12">
+						<input name="community_name" id="community_name" ng-model="manager.community_name" class="form-control" type="community_name">
+					</div>
+				</form-input>
+				<!-- <form-input data-title="'社团介绍'" data-name="'description'" ng-show="show_community">
+					<div class="col-md-12">
+						<textarea name="description" id="description" ng-model="manager.description" class="form-control" type="description" rows="5"></textarea>
+					</div>
+				</form-input> -->
+			</div>
+			<button class="btn btn-primary form-control form-submit-button" type="submit" ng-disabled="create_manager_btn">创建</button>
+		</div>
+	</form>
+</div>

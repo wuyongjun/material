@@ -1,0 +1,68 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9" ng-controller="PartyTimelineCtrl">
+	<div class="activity-button-bar">
+		<div class="btn-group">
+			<!-- 返回操作将返回到活动概况页面 -->
+			<a class="btn btn-default" ui-sref="party_act_item({ id: activity.id })">
+				<i class="fa fa-reply"></i> 返回
+			</a>&nbsp;
+		</div>
+		<a class="btn btn-info" ng-click="participator()">
+			<i class="fa fa-user"></i> 选择参与者
+		</a>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<form class="panel panel-default form-horizontal">
+				<div class="panel-heading">
+					<div class="panel-title">爆料</div>
+				</div>
+				<div class="panel-body">
+					<div class="bs-callout bs-callout-warning col-md-10 col-md-offset-1" style="margin-top:10px;">
+						<h4>活动爆料说明</h4>
+						<p>
+							1、管理后台与App间保持双向沟通。<br/>
+							2、单次“爆料”最多支持6张图片。
+						</p>
+					</div>
+					<form-input data-title="'内容'" data-name="'content'" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+						<textarea class="form-control" id="content" ng-model="comment.content"
+							name="content" rows="5" autocomplete="off"></textarea>
+					</form-input>
+					<form-input data-title="'图片'" data-name="'images'" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+						<div class="fileinput fileinput-new" data-provides="fileinput">
+							<span class="btn btn-default btn-file" data-toggle="tooltip" data-placement="bottom" title="单张图片大小不能超过1M" tool-tip>
+								<span class="fileinput-new">
+									请选择图片，最多6张
+								</span>
+								<span class="fileinput-exists">重新选择</span>
+								<input type="file" name="images" multiple data-files="comment.images">
+							</span>
+							<div ng-repeat="image in comment.images">
+								<i class="fa fa-times timeline-file-remove"  ng-click="removeFile($index)"></i>{{image.name}}
+							</div>
+						</div>
+					</form-input>
+				</div>
+				<button class="btn btn-primary form-control form-submit-button"
+					type="submit" ng-click="submit()" ng-show="user.role.name==='ADMIN' || user.role.name === 'USER'">发布
+				</button>
+			</form>
+		</div>
+	</div>
+	<!--爆料内容-->
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+      <div ng-if="comments.length!==0">
+          <table class="table table-striped table-responsive coupons" ng-table="tableParams">
+            <tbody>
+              <tr ng-repeat="comment in $data">
+                <td data-title="''">
+                  <party-post data-comment="comment"></party-post>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+     </div>
+		</div>
+	</div>
+</div>

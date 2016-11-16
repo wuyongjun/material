@@ -1,0 +1,169 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9"
+    ng-controller="VoteCtrl">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <!-- 返回操作将返回到活动概况页面 -->
+      <a class="btn btn-default" ui-sref="activity_item({ id: activity.id })">
+        <i class="fa fa-reply"></i> 返回</a>&nbsp;&nbsp;
+    </div>
+    <div class="btn-group" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <!--添加结束本次投票-->
+      <a class="btn btn-primary" ng-click="complete_vote()" data-toggle="tooltip" data-placement="bottom" title="手机客户端用户无法继续参与投票，但投票功能仍然在手机客户端展示。" tool-tip>
+        <i class="glyphicon glyphicon-stop"></i> 结束本次投票</a>
+      <a class="btn btn-danger" ng-click="delete()" data-toggle="tooltip" data-placement="bottom" title="彻底删除投票功能，之前保存的候选项内容全部清空。" tool-tip>
+        <i class="fa fa-close"></i> 删除投票功能</a>
+      <a class="btn btn-warning" ng-click="close()" data-toggle="tooltip" data-placement="bottom" title="暂时将投票功能从手机客户端下架不显示，再次打开投票功能时，之前保存的候选项内容依旧存在，可继续编辑。" tool-tip>
+        <i class="fa fa-eye"></i> 暂时关闭本次投票</a>
+      
+    </div>
+    <div class="btn-group" ng-if="vote && vote.id && vote.id > 0">
+      <a class="btn btn-default" ng-click="viewresult()">
+        <i class="fa fa-share"></i> 查看投票结果</a>
+    </div>
+  </div>
+  <!--添加查看历史投票
+  <div style="margin-bottom:10px;">
+    <a class="btn btn-default" ng-click="history_vote()" data-placement="bottom" title="如果社团开启多轮投票，可以在这里查看历次投票数据统计。" tool-tip>
+      <i class="glyphicon glyphicon-list"></i> 查看历史投票</a>
+  </div>-->
+  <div>
+    <form class="panel panel-default form-horizontal">
+      <div class="panel-heading">
+        <div class="panel-title">投票概况</div>
+      </div>
+      <div class="bs-callout bs-callout-warning col-md-10 col-md-offset-1" style="margin-top:10px;">
+        <h4>单项投票功能解释</h4>
+        <p>
+          1、24小时内，只能为一个候选项投1票，支持多个候选项。<br/>
+          2、投票开始后，候选项内容支持实时更新。
+        </p>
+      </div>
+
+      <div class="panel-body">
+        <form-input data-title="'投票标题'" data-name="'vote_title'">
+          <input ng-model="vote.title" class="form-control" type="text" placeholder="可以是人名，也可以是某个观点">
+        </form-input>
+        <form-input data-title="'投票开始时间'" data-name="'vote_start_time'">
+          <datetimepicker datetime="vote.vote_start_time"></datetimepicker>
+        </form-input>
+        <form-input data-title="'投票结束时间'" data-name="'vote_end_time'">
+          <datetimepicker datetime="vote.vote_end_time"></datetimepicker>
+        </form-input>
+        <form-input data-title="'投票范围'" data-name="'vote_scope'">
+          <select name="vote_scope" id="vote_scope" ng-init="vote.scope_id = vote.scope_id || rangeArray[0].id"
+            ng-model="vote.scope_id" ng-options="r.id as r.name for r in rangeArray"
+            class="form-control" data-toggle="tooltip" data-placement="bottom" title="哪些人可以参与这次投票" tool-tip>
+          </select>
+        </form-input>
+        <form-input data-title="'投票说明'" data-name="'vote_description'">
+          <textarea class="form-control" id="content"
+              ng-model="vote.vote_description"
+              name="vote_description" rows="5" autocomplete="off" placeholder="请在此填入对投票规则的更多说明，比如：只有现场签到的用户才能投票">
+          </textarea>
+        </form-input>
+      </div>
+      <div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+        <button class="btn btn-primary form-control form-submit-button"
+          type="submit" ng-click="create()" ng-hide="update">创建
+        </button>
+        <button class="btn btn-primary form-control form-submit-button"
+          type="submit" ng-click="change()" ng-if="update">更新
+        </button>  
+      </div>
+    </form>
+
+    <form class="panel panel-default form-horizontal" ng-if="vote && vote.id && vote.id > 0" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <div class="panel-heading">
+        <div class="panel-title">添加新的候选项
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <form-input data-title="'候选项'" data-name="'newcandi.title'">
+          <input ng-model="newcandi.title"
+            class="form-control" type="text">
+        </form-input>
+        <form-input data-title="'图片'" data-name="'images'">
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <span class="btn btn-default btn-file"><span class="fileinput-new">
+                请选择图片，最多6张
+            </span>
+            <span class="fileinput-exists">重新选择</span>
+            <input type="file" name="images" multiple
+                data-files="newcandi.images"></span>
+            <div ng-repeat="image in newcandi.images">
+              <i class="fa fa-times timeline-file-remove"
+                  ng-click="removeFile($index)"></i>{{image.name || image.path}}
+            </div>
+          </div>
+        </form-input>
+        <form-input data-title="'候选说明'" data-name="'newcandi.describe'">
+        <textarea class="form-control" id="newcandi.describe"
+            ng-model="newcandi.describe" rows="5" autocomplete="off" placeholder="">
+        </textarea>
+      </div>
+      <button class="btn btn-primary form-control form-submit-button"
+          type="submit" ng-click="addcandi()"><i class="fa fa-plus"></i> 添加候选项目
+      </button>
+    </form>
+
+    <table ng-table="tableParams"
+      class="table table-striped table-responsive coupons">
+      <tbody>
+        <tr ng-repeat="candi in $data">
+          <td  data-title="''" style="border:0px;">
+            <form class="panel panel-default form-horizontal">
+              <span class="btn pull-right" ng-click="deletecandi(candi)" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                  <i class="fa fa-save"></i> 删除候选项
+              </span>
+              <div class="panel-heading">
+                <div class="panel-title">候选编号:{{$index + 1}}
+                </div>
+              </div>
+
+              <div class="panel-body">
+                <form-input data-title="'候选项'" data-name="'candi.title'">
+                  <input ng-model="candi.title"
+                    class="form-control" type="text">
+                </form-input>
+                <form-input data-title="'已有图片'" data-name="'images'">
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <span ng-repeat="image in candi.images">
+                      <span ng-if="image.path" class="thumbnail">
+                        <img ng-src="{{image.path.substring(0)}}?width=160&height=160" style="width: 178px;" ng-click="viewImage(image.path)">
+                        <i class="fa fa-times timeline-file-remove"
+                          ng-click="removeExistCandiFile(candi, image)" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'"></i>
+                      </span>
+                    </span>
+                  </div>
+                </form-input>
+                <form-input data-title="'图片'" data-name="'newimages'" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                  <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <span class="btn btn-default btn-file"><span class="fileinput-new">
+                        请选择图片，最多6张
+                    </span>
+                    <span class="fileinput-exists">重新选择</span>
+                    <input type="file" name="newimages" multiple
+                        data-files="candi.newimages"></span>
+                    <div ng-repeat="image in candi.newimages">
+                      <i class="fa fa-times timeline-file-remove"
+                          ng-click="removeCandiFile(candi, $index)"></i>{{image.name}}
+                    </div>
+                  </div>
+                </form-input>
+                <form-input data-title="'候选说明'" data-name="'candi.describe'">
+                  <textarea class="form-control" ng-model="candi.describe"
+                      rows="5" autocomplete="off" placeholder="">
+                  </textarea>
+                </div>
+                <button class="btn btn-primary form-control form-submit-button"
+                  type="submit" ng-click="updatecandi(candi)" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                  <i class="fa fa-save"></i> 更新候选项目
+                </button>
+              </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

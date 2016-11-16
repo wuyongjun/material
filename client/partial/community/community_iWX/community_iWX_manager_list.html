@@ -1,0 +1,37 @@
+<div ng-controller="CommIwxManagerListCtrl">
+	<table class="table table-striped table-responsive" ng-table="tableParams">
+		<tbody>
+			<tr ng-repeat="manager in $data">
+				<td data-title="'管理员名称'" header-class="text-left">
+					<font ng-bind="manager.admin_user.name || manager.nickname"></font>
+				</td>
+				<!-- <td data-title="'证件照'" header-class="text-left">
+					<div class="logo" style="height:70px;width:70px">
+						<img ng-src="{{manager.admin_user.icon}}" style="height:100%;width:100%;" ng-click="viewImage(manager.admin_user.icon)">
+					</div>
+				</td> -->
+				<td data-title="'角色'" header-class="text-left">
+					<font ng-bind="role_hash_table[manager.admin_user.role.name] || role_hash_table[manager.role.name]"></font>
+				</td>
+				<td data-title="'类型'" header-class="text-left">
+					<font ng-bind="org_type_hash[manager.admin_user.user_type]"></font>
+				</td>
+				<td data-title="'组织名称'" header-class="text-left">
+					<font ng-bind="manager.community.name"></font>
+				</td>
+				<td data-title="'电话'" header-class="text-left">
+					<font ng-bind="manager.admin_user.phone || manager.phone"></font>
+				</td>
+				<td data-title="'邮箱'" header-class="text-left">
+					<font ng-bind="manager.admin_user.email || manager.email"></font>
+				</td>
+				<!-- <td data-title="'社团logo'" header-class="text-left">
+					<div class="logo" style="height:70px;width:70px">
+						<img ng-src="{{manager.community.logo}}" style="height:100%;width:100%;" ng-click="viewImage(manager.community.logo)" ng-if="manager.admin_user.role.name === 'ADMIN'">
+					</div>
+				</td> -->
+				
+			</tr>
+		</tbody>
+	</table>
+</div>

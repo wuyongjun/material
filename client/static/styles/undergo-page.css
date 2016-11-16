@@ -1,0 +1,34 @@
+.question-table {
+    clear:both;
+    margin-top:15px;
+}
+
+.basic-info {
+    height: 100%;
+}
+
+.basic-info table,.basic-info tbody,.basic-info tbody tr td,.basic-info tbody tr {
+    border: 1px solid #dddddd;
+    vertical-align: middle;
+}
+.course {
+	float: left;
+	margin-bottom: 10px;
+	margin-left: 15px;
+}
+.plugin {
+	float: left;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+.post_image {
+	width: 100%;
+	height: 100%;
+}
+.post_font {
+	width: 300px;
+}
+.course_content {
+	height: 500px;
+	overflow-y: auto;
+}

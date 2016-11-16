@@ -1,0 +1,66 @@
+<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="CommunityElectionCtrl">
+	<!--现社团管理员信息-->
+	<div class="row">
+		<form class="form-horizontal" role="form" enctype="multipart/form-data">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">当前管理员概况</div>
+				</div>
+				<div class="panel-body">
+					<form-input data-title="'邮箱'" data-name="'email'">
+						<input name="email" id="email" ng-model="user.email" class="form-control" type="text" readonly>
+					</form-input>
+					<form-input data-title="'用户名'" data-name="'name'">
+						<input name="name" id="name" ng-model="user.name" class="form-control" type="text" readonly>
+					</form-input>
+					<form-input data-title="'手机'" data-name="'phone'">
+						<input name="phone" id="phone" ng-model="user.phone" class="form-control" type="text" readonly>
+					</form-input>
+					<form-input data-title="'证件照'" data-name="'photo_id'">
+						<div class="thumbnail" style="width:200px;">
+							<img ng-src="{{user.photo_id}}"/>
+						</div>
+					</form-input>
+				</div>
+				<button class="btn btn-primary form-control form-submit-button" type="button" ng-click="choose_new_manager()">添加新管理员</button>
+			</div>
+		</form>
+	</div>
+	<!--新管理员信息-->
+	<div class="row" ng-show="new_manager">
+		<form class="form-horizontal" role="form" enctype="multipart/form-data" ng-submit="election(new_user.user.id)">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="panel-title">新管理员概况</div>
+				</div>
+				<div class="panel-body">
+					<form-input data-title="'邮箱'" data-name="'email'">
+						<input name="email" id="email" ng-model="new_user.user.email" class="form-control" type="email" required>
+					</form-input>
+					<form-input data-title="'用户名'" data-name="'name'">
+						<input name="name" id="name" ng-model="new_user.user.name" class="form-control" type="text" readonly>
+					</form-input>
+					<form-input data-title="'手机'" data-name="'phone'">
+						<input name="phone" id="phone" ng-model="new_user.user.phone" class="form-control" type="text" readonly>
+					</form-input>
+					<form-input data-title="'证件照'" data-name="'photo_id'">
+						<div class="fileinput fileinput-new" data-provides="fileinput">
+							<div class="fileinput-new thumbnail" style="width: 100%">
+								<img ng-src="{{new_user.user.photo_id.substring(0)}}?width=160&height=160">
+							</div>
+							<div class="fileinput-preview fileinput-exists thumbnail"></div>
+							<div>
+								<span class="btn btn-default btn-file">
+								<span class="fileinput-new">选择照片</span>
+								<span class="fileinput-exists">更换</span>
+								<input type="file" name="photo_id" data-file="new_user.user.photo_id"></span>
+								<a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">删除</a>
+							</div>
+						</div>
+					</form-input>
+				</div>
+				<button class="btn btn-primary form-control form-submit-button" type="submit">申请换届</button>
+			</div>
+		</form>
+	</div>
+</div>

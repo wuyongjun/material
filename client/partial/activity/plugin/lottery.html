@@ -1,0 +1,172 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9"
+    ng-controller="LotteryCtrl">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <!-- 返回操作将返回到活动概况页面 -->
+      <a class="btn btn-default" ui-sref="activity_item({ id: activity.id })"><i class="fa fa-reply"></i> 返回</a>&nbsp;&nbsp;
+    </div>
+    <div class="btn-group" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <a class="btn btn-danger" ng-click="delete()" data-toggle="tooltip" data-placement="bottom" title="彻底删除抽奖功能，之前保存的奖项内容全部清空。" tool-tip><i class="fa fa-close"></i> 删除抽奖功能</a>
+      <a class="btn btn-warning" ng-click="close()" data-toggle="tooltip" data-placement="bottom" title="暂时将抽奖功能从手机客户端下架不显示，再次打开抽奖功能时，之前保存的奖项内容依旧存在，可继续编辑。" tool-tip><i class="fa fa-eye"></i> 暂时关闭本次抽奖</a>&nbsp;
+    </div>
+    <div class="btn-group" ng-show="(user.role.name === 'ADMIN' || user.role.name === 'USER') && award_number !== 0">
+      <a class="btn btn-info" target="_blank" ng-href="{{'/app/draw_lots_result/#' + lottery.id}}" data-toggle="tooltip" data-placement="bottom" title="点击展示当前中奖结果" tool-tip>
+        <i class="fa fa-list"></i>&nbsp;中奖结果
+      </a>
+    </div>
+  </div>
+  <!--抽奖基本信息-->
+  <form class="panel panel-default form-horizontal">
+    <div class="panel-heading">
+      <div class="panel-title">抽奖概况</div>
+    </div>
+    <div class="panel-body">
+      <div class="bs-callout bs-callout-warning col-md-10 col-md-offset-1" style="margin-top:10px;">
+        <h4>抽奖功能说明</h4>
+        <p>
+          1、所有奖品均由电子凭证内的电子礼券代替。<br/>
+          2、支持自定义多个奖项，一个奖项可以设置最多6个奖品。<br/>
+          3、支持自定义每一种奖品的数量。<br/>
+          4、开奖过程中，奖项所有信息无法更改。
+        </p>
+      </div>
+      <form-input data-title="'兑奖密码'" data-name="'password_code'">
+        <input class="form-control" readonly 
+            id="password" ng-model="activity.host.password_code" name="password_code">
+        <br/>
+        <!-- <div class="bs-callout bs-callout-warning col-md-12">
+          <p>这个密码小伙伴们一定要牢记并告知对应参与抽奖的战友们，别人打死都不能说噢！</p>
+        </div> -->   
+      </form-input>
+
+    </div>
+    <!-- <button class="btn btn-primary form-control form-submit-button" 
+        type="submit" ng-click="create()" ng-hide="update">添加奖项
+    </button> -->
+    <div ng-if="lottery && lottery.id && lottery.id > 0">
+      <a class="btn btn-primary form-control form-submit-button" ng-click="_create()" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'"><i class="fa fa-plus"></i> 添加奖项</a>
+    </div>
+  </form>
+  <!-- <div class="add-lottery-bar btn-group" ng-if="lottery && lottery.id && lottery.id > 0">
+    <a class="btn btn-default" ng-click="_create()"><i class="fa fa-plus"></i> 添加奖项</a>
+  </div> -->
+  <!-- <div> -->
+  <div ng-if="i._lottery.show">
+    <div class="panel panel-default form-horizontal">
+      <div class="panel-body">
+        <form-input data-title="'奖项名称'" data-name="'name'">
+          <input ng-model="i._lottery.name" class="form-control" type="text">
+        </form-input>
+        <form-input data-title="'中奖人数设置'" data-name="'total'">
+          <input placeholder="请输入整数" ng-model="i._lottery.total" class="form-control" type="number" data-toggle="tooltip" data-placement="top" title="代表这个奖项得奖人数，一个奖项有可能对应多个奖品，每个得奖人奖品均分。"tool-tip>
+        </form-input>
+        <form-input data-title="'中奖范围'" data-name="'scope_id'">
+          <select ng-model="i._lottery.scope_id" ng-options="scope.id as scope.name for scope in lottery_scopes" data-toggle="tooltip" data-placement="top" title="仅支持单选，需要完成中奖范围所选功能之后的手机客户端用户才能参与抽奖。" tool-tip>
+          </select>
+        </form-input>
+        <form-input data-title="'最晚兑换时间'" data-name="'exchange_end_time'">
+          <datetimepicker datetime="i._lottery.exchange_end_time" starttime="i._lottery.exchange_end_time" data-toggle="tooltip" data-placement="top" title="最晚兑换时间前的任何时候，手机客户端用户都可以找对应的社团领取奖品。" tool-tip></datetimepicker>
+        </form-input>
+        <div class="text-center">
+          <a class="btn btn-default" ng-click="lotteryCreate()">保存</a>
+          <a class="btn btn-default" ng-click="_cancel()">取消</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <p class="ng-cloak">
+    <strong>每页显示</strong> {{tableParams.count()}}<strong>条，</strong>
+    <strong>当前为第</strong> {{tableParams.page()}}<strong>页</strong>
+  </p> -->
+  <table ng-table="tableParams"
+      class="table table-striped table-responsive coupons">
+      <tbody>
+        <tr ng-repeat="award in $data">
+          <td data-title="''">
+            <!--修改添加奖项的编号-->
+            <!-- <h4>编号: {{$index + 1}}</h4> -->
+            <div class="panel panel-default form-horizontal">
+              <div class="panel-heading">
+                <div class="panel-title"><h4>编号: {{$index + 1}}</h4></div>
+              </div>
+              <div class="panel-body">
+                <form-input data-title="'奖项名称'">
+                  <input ng-model="award.name" class="form-control" type="text">
+                </form-input>
+                <form-input data-title="'中奖人数设置'" data-name="'total'" >
+                  <input placeholder="请输入整数" ng-model="award.total" class="form-control" type="number" data-toggle="tooltip" data-placement="top" title="代表这个奖项得奖人数，一个奖项有可能对应多个奖品，每个得奖人奖品均分。"tool-tip>
+                </form-input>
+                <form-input data-title="'中奖范围'" data-name="'scope_id'">
+                  <select ng-model="award.scope_id" ng-options="scope.id as scope.name for scope in lottery_scopes" data-toggle="tooltip" data-placement="top" title="仅支持单选，需要完成中奖范围所选功能之后的手机客户端用户才能参与抽奖。" tool-tip>
+                  </select>
+                </form-input>
+                <form-input data-title="'最晚兑换时间'" data-name="'exchange_end_time'">
+                  <datetimepicker datetime="award.exchange_end_time" starttime="i._lottery.exchange_end_time" data-toggle="tooltip" data-placement="top" title="最晚兑换时间前的任何时候，手机客户端用户都可以找对应的社团领取奖品。" tool-tip></datetimepicker>
+                </form-input>
+                <div class="prizes">
+                  <div class="prize" ng-repeat="good in award.goods">
+                    <!-- <div class="logo" style="height:100px;width:100px">
+                      <img src="{{good.goods_info.sponsor_logo}}" image-fixed>
+                    </div> -->
+                    <span class="thumbnail" style="height:100px;width:100px;" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                      <img ng-src="{{good.goods_info.image}}?width=90&height=90" style="height:100%;width:100%;" ng-click="updatePrize(good)" data-toggle="tooltip" data-placement="bottom" title="点击进行奖品数量的更改" tool-tip>
+                    </span>
+                    <span class="thumbnail" style="height:100px;width:100px;" ng-hide="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                      <img ng-src="{{good.goods_info.image}}?width=90&height=90" style="height:100%;width:100%;">
+                    </span>
+                    <p>
+                      数量: {{good.number}}
+                    </p>
+                  </div>
+                  <a class="btn btn-default" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'" ng-click="prizeCreate(award)" data-toggle="tooltip" data-placement="bottom" title="点击添加奖品" tool-tip><i class="fa fa-plus"></i></a>
+                </div>
+                <div class="text-center" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                  <!-- <a class="btn btn-default" ng-click="lotteryResult(award)">开奖区</a> -->
+                  <a class="btn btn-default" target="_blank" ng-href="{{'/app/draw_lots/#' + award.id}}"  data-toggle="tooltip" data-placement="bottom" title="点击后打开”抽奖大屏幕“，在浏览器中点击操作完成整个抽奖流程。" tool-tip>开奖大屏幕</a>
+                  <a class="btn btn-default" ng-click="lotteryChange(award)">更新</a>
+                  <a class="btn btn-default" ng-click="lotteryDelete(award)">删除</a>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <!-- </div> -->
+  <!-- Confirm Modal -->
+  <!-- <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+          <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4>
+        </div>
+        <div class="modal-body">
+          {{confirm.message}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>
+<script type="text/ng-template" id="custom/pager">
+  <ul class="pager ng-cloak">
+    <li ng-repeat="page in pages"
+        ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
+        ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
+      <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; 上一页</a>
+      <a ng-switch-when="next" ng-click="params.page(page.number)" href="">下一页 &raquo;</a>
+    </li>
+    <li> 
+      <div class="btn-group">
+        <button type="button" ng-class="{'active':params.count() == 1}" ng-click="params.count(1)" class="btn btn-default">1</button>
+        <button type="button" ng-class="{'active':params.count() == 3}" ng-click="params.count(3)" class="btn btn-default">3</button>
+        <button type="button" ng-class="{'active':params.count() == 5}" ng-click="params.count(5)" class="btn btn-default">5</button>
+        <button type="button" ng-class="{'active':params.count() == 7}" ng-click="params.count(7)" class="btn btn-default">7</button>
+      </div>
+    </li>
+  </ul>
+</script>

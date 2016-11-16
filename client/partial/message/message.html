@@ -1,0 +1,41 @@
+<div ng-controller="MessageCtrl">
+  <!--用户聊天主题，采用一行多图轮播形式-->
+  <!-- <div class="row" ng-show="topic">
+    <div class="owl-carousel owl-theme">
+      <div class="item" ng-repeat="item in items" repeat-finish> 
+        <img class="img-thumbnail" style="width: 240px;height: 140px;" ng-src="{{item}}" ng-click="viewImage(item)">
+        <div class="item">
+          这是一个主题这是一个主题这是一个主题这是一个主题
+        </div> 
+      </div>
+    </div>
+    <br/><br/>
+  </div> -->
+  <!--聊天内容部分-->
+  <div class="row">
+    <textarea class="form-control" ng-model="content" rows="5"></textarea><br/>
+    <button class="btn btn-info pull-right" type="button" ng-click="send()">发送</button><br/><br/>
+    <div class="message-panel">
+      <div ng-repeat="message in messages" class="message-container">
+          <div ng-if="message.direction == 'FROM_USER'">
+            <img ng-if="user.icon" ng-src="{{user.icon}}/thumbnail"
+                class="message-icon pull-left"
+                ng-attr-title="{{user.nickname}}" ng-click="viewImage(user.icon)"/>
+            <p class="nickname" ui-sref="message.userInfo({ id: user.id})">&nbsp;{{user.nickname}}</p>
+            <div class="user_message message"
+                ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}">
+              {{message.content}}
+            </div>
+          </div>
+          <div ng-if="message.direction == 'FROM_COMMUNITY'">
+            <img ng-if="community.logo" ng-src="{{community.logo}}/thumbnail"
+                class="message-icon pull-right"
+                ng-attr-title="{{community.name}}"/>
+            <div class="community_message message with-newlines"
+                ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}"><div ng-if="message.status === 'NEW'"><font ng-bind="message.content"></font></div><div ng-if="message.status === 'READ'"><font ng-bind="message.content"></font>&nbsp;<font style="color: white;">--</font>&nbsp;<font ng-bind="messageStatus[message.status]" class="message_status"></font></div></div>
+          </div>
+      </div>
+    </div>
+    <button class="btn btn-default center-block more-btn" ng-click="loadMore()" ng-disabled="load_more_btn">{{load_btn_content}}</button>
+  </div>
+</div>

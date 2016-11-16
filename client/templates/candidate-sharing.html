@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{candidate.title}}</title>
+  <link rel="stylesheet" href="/static/styles/candidate-sharing.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body class="container">
+  <div id='ios_popweixin'>
+    <div class='tip top2bottom'>
+      <img align="center" src='/static/images/safari.png' style="width:100%;height:100%" />
+    </div>
+  </div>
+  <div id='android_popweixin'>
+    <div class='tip top2bottom'>
+      <img align="center" src='/static/images/android_note.png' style="width:100%;height:100%"/>
+    </div>
+  </div>
+  <h1>{{candidate.vote_info.activity.subject}}</h1>
+  <div class="banner">
+    <div class="info">
+      <!-- <h1>{{candidate.vote_info.activity.subject}}</h1> -->
+      <!-- <p>{{candidate.remark}}</p> -->
+      <div class="nickname">{{candidate.title}}</div>
+    </div>
+    <ul>
+      {% for image in candidate.images %}
+        <li><img align="center" src="/images/{{image.path}}"></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="content">
+    <p>{{candidate.describe}}</p>
+  </div>
+  <a href="#" class="btn footer-btn">快来 i 微校为Ta投票吧～</a>
+  <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.unslider/src/unslider.js"></script>
+  <script type="text/javascript" src="/static/scripts/candidate-sharing.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="CommArticleCtrl">
+  <!--创建社团新闻按钮-->
+  <div class="row">
+    <button class="btn btn-info pull-right" ng-click="goToArtDetail(-1, currentPage)">创建社团新闻</button>
+    <!-- <button class="btn btn-info pull-right" ng-click="goToArtDetail(-1)">创建社团新闻</button> -->
+  </div>
+  <!--社团文件说明文字-->
+  <div class="row">
+    <form class="form-horizontal">
+      <fieldset>
+        <legend>
+          <h4>新闻简介</h4>
+        </legend>
+        <p>
+          为了更全方位的展示社团的方方面面，有考虑到大家实际的工作量，所以 i 微校支持
+          直接将写好的公众号内容导入哟！！需要注意以下几点：
+        </p>
+        <p>
+          1.我们目前仅支持直接导入微信公众号的链接；
+        </p>
+        <p>
+          2.每个社团，当日发送新闻数量限制为3条；
+        </p>
+        <p>
+          3.社团新闻是展现社团文化很重要的部分哟！
+        </p>
+      </fieldset>
+    </form>
+  </div><br/>
+  <!--新闻总数-->
+  <div class="row">
+		<span class="label label-info" style="font-size: 100%;">
+			新闻总数：&nbsp;<font ng-bind="article_sum"></font>
+		</span>
+  </div><br/>
+  <!--新闻列表-->
+  <div class="row">
+     <div class="table-container">
+            <table ng-table="tableParams" class="table table-striped table-responsive">
+              <tbody>
+              <tr ng-repeat="article in $data" header-class="text-left">
+                <!-- <td data-title="'编号'">
+                              <center>
+                                  <font ng-bind="$index + 1"></font>
+                              </center>
+                          </td> -->
+                <td data-title="'新闻名称'" header-class="text-left">
+                  <!--<a href="{{article.link}}" target="_blank" title="点击打开新闻">-->
+                  <!--<font ng-bind="article.title"></font>-->
+                  <!--</a>-->
+                  <!--begin modify-->
+                  <a href="{{article.link}}" target="_blank" title="点击打开新闻" ng-if="!article.original">
+                    <font ng-bind="article.title"></font>
+                  </a>
+                  <a ui-sref="article_detail({ articleId: article.id, page: currentPage, original: article.original })" ng-if="article.original">
+                    <font ng-bind="article.title"></font>
+                  </a>
+                  <!--end modify-->
+                </td>
+                <td data-title="'发布时间'" header-class="text-left">
+                  <font ng-bind="article.publish_time | date: 'yyyy-MM-dd HH:mm'"></font>
+                </td>
+                <td data-title="'阅读量'">
+                  <center>
+                    <font ng-bind="article.num"></font>
+                  </center>
+                </td>
+                <td data-title="'状态'" header-class="text-left">
+                  <span ng-if="article.publish" class="label label-success">已发布</span>
+                  <span ng-if="!article.publish" class="label label-danger">未发布</span>
+                </td>
+                <!------------gai-->
+                <td data-title="'发布方式'" header-class="text-left">
+                  <span ng-if="!article.original" class="label label-success">微信导入</span>
+                  <span ng-if="article.original" class="label label-danger">原创</span>
+                  </a>
+                </td>
+                <!------------gai-->
+                <td data-title="'操作'">
+                  <label type="button" class="btn btn-default btn-checkbox" ng-if="!article.publish"
+                         ng-click="togglePubArt(article.id,article.publish)" style="margin-bottom:3px;width:98px;">
+                      <span>
+                        发&nbsp;&nbsp;布 <i class="fa fa-volume-up"></i>
+                      </span>
+                  </label><font ng-if="!article.publish"></font>
+                  <label type="button" class="btn btn-default btn-checkbox" ng-if="article.publish"
+                         ng-click="togglePubArt(article.id,article.publish)" style="margin-bottom:3px;">
+                      <span>
+                        取消发布 <i class="fa fa-ban"></i>
+                      </span>
+                  </label><font ng-if="article.publish"></font>
+                  <!-- begin modify -->
+                  <label type="button" class="btn btn-info btn-checkbox"
+                         ng-click="goToArtDetail(article.id, currentPage, article.original)" style="width:86px;margin-bottom:3px;">
+                        <span>
+                          编&nbsp;&nbsp;辑&nbsp;&nbsp;<i class="fa fa-pencil-square-o"></i>
+                        </span>
+                  </label>
+                  <!-- end modify -->
+                  <!--<label type="button" class="btn btn-info btn-checkbox" ng-click="goToArtDetail(article.id, currentPage,original)" style="width:86px;margin-bottom:3px;">-->
+                  <!--<span>-->
+                  <!--编&nbsp;&nbsp;辑&nbsp;&nbsp;<i class="fa fa-pencil-square-o"></i>-->
+                  <!--</span>-->
+                  <!--</label>&nbsp;-->
+                  <!-- <label type="button" class="btn btn-info btn-checkbox" ng-click="goToArtDetail(article.id)" style="width:86px;margin-bottom:3px;">
+                                  <span>
+                                      编&nbsp;&nbsp;辑&nbsp;&nbsp;<i class="fa fa-pencil-square-o"></i>
+                                  </span>
+                              </label>&nbsp; -->
+                  <label type="button" class="btn btn-danger btn-checkbox" ng-click="deleteArticle(article.id)" style="width:86px;margin-bottom:3px;">
+                      <span>
+                        删&nbsp;&nbsp;除&nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+                      </span>
+                  </label>&nbsp;
+                  <div style="text-align: center;margin-top: 10px;">
+                    <a ng-click="goToUnpubLog('article', article.id)">操作日志</a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+     </div>
+  </div>
+  <!-- Confirm Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">关闭</span>
+          </button>
+          <!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+        </div>
+        <div class="modal-body">
+          <font ng-bind="confirm.message"></font>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirm();">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

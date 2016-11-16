@@ -1,0 +1,58 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="PartyActCtrl">
+	<div class="row">
+		<div class="col-md-12">
+			<a class="btn btn-default" ui-sref="party_info.course({personId: personId, summaryId: 'null'})"><i class="fa fa-reply"></i> 返回</a>
+		</div>
+	</div><br/>
+	<div class="row">
+		<div class="col-md-12">
+			<span class="label label-info">
+				共参与支部活动：&nbsp;<font ng-bind="activity_sum"></font>&nbsp;次
+			</span>
+		</div>
+	</div><br/>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped table-responsive" ng-table="tableParams">
+				<tbody>
+					<tr ng-repeat="activity in $data">
+						<td data-title="'活动名称'" header-class="text-left">
+							<font ng-bind="activity.activity_obj.activity.subject"></font>
+						</td>
+						<td data-title="'活动时间'" header-class="text-left">
+							<font ng-bind="activity.activity_obj.activity.start_time | date: 'yyyy-MM-dd HH:mm'"></font>~
+							<font ng-bind="activity.activity_obj.activity.end_time | date: 'yyyy-MM-dd HH:mm'"></font>
+						</td>
+						<td data-title="'活动地点'" header-class="text-left">
+							<font ng-bind="activity.activity_obj.activity.location"></font>
+						</td>
+						<td data-title="'活动功能'" header-class="text-left" class="activity-content">
+							<div ng-repeat="plugin in activity.activity_obj.activity.plugins">
+								<img class="logo" ng-src="{{plugin.icon_path}}" style="width: 13px;"/>
+								<span>
+									{{plugin.name}}
+								</span>
+							</div>
+						</td>
+						<td data-title="'是否已添加总结'">
+							<center>
+								<span class="label label-success" ng-if="activity.join_undergo !== 0">是</span>
+								<span class="label label-danger" ng-if="activity.join_undergo === 0">否</span>
+							</center>
+						</td>
+						<td data-title="'操作'">
+							<center>
+								<label type="button" class="btn btn-info btn-checkbox" ng-if="activity.join_undergo === 0" ng-click="addSummary(activity.id, '-1', personId)">
+									<span>添加总结</span>
+								</label>
+								<label type="button" class="btn btn-info btn-checkbox" ng-if="activity.join_undergo !== 0" ng-click="editSummary(activity.id, activity.join_undergo, personId)">
+									<span>编辑总结</span>
+								</label>
+							</center>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

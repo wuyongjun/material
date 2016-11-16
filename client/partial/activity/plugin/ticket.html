@@ -1,0 +1,143 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col-xs-9 col-sm-9"
+    ng-controller="TicketCtrl">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <!-- 返回操作将返回到活动概况页面 -->
+      <a class="btn btn-default" ui-sref="activity_item({ id: activity.id })">
+        <i class="fa fa-reply"></i> 返回</a>
+      <a ng-show="ticket_big_screen" class="btn btn-default" target="_blank" ng-href="{{'/app/ticket_screen/#' + ticket.id}}">
+        <i class="fa fa-desktop"></i> 大屏幕</a>&nbsp;&nbsp;
+    </div>
+    <div class="btn-group" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <!--添加停用电子票-->
+      <a class="btn btn-primary" ng-click="complete_ticket()" data-toggle="tooltip" data-placement="bottom" title="手机客户端用户无法继续使用电子票，但电子票功能仍然在手机客户端展示。" tool-tip>
+        <i class="glyphicon glyphicon-stop"></i> 停用电子票</a>
+      <a class="btn btn-danger" ng-click="close()" data-toggle="tooltip" data-placement="bottom" title="暂时将电子票功能从手机客户端下架不显示，再次打开电子票功能时，之前保存的候选项内容依旧存在，可继续编辑。" tool-tip>
+        <i class="fa fa-close"></i> 关闭电子票</a>
+    </div>
+  </div>
+  <!--添加查看已停用的电子票
+  <div style="margin-bottom:10px;">
+    <a class="btn btn-default" ng-click="history_ticket()" data-placement="bottom" title="如果社团多次发放电子票，可以在这里查看历次电子票数据统计。" tool-tip>
+      <i class="glyphicon glyphicon-list"></i> 查看历史电子票</a>
+  </div>-->
+  <div>
+  <form class="panel panel-default form-horizontal">
+    <div class="panel-heading">
+      <div class="panel-title">电子票概况</div>
+    </div>
+    <div class="panel-body">
+      <form-input data-title="'电子票数量'" data-name="'total'">
+        <input type="number" class="form-control"
+            id="total" ng-model="ticket.total" name="total" placeholder="请输入整数">
+      </form-input>
+      <form-input data-title="'抢票开始时间'" data-name="'start_time'">
+        <datetimepicker datetime="ticket.start_time"></datetimepicker>
+      </form-input>    
+      <form-input data-title="'抢票结束时间'" data-name="'end_time'">
+        <datetimepicker datetime="ticket.end_time"></datetimepicker>
+      </form-input>         
+      <form-input data-title="'电子票说明'" data-name="'content'">
+        <textarea class="form-control" id="content"
+            ng-model="ticket.content"
+            name="content" rows="5" autocomplete="off" placeholder="抢票说明及使用说明，200字以内">
+        </textarea>
+      </form-input>
+      <!-- <form-input data-title="'费用'" data-name="'cost'">
+        <input name="cost" id="cost" ng-model="ticket.cost" 
+            class="form-control" type="text">
+      </form-input> -->
+      <form-input data-title="'验票地点'" data-name="'location'">
+        <input name="location" id="location" ng-model="ticket.location" 
+            class="form-control" type="text">
+      </form-input>
+
+      <div class="bs-callout bs-callout-warning col-md-10 col-md-offset-1" ng-show="ticket_view">
+        <h4>电子票示意图</h4>
+        <p>亲爱的同学们，电子票不仅作为活动入场的唯一电子凭证，更是为社团谋福利的一大利器啊~~吼吼，一张成熟的电子票应该是这样滴<!-- ：{{ticket.cover}}<br/>{{ticket.cover.substring(0)}} --></p>
+        <!-- <img class="col-md-12" src="/static/images/ticket.jpg" ng-click="viewImage('/static/images/ticket.jpg')"> -->
+        <div class="row">
+          <div class="col-xs-8 col-sm-9" style="height:250px;margin-right:-40px;">
+            <img id="ticket_image" class="col-xs-12 col-sm-12" ng-src="{{ticket_cover}}" style="height:100%;"/>
+            <font id="ticket_time_loc">
+              {{ticket.activity.start_time | date: 'yyyy-MM-dd HH:mm'}}&nbsp;&nbsp;&nbsp;{{ticket.location}}
+            </font>
+            <font id="ticket_subject">
+              {{ticket.activity.subject}}
+            </font>
+            <font id="ticket_sponsor_name_title">
+              特别感谢：
+            </font>
+            <font id="ticket_sponsor_name">
+              {{ticket.sponsor_name}}
+            </font>
+            <img id="ticket_logo" ng-src="{{ticket_logo}}"/>
+            <img id="ticket_community_logo" ng-src="{{ticket.community_logo.substring(0)}}"/>
+          </div>
+          <div class="col-xs-4 col-sm-4" style="height:250px;margin-left:-20px;">
+            <img class="col-xs-12 col-sm-12" src="/static/images/qr_code.png" style="height:100%;"/>
+          </div>
+        </div>
+      </div>
+
+      <form-input data-title="'赞助商名称'" data-name="'sponsor_name'">
+        <input name="sponsor_name" id="sponsor_name" ng-model="ticket.sponsor_name" 
+            class="form-control" type="text" placeholder="请将赞助商名称限制在10个汉字以内" regexp="sponsor_name_regexp" blur>
+      </form-input>
+      <form-input data-title="'赞助商Logo'" data-name="'logo'">
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div ng-if="ticket.logo" class="fileinput-new thumbnail" style="height:80px;width:80px">
+              <img ng-src="{{ticket.logo.substring(0)}}" image-fixed>
+            </div>
+            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+            <div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+              <span class="btn btn-default btn-file">
+                <span class="fileinput-new">选择照片</span>
+                <span class="fileinput-exists">更换</span>
+                <input type="file" name="logo" data-file="ticket.logo">
+              </span>
+              <a href="#" class="btn btn-default fileinput-exists"
+                  data-dismiss="fileinput">删除</a>
+            </div>
+          </div>
+      </form-input>
+
+      <form-input data-title="'赞助商海报'" data-name="'cover'">
+          <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div ng-if="ticket.cover" class="fileinput-new thumbnail" style="height:200px;width:300px">
+              <img ng-src="{{ticket.cover.substring(0)}}" image-fixed>
+            </div>
+            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+            <div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+              <span class="btn btn-default btn-file">
+                <span class="fileinput-new">选择照片</span>
+                <span class="fileinput-exists">更换</span>
+                <input type="file" name="cover" data-file="ticket.cover">
+              </span>
+              <a href="#" class="btn btn-default fileinput-exists"
+                  data-dismiss="fileinput">删除</a>
+            </div>
+          </div>
+      </form-input>
+
+      <form-input data-title="'验票密码'" data-name="'password'">
+        <input class="form-control" readonly 
+            id="password" ng-model="activity.host.password_code" name="password">
+        <br/>
+        <div class="bs-callout bs-callout-warning col-md-12">
+          <p>这个密码小伙伴们一定要牢记并告知对应参与验票的战友们，别人打死都不能说噢！</p>
+        </div>            
+      </form-input>
+
+    </div>
+    <div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <button class="btn btn-primary form-control form-submit-button" 
+        type="submit" ng-click="create()" ng-hide="update">创建
+      </button>
+      <button class="btn btn-primary form-control form-submit-button" 
+          type="submit" ng-click="change()" ng-if="update">更新
+      </button>
+    </div>
+  </form>
+  </div>
+</div>

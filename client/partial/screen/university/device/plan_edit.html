@@ -1,0 +1,70 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="EditPlanCtrl">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6">
+			<a class="btn btn-default" ui-sref="terminal_university.plans({page: page})" ng-if="from === 'plan'">
+				<i class="fa fa-reply"></i> 返回
+			</a>
+			<a class="btn btn-default" ui-sref="terminal_university.device({page: page})" ng-if="from === 'device'">
+				<i class="fa fa-reply"></i> 返回
+			</a>
+		</div>
+	</div><br/>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<form class="form-horizontal" role="form" name="planForm">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<div class="panel-title">编辑计划</div>
+					</div>
+					<div class="panel-body">
+						<form-input data-title="'计划名称'" data-name="'name'">
+							<input class="form-control" ng-model="plan.name" placeholder="请将计划名称限制在10个字符以内" maxlength="10" />
+						</form-input>
+						<form-input data-title="'开机时间'" data-name="'wakeup_time'">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="input-group">
+										<input type="number" class="form-control" ng-model="plan.sHour" step="1" min="0" max="23"  />
+										<span class="input-group-addon">时</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group">
+										<input type="number" class="form-control" ng-model="plan.sMinute" step="1" min="0" max="59" />
+										<span class="input-group-addon">分</span>
+									</div>
+								</div>
+							</div>
+						</form-input>
+						<form-input data-title="'关机时间'" data-name="'sleep_time'">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="input-group">
+										<input type="number" class="form-control" ng-model="plan.eHour" step="1" min="0" max="23" />
+										<span class="input-group-addon">时</span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-group">
+										<input type="number" class="form-control" ng-model="plan.eMinute" step="1" min="0" max="59" />
+										<span class="input-group-addon">分</span>
+									</div>
+								</div>
+							</div>
+						</form-input>
+						<form-input data-title="'重复周期'" data-name="'repeating_weekdays'">
+							<div class="row">
+								<div class="col-lg-2 col-md-2 col-sm-2" ng-repeat="weekday in repeatWeekdays">
+									<input type="checkbox" ng-model="choose_item" ng-checked="weekday.checked" ng-click="chooseWeekday(weekday.id, choose_item)"/> 
+									<font ng-bind="weekday.name"></font>
+								</div>
+							</div>
+						</form-input>
+					</div>
+				</div>
+				<button class="btn btn-info form-control" type="submit" ng-if="editId === '-1'" ng-click="savePlan()">添&nbsp;&nbsp;加</button>
+				<button class="btn btn-info form-control" type="submit" ng-if="editId !== '-1'" ng-click="savePlan()">修&nbsp;&nbsp;改</button>
+			</form>
+		</div>
+	</div>
+</div>

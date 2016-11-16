@@ -1,0 +1,36 @@
+<div ng-controller="SysMesInfoCtrl">
+	<!-- 系统公告表格 -->
+	<div class="row" ng-repeat="sysinfo in sysinfos">
+		<div class="col-md-10 col-md-offset-1">
+			<form class="panel panel-info form-horizontal" my-collapse>
+				<span class="btn pull-right">
+					<div ng-if="!sysinfo.isDisplay"><i class="fa fa-chevron-down"></i>&nbsp;展开</div>
+					<div ng-if="sysinfo.isDisplay"><i class="fa fa-chevron-up"></i>&nbsp;收起</div>
+				</span>
+				<div class="panel-heading">
+					<div><font ng-bind="sysinfo.sender_obj.nickname || '超级管理员'"></font>&nbsp;&nbsp;<font ng-bind="sysinfo.create_time | date: 'yyyy-MM-dd HH:mm'"></font></div>
+				</div>
+				<div id="{{sysinfo.id}}" class="panel-body" ng-class="{true: 'isDisplay', false: 'isNotDisplay'}[{{sysinfo.isDisplay}}]">
+					<div class="row">
+						<div class="col-sm-12">
+							<h4><font ng-bind="sysinfo.title"></font></h4>
+						</div>
+					</div><br/>
+					<div class="row" ng-if="sysinfo.log_type === 'VERSION'">
+						<div class="col-sm-12">
+							更新信息：<textarea class="form-control" ng-disabled="true" rows="10" style="resize: none;" ng-bind="sysinfo.data_obj.describe"></textarea>
+						</div>
+					</div>
+					<div class="row" ng-if="sysinfo.content">
+						<div class="col-sm-12">
+							理由：<textarea class="form-control" ng-disabled="true" rows="6" style="resize: none;" ng-bind="sysinfo.content"></textarea>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div><br/>
+	<button class="btn btn-default center-block more-btn" ng-click="loadMoreInfos()" ng-disabled="loadMoreBtn" ng-show="loadMore">
+		<font ng-bind="loadSysinfoBtn"></font>
+	</button>
+</div>

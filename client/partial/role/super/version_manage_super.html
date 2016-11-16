@@ -1,0 +1,58 @@
+<div>
+	<!--新建发布版本-->
+	<div class="row">
+		<!-- <button class="btn btn-info pull-right" ng-click="publishVersion()">发布新版本</button> -->
+		<div class="btn-group pull-right" role="group">
+			<button class="btn btn-info" ng-click="publishVersion('editor')">编辑器发布</button>
+			<button class="btn btn-info" ng-click="publishVersion('app')">App发布</button>
+		</div>
+	</div><br/>
+	<!--导航栏部分-->
+	<div class="row">
+		<nav class="navbar navbar-inverse" style="background-color: rgb(219, 218, 218);" role="navigation">
+			<div class="navbar-header"></div>
+			<div class="collapse navbar-collapse" id="navbar-item">
+				<ul class="nav navbar-nav">
+					<li d-sref="'version_manage_super'">
+						<a ui-sref="version_manage_super">编辑器版本</a>
+					</li>
+					<li d-sref="'version_manage_super.app'">
+						<a ui-sref="version_manage_super.app">app版本</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div ui-view>
+		<div ng-controller="VerManageSuCtrl">
+			<!--提示信息-->
+			<div class="row" ng-show="versionList">
+				<center>
+					<h1><font ng-bind="note"></font></h1>
+				</center>
+			</div>
+			<!--app版本列表-->
+			<div class="row" ng-hide="versionList">
+				<br/>
+				<table ng-table="tableParams" class="table table-striped table-responsive">
+					<tbody>
+						<tr ng-repeat="version in $data">
+							<td data-title="'版本号'" header-class="text-left">
+								<font ng-bind="version.version_num"></font>
+							</td>
+							<td data-title="'创建时间'" header-class="text-left">
+								<font ng-bind="version.create_time | date: 'yyyy-MM-dd HH:mm'"></font>
+							</td>
+							<td data-title="'版本标题'" header-class="text-left">
+								<font ng-bind="version.version_url"></font>
+							</td>
+							<td data-title="'版本简介'" header-class="text-left">
+								<textarea ng-bind="version.describe" style="width:100%;border-radius:4px;padding:10px;resize:none;" rows="6" ng-disabled="true"></textarea>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

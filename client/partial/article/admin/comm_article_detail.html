@@ -1,0 +1,85 @@
+<div class="tabs-left hidden-print"  ng-if="user.role.name === 'UN_ADMIN'">
+  <ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+    <li>
+      <a ui-sref="activity_university">活动管理</a>
+    </li>
+    <li class="active">
+      <a ui-sref="activity_university.article">新闻管理</a>
+    </li>
+    <li>
+      <a ui-sref="activity_university.bazaar">校园集市</a>
+    </li>
+  </ul>
+</div>
+<div class="tabs-left hidden-print"  ng-if="user.role.name === 'IWX_ADMIN'">
+  <ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+    <li>
+      <a ui-sref="activity_iWX">活动管理</a>
+    </li>
+    <li class="active">
+      <a ui-sref="activity_iWX.article">新闻管理</a>
+    </li>
+    <li id="left">
+      <a ui-sref="activity_iWX.bazaar">校园集市</a>
+    </li>
+  </ul>
+</div>
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="CommArtDetailCtrl">
+  <div class="row">
+    <!--<a class="btn btn-default" ui-sref="activity.article({ page: page})">-->
+    <!--<i class="fa fa-reply"></i> 返回-->
+    <!--</a>-->
+    <!--begin modify-->
+    <a class="btn btn-default" ui-sref="activity.article({ currentPage: page, page: page})" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <i class="fa fa-reply"></i> 返回
+    </a >
+    <!--end modify-->
+  </div><br/><br/>
+  <!--新闻内容表单-->
+  <div class="row">
+    <form class="form-horizontal" ng-submit="sendArticle()">
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="article_title">新闻标题</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="请填写新闻标题，20字以内。" maxlength="20" ng-model="article.title" required>
+        </div>
+      </div><br/>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="article_title">新闻摘要</label>
+        <div class="col-md-8">
+					<textarea class="form-control" placeholder="请填写新闻摘要，100字以内。" maxlength="100" rows="8"
+                    ng-model="article.context" required></textarea>
+        </div>
+      </div><br/>
+      <div class="form-group">
+        <label class="col-md-2 control-label" for="article_title">选择发布方式</label>
+        <div class="col-md-8">
+          <button href="#" class="btn btn-default" ng-disabled="disable" ng-class="{'': original=='true', 'active': original=='false'}" ng-click="tab1()">原创</button>
+          <button href="#" class="btn btn-default" ng-disabled="!disable" ng-class="{'active': original=='true','': original=='false'}" ng-click="tab2()">微信导入</button>
+        </div>
+      </div><br/>
+      <div class="form-group" ng-if="tab==1">
+        <label class="col-md-2 control-label" for="article_title"></label>
+        <div class="col-md-8">
+          <ng-simditor content="article.original_context" required></ng-simditor>
+        </div>
+      </div><br/>
+      <div class="form-group" ng-if="tab==2">
+        <label class="col-md-2 control-label" for="article_title">新闻链接</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" placeholder="本社微信公众号链接地址，目前仅支持https://mp.weixin.qq.com/开头的链接。" ng-model="article.link" required>
+        </div>
+      </div><br/>
+      <div class="row">
+        <div class="col-md-6">
+          <!--begin modify-->
+          <button type="submit" class="btn btn-info pull-right" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+            <i class="fa fa-send"></i> 发送
+          </button>
+          <!--end modify-->
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,274 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9"
+    ng-controller="StatCtrl">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="activity-button-bar">
+        <div class="btn-group">
+        <!-- 返回操作将返回到活动概况页面 -->
+          <a class="btn btn-default" ui-sref="activity_item({ id: activity.id })">
+            <i class="fa fa-reply"></i> 返回</a>&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 md-offset-1 text-left">
+      <p class="preview-item shake shake-rotate"
+          data-am=":enter right move 500px scale up 100% over 2.0s:go shake"
+          data-am-shake=":shake " style="font-size:40px;color:#2CC7F9;">
+        活动活跃度：<font ng-bind="summary.total"></font>
+      </p>
+    </div>
+  </div>
+  
+  <div>
+    <!--活动基本统计信息-->
+    <h3 class="col-md-12 text-center">基本信息</h3>
+    <hr class="col-md-12" style="border-top-color:#E4DEDE;" />
+    <div class="col-md-3 text-center">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">活动点击数</div>
+        </div>
+        <div class="panel-body">
+          <font ng-bind="summary.browse_count"></font>
+        </div> 
+      </div>
+    </div>
+
+    <div class="col-md-3 text-center">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">活动收藏数</div>
+        </div>
+        <div class="panel-body">
+          {{summary.fav_count}}
+        </div> 
+      </div>
+    </div>
+    <!-- <div class="col-md-3 text-center">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-title">活动分享数</div>
+        </div>
+        <div class="panel-body">
+          暂未统计
+        </div> 
+      </div>
+    </div> --> 
+    <!--签到统计信息-->
+    <div ng-hide="plugin_exist.sign_in">
+      <h3 class="col-md-12 text-center">签到</h3>
+      <hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">签到人数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.sign_in_count"></font>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <!--电子票统计信息-->
+    <div ng-hide="plugin_exist.ticket">
+      <h3 class="col-md-12 text-center">电子票</h3>
+      <hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+      <!-- <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">总票数</div>
+          </div>
+          <div class="panel-body">
+            暂未统计
+          </div> 
+        </div>
+      </div> --> 
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">抢票人数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.ticket_claimed_count"></font>
+          </div> 
+        </div>
+      </div> 
+
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">到场人数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.ticket_used_count"></font>
+          </div> 
+        </div>
+      </div> 
+
+      <!-- <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">分享人数</div>
+          </div>
+          <div class="panel-body">
+            暂未统计
+          </div> 
+        </div>
+      </div> --> 
+    </div>
+    <!--爆料统计信息-->
+    <div ng-hide="plugin_exist.timeline">
+      <h3 class="col-md-12 text-center">爆料</h3>
+      <hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+      <!-- <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">浏览量</div>
+          </div>
+          <div class="panel-body">
+            暂未统计
+          </div> 
+        </div>
+      </div> --> 
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">爆料总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.comment_count"></font>
+          </div> 
+        </div>
+      </div> 
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">爆料回复总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.reply_comment_count"></font>
+          </div> 
+        </div>
+      </div> 
+
+      <!-- <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">上墙总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.up_comment_count"></font>
+          </div> 
+        </div>
+      </div> -->
+    </div>
+    
+    <!--抽奖统计信息 需求未定
+    <div ng-hide="plugin_exist.lottery">
+      <h3 class="col-md-12 text-center">抽奖</h3>
+      <hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">奖项数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.lottery_count"></font>
+          </div> 
+        </div>
+      </div>
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">奖品总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.lottery_goods_count"></font>
+          </div> 
+        </div>
+      </div>
+
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">中奖人数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.lottery_draw_lots_count"></font>
+          </div> 
+        </div>
+      </div>
+    </div>-->
+    <!--投票统计信息-->
+    <div ng-if="summary.votes.length > 0" ng-hide="plugin_exist.vote">
+      <h3 class="col-md-12 text-center">投票</h3>
+      <hr class="col-md-12" style="border-top-color:#E4DEDE;"/>
+
+      <div class="col-md-3 text-center" ng-repeat="vote in summary.votes">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title"><!-- <font ng-bind="vote.title"></font> -->投票总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="vote.vote_count"></font>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <!-- 当前问卷插件统计信息 -->
+    <div ng-hide="plugin_exist.questionnaire">
+      <h3 class="col-md-12 text-center">问卷</h3>
+      <hr class="col-md-12" style="border-top-color: #E4DEDE;">
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">问卷题目总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.questionnaire.rubric_num"></font>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">参与总人数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.questionnaire.people_num"></font>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">男性总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.questionnaire.male"></font>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 text-center">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">女性总数</div>
+          </div>
+          <div class="panel-body">
+            <font ng-bind="summary.questionnaire.female"></font>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>am.start();</script>

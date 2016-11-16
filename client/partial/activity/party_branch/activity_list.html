@@ -1,0 +1,90 @@
+<div ng-controller="PartyActListCtrl">
+	<div class="tabs-left hidden-print ">
+		<ul class="nav nav-tabs col-sm-2 col-lg-2">
+			<li d-sref="'party_act_list'">
+				<a ui-sref="party_act_list">活动管理</a>
+			</li>
+		</ul>
+	</div>
+	<div ui-view>
+		<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3">
+			<div class="row">
+				<div class="col-md-12">
+					<a class="btn btn-info pull-right" ng-click="createActivity()"><i class="fa fa-plus" aria-hidden="true"></i> 创建支部活动</a>
+				</div>
+			</div>
+			<br/>
+			<table class="table table-striped table-responsive" ng-table="tableParams">
+				<tbody>
+					<tr ng-repeat="activity in $data">
+						<td data-title="'活动主题'" header-class="text-left">
+							<a ui-sref="party_act_item({ id: activity.id, page: currentPage })"><font ng-bind="activity.subject"></font></a>
+						</td>
+						<td data-title="'活动时间'" header-class="text-left">
+							<font ng-bind="activity.start_time | date: 'yyyy-MM-dd HH:mm'"></font>~
+							<font ng-bind="activity.end_time | date: 'yyyy-MM-dd HH:mm'"></font>
+						</td>
+						<td data-title="'地点'" header-class="text-left">
+							<font ng-bind="activity.location"></font>
+						</td>
+						<td data-title="'功能'" header-class="text-left" class="activity-content" style="width: 90px;">
+							<div ng-repeat="plugin in activity.plugins">
+								<img class="logo" ng-src="{{plugin.icon_path}}" style="width:13px;" />
+									<a ng-click="gotoPlugin(activity.id, plugin.id)" class="pulgin-dropdown">
+										<font ng-bind="plugin.name"></font>
+									</a>
+							</div>
+						</td>
+						<td data-title="'操作'" style="width: 230px;">
+							<center>
+								<label type="button" class="btn btn-default btn-checkbox"
+									ng-click="invTogglePublish(activity)" ng-disabled="activity.published" style="width: 102px;">
+									<span ng-if="activity.published" style="color:green">
+										 <i class="fa fa-check"></i> 已发布
+									</span>&nbsp;
+									<span ng-if="!activity.published">
+										<i class="fa fa-volume-up"></i> 发&nbsp;&nbsp;布
+									</span>&nbsp;
+								</label>&nbsp;
+								<label type="button" class="btn btn-default btn-checkbox"
+									ng-click="invTogglePublish(activity)" ng-disabled="!activity.published">
+									<span>
+										<i class="fa fa-ban"></i> 取消发布
+									</span>
+								</label>
+								<label type="button" class="btn btn-default btn-checkbox" ui-sref="party_act_item({ id: activity.id, page: currentPage })" style="width: 102px;margin-top: 6px;">
+									<span>
+										<i class="fa fa-pencil-square-o"></i> 编&nbsp;&nbsp;辑&nbsp;&nbsp;
+									</span>
+								</label>&nbsp;
+								<label type="button" class="btn btn-danger btn-checkbox" ng-click="deleteActivity(activity)" style="width: 98.14px;margin-top: 6px;">
+									<span>
+										<i class="fa fa-trash-o"></i> 删&nbsp;&nbsp;除&nbsp;&nbsp;
+									</span>
+								</label>
+							</center>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- Confirm Modal -->
+		<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+						<!-- <h4 class="modal-title" id="myModalLabel">{{confirm.title}}</h4> -->
+					</div>
+					<div class="modal-body">
+						{{confirm.message}}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><span aria-hidden="true">取消</span></button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmModal();">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

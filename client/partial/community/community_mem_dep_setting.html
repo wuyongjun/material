@@ -1,0 +1,38 @@
+<div class="modal-header">
+	<h4 class="modal-title">部门设置</h4>
+</div>
+<div class="modal-body">
+	<div>
+        <h3 style="margin-top: -10px;margin-left: 10px;"><span class="label label-success"><font style="font-weight: bold;" ng-bind="member.user.name"></font></span></h3>
+	</div><br/>
+	<!-- <form class="form-horizontal"> -->
+	<div class="row">
+		<div class="col-md-5">
+			<div class="form-group">
+				<label class="col-md-5 control-label">当前部门</label>
+				<div class="col-md-7">
+					<span class="label label-info">
+						<font style="font-weight: bold;" title="{{member.department.name}}" ng-bind="member.department.name | substr: 6: 5 | depcontent"></font>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7">
+			<div class="form-group">
+				<label class="col-md-4 control-label">调整部门</label>
+				<div class="col-md-8">
+					<select name="department_scope" id="department_scope" class="form-control" ng-model="department_id" ng-options="r.id as r.name for r in departmentArray">
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- </form> -->
+	<div>
+		
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="setDepartment()" ng-disabled="btnSetting">确&nbsp;定</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">取&nbsp;消</span></button>
+</div>

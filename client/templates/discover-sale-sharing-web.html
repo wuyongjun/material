@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>i微校-校园集市</title>
+  <link rel="stylesheet" type="text/css" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles/discover-sale-sharing-web.css">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+</head>
+<body>
+  <div class="container" style="width: 600px;">
+    {% if topic.image %}
+    <div class="banner">
+      <ul>
+        {% for im in topic.image %}
+          <li><img align="center" src="{{ im }}"></li>
+          <!-- <li><img align="center" src="/static/images/draw-bg.png"></li> -->
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    <div class="content">
+      <h2>{{ topic.topic }}</h2><br/>
+      <!-- <h2>香港金像奖</h2><br/> -->
+      <h4>
+        {% if topic.price %}
+        <font>￥{{ topic.price }}</font>
+        <!-- <font>￥100</font> -->
+        {% endif %}
+        <font id="browsers"><i class="fa fa-eye"></i> 浏览{{ topic.browsers }}次</font>
+        <!-- <font id="browsers"><i class="fa fa-eye"></i> 浏览100次</font> -->
+      </h4><br/>
+      <hr><br/>
+      <div>
+        <img id="user_image" src="/images/{{ topic.user_obj.icon }}">
+        <!-- <img id="user_image" src="/static/images/draw-bg.png"> -->
+        <font id="user_name">{{ topic.user_obj.nickname }}</font>
+        <!-- <font id="user_name">黄秋生</font> -->
+        <!-- <font id="date">2015-5-28 15:30:30</font> -->
+      </div><br/><br/><br/>
+      {{ topic.content }}
+      <!-- 中国香港，挥泪大甩卖，清仓大处理 -->
+    </div>
+  </div>
+  <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+  <script type="text/javascript" src="/static/bower_components/jquery.unslider/src/unslider.js"></script>
+  <script type="text/javascript" src="/static/scripts/discover-sale-sharing-web.js"></script>
+</body>
+</html>

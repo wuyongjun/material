@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title">历史电子票情况</h4>
+</div>
+<div class="modal-body">
+  <div class="row">
+  	<div class="col-md-12">
+  		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>编号</th>
+					<th>验票开始/结束时间</th>
+					<th>已用票数</th>
+					<th>总票数</th>
+				</tr>
+			</thead>
+	  		<tbody>
+	  			<tr ng-repeat="item in history_ticket">
+	  				<td>
+	  					{{$index + 1}}
+	  				</td>
+	  				<td>
+	  					{{item.start_time | date: 'yyyy-MM-dd HH:mm'}} ~ {{item.end_time | date: 'yyyy-MM-dd HH:mm'}}
+	  				</td>
+	  				<td>
+	  					{{item.total - item.left}}
+	  				</td>
+	  				<td>
+	  					{{item.total}}
+	  				</td>
+	  			</tr>
+	  		</tbody>
+	  	</table>
+  	</div>
+  </div>
+</div>

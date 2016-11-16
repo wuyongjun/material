@@ -1,0 +1,4 @@
+"爱微笑"的{{ user.name }}辛苦了,{{ user.community.name }}管理员换届成功,用你的邮箱直接登陆 i 微校管理后台:v2.iweixiao.cn(直接作为可点击的超链接),接下来这一年{{ user.community.name }}的光明前景就靠你啦!棒棒哒,加油哟!
+
+敬请关注我们的微信公众号:<img src=/static/images/ma/gong.jpg' />,i 微校下载二维码:<img src=/static/images/ma/download.jpg' />
+i 微校团队

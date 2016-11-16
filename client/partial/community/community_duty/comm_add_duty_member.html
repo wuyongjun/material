@@ -1,0 +1,50 @@
+<div class="modal-header">
+	<h4 class="modal-title">请选择要赋予该职务的社员</h4>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-md-2">
+			<div class="checkbox" style="padding-left:8px;">
+				<label>
+					<input type="checkbox" ng-model="is_checked_all" ng-checked="checked_all()" ng-click="get_checked_all(is_checked_all)"/>&nbsp;&nbsp;全选
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<table class="table table-striped table-responsive coupons" ng-table="tableParams">
+			<tbody>
+				<tr ng-repeat="member in $data">
+					<td style="padding-left:22px;">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="is_checked_item" ng-checked="is_checked(member.user.id)" ng-click="get_checked_item(member.user.id, is_checked_item)"/>
+							</label>
+						</div>
+					</td>
+					<td>
+						<div class="logo" style="height:70px;width:70px">
+							<img ng-src="{{member.user.icon}}" style="height:100%;width:100%;">
+						</div>
+					</td>
+					<td>
+						<font ng-bind="member.user.nickname"></font>
+					</td>
+					<td>
+						<font ng-bind="member.user.name"></font>
+					</td>
+					<td>
+						<font ng-bind="member.department.name"></font>
+					</td>
+					<td>
+						<font ng-bind="member.duty.name"></font>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-info" data-dismiss="modal" ng-click="choose_member()">添&nbsp;加</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()"><span aria-hidden="true">取&nbsp;消</span></button>
+</div>

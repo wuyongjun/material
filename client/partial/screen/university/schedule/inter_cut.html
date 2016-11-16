@@ -1,0 +1,79 @@
+<div class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3" ng-controller="InterCutCtrl">
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<a class="btn btn-default" ui-sref="terminal_university.schedule({ page: page})" ng-if="router === 'schedule'">
+				<i class="fa fa-reply"></i> 返回</a>
+			<a class="btn btn-default" ui-sref="terminal_university.source({ page: page})" ng-if="router === 'source'">
+				<i class="fa fa-reply"></i> 返回</a>
+			<a class="btn btn-default" ui-sref="terminal_university.display_log({ page: page})" ng-if="router === 'display_log'">
+				<i class="fa fa-reply"></i> 返回</a>
+		</div>
+	</div><br/>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<form method="POST" ng-submit="save()" class="form-horizontal" role="form"
+				name="screenForm" enctype="multipart/form-data">
+				<div class="panel panel-info">
+					<div class="panel panel-heading">
+						<div class="panel-title">
+							<font>插&nbsp;&nbsp;播</font>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="bs-callout bs-callout-warning col-md-10 col-md-offset-1" style="margin-top:10px;">
+							<h4>插播须知</h4>
+							<p>
+								1、选择插播内容，提交成功后将在本校所有电子展板同步显示。<br/>
+								2、插播的内容不会影响到现有的播放列表，待插播内容播放完毕后，电子展板将延续播放之前的播放列表内容。
+							</p>
+						</div>
+						<form-input data-title="'展板项目名称'" data-name="'title'">
+							<input class="form-control" ng-model="screen.title" placeholder="请将项目名称限制在30个字符以内" maxlength="30" />
+						</form-input>
+						<form-input data-title="'播放等级'" data-name="'level'">
+							<select class="form-control" ng-model="screen.priority.id" ng-options="level.id as level.name for level in levels"></select>
+						</form-input>
+						<form-input data-title="'横装电子展板活动专用海报'">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div ng-if="screen.landscape_poster" class="fileinput-new thumbnail" style="width:300px;height:170px;">
+									<img ng-src="{{screen.landscape_poster.substring(0)}}" image-fixed/>
+								</div>
+								<div class="fileinput-preview fileinput-exists thumbnail"></div>
+								<div>
+									<span class="btn btn-default btn-file">
+										<span class="fileinput-new">本地上传</span>
+										<span class="fileinput-exists">更换</span>
+										<input type="file" name="landscape_poster" data-file="screen.landscape_poster" id="image_file">
+									</span>
+									<a href="#" class="btn btn-default fileinput-exists"
+										data-dismiss="fileinput">删除</a>
+								</div>
+							</div>&nbsp;&nbsp;&nbsp;<span><a ng-click="showDemo('/static/images/H-01.jpg', 'landscape_poster')">查看示例</a></span>
+							<div>分辨率：1920*1080 72ppi以上</div>
+						</form-input>
+						<form-input data-title="'竖装电子展板活动专用海报'">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div ng-if="screen.portrait_poster" class="fileinput-new thumbnail" style="width:170px;height:300px;">
+									<img ng-src="{{screen.portrait_poster.substring(0)}}" image-fixed/>
+								</div>
+								<div class="fileinput-preview fileinput-exists thumbnail"></div>
+								<div>
+									<span class="btn btn-default btn-file" data-toggle="tooltip" data-placement="bottom">
+										<span class="fileinput-new">本地上传</span>
+										<span class="fileinput-exists">更换</span>
+										<input type="file" name="portrait_poster" data-file="screen.portrait_poster" id="image_file">
+									</span>
+									<a href="#" class="btn btn-default fileinput-exists"
+										data-dismiss="fileinput">删除</a>
+								</div>
+							</div>&nbsp;&nbsp;&nbsp;<span><a ng-click="showDemo('/static/images/W-01.jpg', 'portrait_poster')">查看示例</a></span>
+							<div>分辨率：1080*1920 72ppi以上</div>
+						</form-input>
+						
+					</div>
+				</div>
+				<button class="btn btn-info form-control" type="submit">添&nbsp;&nbsp;加</button>
+			</form>
+		</div>
+	</div>
+</div>

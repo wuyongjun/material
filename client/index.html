@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html ng-app="iwx">
+<head>
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8">
+  <link rel="shortcut icon" href="/static/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-chart.js/dist/angular-chart.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-loading/angular-loading.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/ngImgCrop/compile/unminified/ng-img-crop.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/swiper/dist/css/swiper.css">
+  <!--<link rel="stylesheet" type="text/css" href="bower_components/angular-emoji-filter/dist/emoji.min.css">-->
+  <!-- <link rel="stylesheet" type="text/css" href="bower_components/angular-emoji/angular-emoji.css"> -->
+  <!-- Froala css files -->
+  <!-- <link rel="stylesheet" href="bower_components/FroalaWysiwygEditor/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="bower_components/FroalaWysiwygEditor/css/froala_content.min.css" />
+  <link rel="stylesheet" href="bower_components/FroalaWysiwygEditor/css/froala_editor.min.css" />
+  <link rel="stylesheet" href="bower_components/FroalaWysiwygEditor/css/froala_style.min.css" /> -->
+  <!-- end Froala css files -->
+  <!-- watg-angular-richtext css file
+  <link rel="stylesheet" href="bower_components/watg-angular-richtext/dist/css/watg-angular-richtext.min.css"> -->
+  <!-- end watg-angular-richtext -->
+  <!-- angular-simditor css file -->
+  <link rel="stylesheet" href="bower_components/simditor/styles/simditor.css">
+  <!-- <link rel="stylesheet" href="bower_components/simditor-emoji/styles/simditor-emoji.css"> -->
+  <!-- end angular-simditor -->
+  <link rel="stylesheet" href="bower_components/OwlCarousel2/dist/assets/owl.carousel.css">
+  <link rel="stylesheet" href="bower_components/OwlCarousel2/dist/assets/owl.theme.green.css">
+  <link rel="stylesheet" href="bower_components/bootstrap-toggle/css/bootstrap-toggle.css">
+  <!-- select2 css file -->
+  <link rel="stylesheet" href="bower_components/select2/dist/css/select2.css">
+  <link href="app.less" type="text/css" rel="stylesheet/less">
+</head>
+<body>
+
+  <!-- Livereload script for development only (stripped during dist build) -->
+  <script src="http://localhost:35729/livereload.js" data-concat="false"></script>
+
+  <!-- JS from Bower Components -->
+  <script src="bower_components/less.js/dist/less.js" data-concat="false"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js" data-concat="false" data-remove="false"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" data-concat="false" data-remove="false"></script>
+  <script src="bower_components/bootstrap/js/collapse.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  <!-- bootstrap switch -->
+  <script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+  <!-- Froala js files
+  <script src="bower_components/FroalaWysiwygEditor/js/froala_editor.min.js"></script> -->
+  <!-- Froala Plugins
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/tables.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/video.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/block_styles.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/colors.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/media_manager.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/lists.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/font_family.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/font_size.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/file_upload.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/urls.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/fullscreen.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/inline_styles.min.js"></script>
+  <script src="bower_components/FroalaWysiwygEditor/js/plugins/char_counter.min.js"></script> -->
+  <!-- end Froala plugins -->
+  <!-- End Froala js files -->
+  <script src="bower_components/angular/angular.min.js" data-concat="false" data-remove="false"></script>
+  <!-- angular-froala js files
+  <script src="bower_components/angular-froala/src/froala-sanitize.js"></script>
+  <script src="bower_components/angular-froala/src/angular-froala.js"></script> -->
+  <!-- end angular-froala js files -->
+  <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+  <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+  <!--angular-owl-carousel-->
+  <script src="bower_components/OwlCarousel2/dist/owl.carousel.js"></script>
+  <script src="bower_components/OwlCarousel2/docs_src/assets/vendors/jquery.mousewheel.min.js"></script>
+  <script src="bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/moment/locale/zh-cn.js"></script>
+  <script src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="bower_components/ng-table/dist/ng-table.js"></script>
+  <!--
+  <script src="bower_components/angular-qrcode/qrcode.js"></script>-->
+  <script src="bower_components/qrcode-generator/js/qrcode.js"></script>
+  <script src="bower_components/qrcode-generator/js/qrcode_UTF8.js"></script>
+  <script src="bower_components/Chart.js/Chart.min.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+  <!-- add angular-tree-control js -->
+  <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
+  <!-- add ani-machine js -->
+  <script src="bower_components/ani-machine/dist/ani-machine.min.js"></script>
+  <!-- watg-angular-richtext js file
+  <script src="bower_components/watg-angular-richtext/dist/js/watg-angular-richtext.min.js"></script>
+  <script src="bower_components/watg-angular-richtext/dist/js/watg-angular-richtext.tpl.js"></script> -->
+  <!-- end watg-angular-richtext -->
+  <!-- angular-simditor js file -->
+  <script src="bower_components/simple-module/lib/module.js"></script>
+  <script src="bower_components/simple-hotkeys/lib/hotkeys.js"></script>
+  <script src="bower_components/simple-uploader/lib/uploader.js"></script>
+  <script src="bower_components/simditor/lib/simditor.js"></script>
+  <!-- <script src="bower_components/simditor-emoji/lib/simditor-emoji.js"></script> -->
+  <!-- <script src="bower_components/simditor-html/lib/simditor-html.js"></script> -->
+  <script src="bower_components/angular-simditor/src/angular-simditor.js"></script>
+  <!-- select2 js file -->
+  <script src="bower_components/select2/dist/js/select2.js"></script>
+  <!-- end angular-simditor -->
+  <!-- angular-emoji-popup
+  <script src="bower_components/angular-emoji-popup/dist/js/config.js"></script>
+  <script src="bower_components/angular-emoji-popup/dist/js/emoji.min.js"></script>
+  <script src="bower_components/angular-emojify/angular-emojify.js"></script>
+  <script src="bower_components/angular-emoji-filter/dist/emoji.min.js"></script>
+  <script src="bower_components/angular-emoji-map/angular-emoji-map.js"></script>-->
+  <!-- <script src="bower_components/angular-emoji/angular-emoji.js"></script> -->
+  <!-- <script src="bower_components/bower-angular-emojiuni/emojiuni.js"></script> -->
+  <!-- Main App JS -->
+  <script src="app.js"></script>
+  <!--plugin config.js-->
+  <script src="partial/welcome/welcome.js"></script>
+  <script src="partial/welcome/systemInfo.js"></script>
+  <script src="partial/welcome/sysMesAndInfo.js"></script>
+  <script src="partial/common/unpublished_log.js"></script>
+  <script src="partial/profile/profile.js"></script>
+  <!--iwx管理员账户管理js-->
+  <script src="partial/profile/profile_iwx/profile_iwx.js"></script>
+  <!--university管理员账户管理js-->
+  <script src="partial/profile/profile_university/profile_university.js"></script>
+  <script src="partial/certificate/coupons/certificate_coupons.js"></script>
+  <script src="partial/certificate/coupons/certificate_coupons_details.js"></script>
+  <script src="partial/certificate/coupons/certificate_coupons_item.js"></script>
+  <script src="partial/community/community.js"></script>
+  <script src="partial/community/community_register.js"></script>
+  <script src="partial/community/community_members.js"></script>
+  <script src="partial/community/community_member.js"></script>
+  <script src="partial/community/community_department/community_department.js"></script>
+  <script src="partial/community/community_department/community_department_detail.js"></script>
+  <script src="partial/community/community_department/community_add_dep_member.js"></script>
+  <script src="partial/community/community_duty/community_duty.js"></script>
+  <script src="partial/community/community_duty/community_duty_detail.js"></script>
+  <script src="partial/community/community_duty/comm_add_duty_member.js"></script>
+  <script src="partial/community/community_election.js"></script>
+  <script src="partial/community/community_election_members.js"></script>
+  <script src="partial/community/community_members_verify.js"></script>
+  <script src="partial/community/community_member_department.js"></script>
+  <script src="partial/community/community_mem_dep_setting.js"></script>
+  <script src="partial/community/community_mem_duty_setting.js"></script>
+
+  <script src="partial/activity/activity.js"></script>
+  <!-- 社团管理员-社团新闻管理js文件 -->
+  <script src="partial/article/admin/comm_article.js"></script>
+  <script src="partial/article/admin/comm_article_detail.js"></script>
+  <!-- 校级管理员-社团新闻管理js文件 -->
+  <script src="partial/article/university/comm_article_un.js"></script>
+  <!-- i微校管理员-社团新闻管理js文件 -->
+  <script src="partial/article/iwx/comm_article_iwx.js"></script>
+  <!-- i微校管理员-校园集市js文件 -->
+  <script src="partial/bazaar/iwx/bazaar_list_iwx.js"></script>
+  <script src="partial/bazaar/iwx/publisher_info.js"></script>
+  <!-- 校级管理员-校园集市js文件 -->
+  <script src="partial/bazaar/university/bazaar_list_un.js"></script>
+  <script src="partial/bazaar/university/publisher_info.js"></script>
+  <!-- 社团管理员集市管理 -->
+  <script src="partial/bazaar/admin/bazaar_list.js"></script>
+  <script src="partial/bazaar/admin/bazaar_detail.js"></script>
+  <!--i微校管理员页面js文件-->
+  <script src="partial/activity/activity_iWX.js"></script>
+  <script src="partial/activity/activity_iWX_create.js"></script>
+  <script src="partial/community/community_iWX/community_iWX.js"></script>
+  <script src="partial/community/community_iWX/community_iWX_create_manager.js"></script>
+  <script src="partial/community/community_iWX/community_iWX_manager_list.js"></script>
+  <script src="partial/community/community_iWX/community_iWX_pending.js"></script>
+  <script src="partial/community/community_iWX/community_iWX_shift.js"></script>
+  <script src="partial/certificate/coupons/coupons_iWX/certificate_coupons_iWX.js"></script>
+  <script src="partial/certificate/coupons/coupons_iWX/certificate_coupons_iWX_create.js"></script>
+  <script src="partial/certificate/coupons/coupons_iWX/certificate_coupons_detail_iWX.js"></script>
+  <script src="partial/message/message_iWX/message_iWX.js"></script>
+  <script src="partial/message/message_iWX/message_iWX_letters.js"></script>
+  <script src="partial/message/message_iWX/message_iWX_to_community.js"></script>
+  <!--超级管理员页面js文件-->
+  <script src="partial/role/super/role_manage_super.js"></script>
+  <script src="partial/role/super/role_manage_super_user.js"></script>
+  <script src="partial/role/super/role_manage_super_user_info.js"></script>
+  <script src="partial/role/super/role_manage_super_scope.js"></script>
+  <script src="partial/role/super/version_manage_super.js"></script>
+  <script src="partial/role/super/version_manage_super_detail.js"></script>
+  <!--校级管理员页面js文件-->
+  <script src="partial/activity/activity_university/activity_university.js"></script>
+  <script src="partial/activity/activity_university/activity_university_create.js"></script>
+  <script src="partial/certificate/coupons/coupons_university/certificate_university.js"></script>
+  <script src="partial/certificate/coupons/coupons_university/certificate_university_create.js"></script>
+  <script src="partial/certificate/coupons/coupons_university/certificate_university_detail.js"></script>
+  <script src="partial/community/community_university/community_university.js"></script>
+  <script src="partial/community/community_university/community_university_pending.js"></script>
+  <script src="partial/community/community_university/community_university_election.js"></script>
+  <script src="partial/community/community_university/community_org_info/org_info.js"></script>
+  <script src="partial/community/community_university/community_org_info/org_info_detail.js"></script>
+  <!-- approved activity list controller
+  <script src="partial/community/community_university/comm_activity_approve/activity_appr_list.js"></script>-->
+  <!-- approved activity view controller
+  <script src="partial/community/community_university/comm_activity_approve/activity_appr_view.js"></script>-->
+  <!-- approve table list controller
+  <script src="partial/community/community_university/comm_activity_approve/act_setting/act_appr_setting.js"></script>-->
+  <!-- approve table detail controller
+  <script src="partial/community/community_university/comm_activity_approve/act_setting/appr_table_detail.js"></script>-->
+  <!-- approve table view controller
+  <script src="partial/community/community_university/comm_activity_approve/act_setting/appr_table_view.js"></script>-->
+
+
+  <script src="partial/message/message_university/message_university.js"></script>
+  <script src="partial/message/message_university/message_university_letters.js"></script>
+  <script src="partial/message/message_university/message_university_to_community.js"></script>
+
+  <script src="partial/activity/item/activity_item.js"></script>
+  <script src="partial/activity/plugin/announcement.js"></script>
+  <script src="partial/activity/plugin/lottery.js"></script>
+  <script src="partial/activity/plugin/lotteryat.js"></script>
+  <script src="partial/activity/plugin/timeline.js"></script>
+  <script src="partial/activity/plugin/ticket.js"></script>
+  <script src="partial/activity/plugin/vote.js"></script>
+  <script src="partial/activity/plugin/stat.js"></script>
+  <script src="partial/activity/plugin/votestat.js"></script>
+  <script src="partial/activity/plugin/signin.js"></script>
+  <script src="partial/activity/plugin/signinat.js"></script>
+  <!--add history_sign_in.js-->
+  <script src="partial/activity/plugin/history_sign_in.js"></script>
+  <!--add history_vote.js-->
+  <script src="partial/activity/plugin/history_vote.js"></script>
+  <!--add plugin.js-->
+  <script src="partial/activity/plugin/plugin.js"></script>
+  <script src="partial/activity/plugin/questionnaire.js"></script>
+  <script src="partial/activity/plugin/questionnaire_stat.js"></script>
+  <script src="partial/activity/plugin/qn_prize_add.js"></script>
+  <script src="partial/activity/plugin/qn_prize_minus.js"></script>
+  <script src="partial/admin/register.js"></script>
+  <script src="partial/admin/login.js"></script>
+  <script src="partial/util/carousel.js"></script>
+  <script src="partial/message/messages.js"></script>
+  <script src="partial/message/message.js"></script>
+  <script src="partial/message/message_member_info.js"></script>
+  <script src="partial/message/message_admin_iwx.js"></script>
+  <script src="partial/message/message_admin_university.js"></script>
+  <script src="partial/message/messages_members.js"></script>
+  <!--集市消息js file-->
+  <script src="partial/message/message_bazaar_user.js"></script>
+  <script src="partial/message/message_bazaar_topic.js"></script>
+  <script src="partial/common/host_detail.js"></script>
+  <script src="partial/common/share_qrcode.js"></script>
+  <!--党支部组织信息-->
+  <script src="partial/community/party_branch/party_org.js"></script>
+  <script src="partial/community/party_branch/party_persons.js"></script>
+  <script src="partial/community/party_branch/info_conllection.js"></script>
+  <script src="partial/community/party_branch/party_persons/change.js"></script>
+  <script src="partial/community/party_branch/party_persons/duty.js"></script>
+  <script src="partial/community/party_branch/duty_detail/edit_duty.js"></script>
+  <script src="partial/community/party_branch/members.js"></script>
+  <script src="partial/community/party_branch/party_persons/group.js"></script>
+  <script src="partial/community/party_branch/group_detail/edit_group.js"></script>
+  <script src="partial/community/party_branch/party_persons/grade.js"></script>
+  <script src="partial/community/party_branch/grade_detail/edit_grade.js"></script>
+  <script src="partial/community/party_branch/party_persons/course.js"></script>
+  <script src="partial/community/party_branch/party_persons/course/party_activity.js"></script>
+  <script src="partial/community/party_branch/info_conllection/verify.js"></script>
+  <script src="partial/community/party_branch/info_conllection/applyPersonInfo.js"></script>
+  <script src="partial/community/party_branch/party_persons/course/activity_summary.js"></script>
+  <script src="partial/community/party_branch/party_persons/course/add_label.js"></script>
+  <script src="partial/community/party_branch/party_persons/course/course_summary.js"></script>
+  <!--党支部动态管理-->
+  <script src="partial/activity/party_branch/activity_list.js"></script>
+  <script src="partial/activity/party_branch/activity_item.js"></script>
+  <script src="partial/activity/party_branch/plugins/stat.js"></script>
+  <script src="partial/activity/party_branch/plugins/sign_in.js"></script>
+  <script src="partial/activity/party_branch/plugins/timeline.js"></script>
+  <script src="partial/activity/party_branch/plugins/add_plugin.js"></script>
+  <script src="partial/activity/party_branch/plugins/sign_in_at.js"></script>
+  <script src="partial/activity/party_branch/plugins/participator.js"></script>
+  <!-- 电子展板 -->
+  <script src="partial/screen/screen_list.js"></script>
+  <script src="partial/screen/screen_edit.js"></script>
+  <!-- 校级管理员 终端管理 -->
+  <script src="partial/screen/university/terminal.js"></script>
+  <script src="partial/screen/university/terminal/approve_list.js"></script>
+  <script src="partial/screen/university/schedule.js"></script>
+  <script src="partial/screen/university/schedule/inter_cut.js"></script>
+  <script src="partial/screen/university/schedule/display_list_edit.js"></script>
+  <script src="partial/screen/university/schedule/source.js"></script>
+  <script src="partial/screen/university/schedule/display_log.js"></script>
+  <script src="partial/screen/university/schedule/upload_native.js"></script>
+  <script src="partial/screen/university/schedule/set_levels.js"></script>
+  <script src="partial/screen/university/device/device_list.js"></script>
+  <script src="partial/screen/university/device/set_plan.js"></script>
+  <script src="partial/screen/university/device/plan_list.js"></script>
+  <script src="partial/screen/university/device/plan_edit.js"></script>
+  <script src="partial/screen/university/device/batch_list.js"></script>
+
+  <script src="directive/dsref.js"></script>
+  <script src="directive/form-input/form-input.js"></script>
+  <script src="directive/image-fixed.js"></script>
+  <script src="service/httpinterceptor.js"></script>
+  <script src="service/userservice.js"></script>
+  <script src="service/participator.js"></script>
+  <script src="service/activity.js"></script>
+  <script src="service/members.js"></script>
+  <script src="directive/file.js"></script>
+
+  <!--添加二维码js file-->
+  <script src="directive/monoQrcode.js"></script>
+  <script src="directive/qrcode.js"></script>
+  <script src="directive/qrcode/qrcode.js"></script>
+  <script src="directive/post/post.js"></script>
+  <script src="directive/post/party_post.js"></script>
+  <script src="directive/datetimepicker/datetimepicker.js"></script>
+  <script src="directive/datepicker/datepicker.js"></script>
+  <script src="directive/tooltip.js"></script>
+  <script src="directive/validate.js"></script>
+  <script src="directive/operation.js"></script>
+  <script src="directive/navigation.js"></script>
+  <script src="directive/community_dir.js"></script>
+  <script src="directive/angular-owl-carousel.js"></script>
+  <!-- my collapse -->
+  <script src="directive/myDirectives.js"></script>
+  <!--add myFilters.js file-->
+  <script src="filters/myFilters.js"></script>
+  <!-- Add New Component JS Above -->
+
+  <div ng-controller="MainCtrl" ng-cloak>
+    <div class="notification-bar">
+      <div ng-show="notification"
+          class="notification notification-{{notification.type.class}} alert-dismissable">
+        <button ng-show="notification && notification.type.closable" type="button" class="close"
+            ng-click="clearNotification()">&times;</button>
+        {{notification.message}}
+        <a ng-show="notification && notification.payload"
+            ng-click="notificationDetails(notification.payload)">(more)</a>
+      </div>
+    </div>
+    <nav id="navigation" class="navbar" style="background-color: #3CBBDC;border-radius: 0px;" role="navigation" opacity>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-item">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" ui-sref="welcome">
+            <img src="/static/images/logo.png" style="height:26px;"/>
+          </a>
+          <a class="navbar-brand" ui-sref="welcome">
+            <img src="/static/images/iweixiao.png" style="height:20px;margin-left: -8px;margin-top: 2px;"/>
+          </a>
+        </div>
+        <div class="collapse navbar-collapse" ng-class="{'': user, 'in': !user}" id="navbar-item" menu-collapse>
+          <ul class="nav navbar-nav" ng-show="user">
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'"><a ui-sref="screen({ page: 1})">电子展板</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'"><a ui-sref="community">社团管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'IWX_ADMIN'"><a ui-sref="community_iWX">组织管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN' && user.admin_type === 'UNION'">
+              <a ui-sref="community_university">社团管理</a>
+            </li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN' && user.admin_type === 'COMMITTEE'">
+              <a ui-sref="community_university.league">组织管理</a>
+            </li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'"><a ui-sref="activity({currentPage: 1})">社团动态</a></li>
+            <!-- <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN'"><a ui-sref="activity">社团动态</a></li> -->
+            <li ui-sref-active="active" ng-show="user.role.name === 'IWX_ADMIN'"><a ui-sref="activity_iWX">社团动态</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN' && user.admin_type === 'UNION'">
+              <a ui-sref="activity_university">社团动态</a>
+            </li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN' && user.admin_type === 'COMMITTEE'">
+              <a ui-sref="activity_university">组织动态</a>
+            </li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'">
+              <a ui-sref="message">
+                <i class="fa fa-volume-up" style="color: red;" ng-show="mes_note"></i>消息管理
+              </a>
+            </li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'IWX_ADMIN'"><a ui-sref="message_iWX">消息管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN' && user.admin_type !== 'DISSEMINATE'"><a ui-sref="message_university">消息管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN' && (user.admin_type === 'DISSEMINATE' || user.admin_type === 'COMMITTEE')"><a ui-sref="terminal_university">终端管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'"><a ui-sref="certificate">电子凭证管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'IWX_ADMIN'"><a ui-sref="profile_iwx">账户设置</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'UN_ADMIN'"><a ui-sref="profile_university">账户设置</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'SUPER_USER'"><a ui-sref="role_manage_super">角色管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'SUPER_USER'"><a ui-sref="version_manage_super">版本管理</a></li>
+            <!--党支部社团管理员主菜单-->
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type === 'POLITICAL'"><a ui-sref="party_info">组织管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN' && user.user_type === 'POLITICAL'"><a ui-sref="party_act_list({page: 1})">动态管理</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN'"><a ui-sref="profile">账户设置</a></li>
+            <li ui-sref-active="active" ng-show="user.role.name === 'ADMIN'"><a ui-sref="sysMesAndInfo({ id: -1 })">系统公告</a></li>
+          </ul>
+          <ul ng-show="!user" class="nav navbar-nav pull-right">
+            <li ui-sref-active="active"><a ui-sref="login({next:'welcome'})"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;登录</a></li>
+            <li ui-sref-active="active"><a ui-sref="register"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;注册</a></li>
+          </ul>
+          <ul ng-show="user" class="nav navbar-nav pull-left">
+            <li>
+              <a ng-show="user.role.name === 'ADMIN' && user.user_type !== 'POLITICAL'" ui-sref="community" style="padding: 0px 10px 0px 0px;">
+                <img ng-src="{{user.managed_community.logo}}/thumbnail" style="width: 50px;height: 50px;padding: 10px;">{{user.managed_community.name | substr: 11: 10}}</a>
+              <a ng-show="user.role.name === 'ADMIN' && user.user_type === 'POLITICAL'" ui-sref="party_info" style="padding: 0px 10px 0px 0px;">
+                <img ng-src="{{user.managed_community.logo}}/thumbnail" style="width: 50px;height: 50px;padding: 10px;">{{user.managed_community.name | substr: 11: 10}}</a>
+            </li>
+            <li><a ng-show="user.role.name === 'IWX_ADMIN'" ui-sref="profile_iwx">{{user.name || user.nickname}}</a></li>
+            <li><a ng-show="user.role.name === 'UN_ADMIN'" ui-sref="profile_university">{{user.name || user.nickname}}</a></li>
+            <li>
+              <a ng-show="user.role.name === 'ADMIN' || user.role.name === 'UN_ADMIN'" ng-click="shareWeb(user.role.name)">
+                <i class="fa fa-share-alt-square"></i>&nbsp;&nbsp;分享
+              </a>
+            </li>
+            <li><a ng-click="logout()"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;登出</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <!-- <div class="color_logo"></div> -->
+    <div class="row" ng-show="welcome_bg && user">
+      <img class="login_after_img remove_login_after_img" src="/static/images/login_before_edit.png">
+    </div>
+    <div style="position: absolute; width: 100%" ng-show="welcome_bg && !user">
+      <section class="content-section text-center" style="margin-top: -30px">
+        <div class="row bg_shallowblue">
+          <div class="container content_div">
+          </div>
+        </div>
+      </section>
+      <div class="row bg_yellow">
+        <div class="container content_div">
+          <div class="col-sm-5 col-sm-offset-1">
+            <img class="content_img" src="/static/images/iweixiao.cn/first_left.png">
+          </div>
+          <div class="col-sm-5">
+            <img class="content_img" src="/static/images/iweixiao.cn/first_right.png">
+          </div>
+        </div>
+      </div>
+      <div class="row bg_orange">
+        <div class="container content_div">
+          <div class="col-sm-5 col-sm-offset-1">
+            <img class="content_img" src="/static/images/iweixiao.cn/second_left.png">
+          </div>
+          <div class="col-sm-5">
+            <img class="content_img" src="/static/images/iweixiao.cn/second_right.png">
+          </div>
+        </div>
+      </div>
+      <div class="row bg_blue">
+        <div class="container content_div">
+          <div class="col-sm-5 col-sm-offset-1">
+            <img class="content_img" src="/static/images/iweixiao.cn/third_left.png">
+          </div>
+          <div class="col-sm-5">
+            <img class="content_img" src="/static/images/iweixiao.cn/third_right.png">
+          </div>
+        </div>
+      </div>
+      <div class="row bg_qrcode">
+        <div class="container content_div_last">
+          <div class="col-sm-3 col-sm-offset-1">
+            <img class="content_img" src="/static/images/iweixiao.cn/qrcode_left.png">
+          </div>
+          <div class="col-sm-3">
+            <img class="content_img" src="/static/images/iweixiao.cn/qrcode_middle.png">
+          </div>
+          <div class="col-sm-3">
+            <img class="content_img" src="/static/images/iweixiao.cn/qrcode_right.png">
+          </div>
+        </div>
+      </div>
+      <div class="row bg_qrcode">
+        <footer class="bs-docs-footer">
+          <div class="container">
+            <p style="font-weight: bold;">
+              Copyright © Boring Killer Ltd. 京ICP备13042578号<br/>
+              "北京博灵凯乐科技有限责任公司" 版权所有&nbsp;隐私政策
+            </p>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <div id="content" class="container">
+      <div ui-view></div>
+    </div>
+    <!-- Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:1200;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+            <!-- <h4 class="modal-title" id="myModalLabel">{{popmsg.title}}</h4> -->
+          </div>
+          <div class="modal-body">
+            {{popmsg.message}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

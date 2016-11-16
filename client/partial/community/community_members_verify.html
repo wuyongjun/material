@@ -1,0 +1,52 @@
+<div ng-controller="CommMemVerCtrl" class="col-lg-9 col-lg-offset-3 col-md-9 col-md-offset-3 col-sm-9 col-sm-offset-3">
+	<!--导航部分-->
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="navbar-header"></div>
+		<div class="collapse navbar-collapse" id="navbar-item">
+			<ul class="nav navbar-nav">
+				<li>
+					<a ui-sref="community.register">招新问题</a>
+				</li>
+				<li class="active">
+					<a ui-sref="community.verify_members({ page: 1 })">待审核列表</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<!--待审核成员列表-->
+	<table ng-table="tableParams" class="table table-striped table-responsive">
+		<tbody>
+			<tr ng-repeat="user in $data">
+				<td data-title="'编号'" header-class="text-left">
+					<font ng-bind="$index + 1"></font>
+				</td>
+				<td data-title="'i微校账号'" header-class="text-left">
+					<a ui-sref="community.member({ id: user.user.id, page: currentPage })">
+						<font ng-bind="user.user.nickname"></font>
+					</a>
+				</td>
+				<td data-title="'姓名'" header-class="text-left">
+					<font ng-bind="user.user.name"></font>
+				</td>
+				<td data-title="'电话'" header-class="text-left">
+					<font ng-bind="user.user.phone"></font>
+				</td>
+				<!-- <td data-title="'申请时间'" header-class="text-left">
+					<font ng-bind="$index + 1"></font>
+				</td> -->
+				<td data-title="'操作'" header-class="text-left">
+					<label type="button" class="btn btn-info btn-checkbox" ng-click="approve(user.user.id)">
+						<span>
+							批&nbsp;&nbsp;准&nbsp;&nbsp;<i class="fa fa-check"></i>
+						</span>
+					</label>&nbsp;
+					<label type="button" class="btn btn-danger btn-checkbox" ng-click="refuse(user, '')">
+						<span>
+							拒&nbsp;&nbsp;绝&nbsp;&nbsp;<i class="fa fa-ban"></i>
+						</span>
+					</label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

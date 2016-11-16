@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>党建经历</title>
+		<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="/static/styles/undergo-page.css">
+		<link rel="shortcut icon" href="/static/favicon.ico">
+	</head>
+	<body>
+		<div class="container">
+			<br/>
+			<div class="row">
+				<div id="info" class="col-md-9 col-md-offset-1">
+					<script type="text/x-handlebars-template" id="tpl">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<div class="panel-title"><font>{{user_obj.user_obj.name}}</font>的党建历程</div>
+							</div>
+							<div id="personInfo" class="panel-body">
+								<!--人员信息-->
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="basic-info">
+											<table class="table col-md-12">
+												<tbody>
+													<tr>
+														<td class="col-md-3" rowspan="5">
+															<img class="poster_img" id="photo" src="{{user_obj.user_obj.icon}}" style="width: 100%;">
+														</td>
+														<td class="col-md-2">真实姓名</td>
+														<td class="col-md-2"><font id="name">{{user_obj.user_obj.name}}</font></td>
+														<td class="col-md-2">身份</td>
+														<td class="col-md-2">
+															{{{statusfilter user_obj.status}}}
+														</td>
+													</tr>
+													<tr>
+														<td class="col-md-2">性别</td>
+														<td class="col-md-2"><font id="sex">{{user_obj.user_obj.sex}}</font></td>
+														<td class="col-md-2">专业</td>
+														<td class="col-md-2"><font id="major">{{user_obj.user_obj.major}}</font></td>
+													</tr>
+													<tr>
+														<td class="col-md-2">电话</td>
+														<td class="col-md-2"><font id="phone">{{user_obj.user_obj.phone}}</font></td>
+														<td class="col-md-2">入学时间</td>
+														<td class="col-md-2"><font id="admission_date">{{user_obj.user_obj.admission_date}}</font></td>
+													</tr>
+													<tr>
+														<td class="col-md-2">加入学年</td>
+														<td class="col-md-2">
+															{{#if user_obj.year_obj.name}}
+															<font id="year">{{user_obj.year_obj.name}}</font>
+															{{else}}
+															<font color="#B8BEC3">未采集</font>
+															{{/if}}
+														</td>
+														<td class="col-md-2">所属分组</td>
+														<td class="col-md-2">
+															{{#if user_obj.group_obj.name}}
+															<font id="group">{{user_obj.group_obj.name}}</font>
+															{{else}}
+															<font color="#B8BEC3">未采集</font>
+															{{/if}}
+														</td>
+													</tr>
+													<tr>
+														<td class="col-md-2">担任职务</td>
+														<td class="col-md-2">
+															{{#if user_obj.duty_obj.name}}
+															<font id="duty">{{user_obj.duty_obj.name}}</font>
+															{{else}}
+															<font color="#B8BEC3">未采集</font>
+															{{/if}}
+														</td>
+														<td class="col-md-2"></td>
+														<td class="col-md-2"></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!--党建历程信息-->
+								{{#if undergo_obj}}
+									{{#each undergo_obj}}
+										<div class="panel panel-default form-horizontal">
+											<div class="panel-heading">
+												<div class="panel-title">
+													<font>{{datefilter this.create_time}}</font>
+												</div>
+											</div>
+											<div class="panel-body">
+												<div class="row">
+													{{#if this.label}}
+														{{#each this.label}}
+															<span class="label label-info course">
+																<font size="3">{{this.name}}</font>
+															</span>
+														{{/each}}
+													{{/if}}
+												</div>
+												{{#if this.activity_obj}}
+												<div class="row">
+													<div class="col-sm-6">
+														<p>活动名称：<font>{{this.activity_obj.subject}}</font></p>
+														<p>活动地点：<font>{{this.activity_obj.location}}</font></p>
+														<p>活动开始时间：<font>{{datefilter this.activity_obj.start_time}}</font></p>
+														<p>活动结束时间：<font>{{datefilter this.activity_obj.end_time}}</font></p>
+														{{#if this.activity_obj.plugins}}
+															{{#each this.activity_obj.plugins}}
+																<span class="label label-success plugin">
+																	<font id="plugin">{{this.name}}</font>
+																</span>
+															{{/each}}
+														{{/if}}
+													</div>
+													<div class="col-sm-6">
+														<div class="thumbnail" style="width: 300px;height: 200px;">
+															<img src="{{this.activity_obj.poster}}" style="width: 100%;height: 100%;">
+														</div>
+														<p class="text-center" style="width: 300px">活动海报</p>
+													</div>
+												</div>
+												{{/if}}
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="well course_content">
+															{{{content}}}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									{{/each}}
+								{{/if}}
+							</div>
+						</div>
+					</script>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="../bower_components/handlebars/handlebars.js"></script>
+		<script type="text/javascript" src="/static/scripts/undergo-page-test.js"></script>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+<div class="col-sm-12 col-md-12 col-lg-12" ng-controller="MessageToCommUniCtrl">
+  <!-- <div class="row"> -->
+  <textarea class="form-control" ng-model="content" rows="5" placeholder="请在此输入要发送的私信内容"></textarea><br/>
+  <button class="btn btn-info pull-right" type="button" ng-click="send()">发送</button><br/><br/> 
+  <!-- </div> -->
+	<div class="message-panel">
+    <div ng-repeat="message in messages" class="message-container">
+        <div ng-if="message.mes_type == 'COMMUNITY'">
+          <img ng-if="message.community.logo" ng-src="{{message.community.logo}}/thumbnail"
+              class="message-icon pull-left"/>
+          <p class="nickname">&nbsp;{{message.community.name}}</p>
+          <div class="user_message message"
+              ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}">
+            {{message.content}}
+          </div>
+        </div>
+        <div ng-if="message.mes_type == 'UN'">
+          <img ng-if="message.user.icon" ng-src="{{message.user.icon}}/thumbnail"
+              class="message-icon pull-right"
+              ng-attr-title="{{message.user.nickname}}"/>
+          <div class="community_message message with-newlines"
+              ng-attr-title="{{message.create_time | date:'yyyy-MM-dd HH:mm:ss'}}">{{message.content}}</div>
+        </div>
+    </div>
+  </div>
+  <button class="btn btn-default center-block more-btn" ng-click="loadMore()">加载更多消息</button>
+</div>

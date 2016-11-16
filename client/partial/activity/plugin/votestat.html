@@ -1,0 +1,73 @@
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9"
+    ng-controller="VoteStatCtrl">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <a class="btn btn-default" ng-click="returntovote()">
+        <i class="fa fa-reply"></i> 返回</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-3 col-md-3 text-center">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">总投票数</div>
+      </div>
+      <div class="panel-body">
+        {{vote.vote_num}}
+      </div>
+    </div>
+    </div>
+
+    <div class="col-md-3 text-center">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title">总参与人数</div>
+      </div>
+      <div class="panel-body">
+        {{vote.participator_num}}
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- <div class="panel panel-default" ng-repeat="candi in vote.candidates">
+    <div class="panel-heading">
+      <div class="panel-title">候选编号/候选项:{{$index + 1}} / {{candi.title}}</div>
+    </div>
+
+    <div class="panel-body">
+      <div class="col-md-8">
+        <div ng-if="candi.default_image" class="fileinput-new thumbnail">
+          <img ng-src="{{candi.default_image.substring(0)}}" style="height: 178px;">
+        </div>
+      </div>
+      <div class="col-md-4 text-center" style="margin-top:40px;">
+        <h4>第{{$index+1}}名</h4>
+        <p>获得票数：{{candi.vote_num}}</p>
+        <p ng-if="vote.vote_num>0">支持率：{{candi.vote_num*100/vote.vote_num | number:2}}%</p>
+      </div>
+    </div>
+  </div> -->
+  <!--候选项得票柱状图-->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">候选项得票数量<font size="1"></font></div>
+    </div>
+
+    <div class="panel-body">
+      <canvas id="bar" class="chart chart-bar" data="data_bar" labels="labels_bar" series="series_bar" options="options_bar" colours="colours"></canvas>
+    </div>
+  </div>
+  <!--候选项支持率饼图-->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">候选项支持率百分比<font size="1"></font></div>
+    </div>
+
+    <div class="panel-body">
+      <canvas id="pie" class="chart chart-pie" data="data_pie" labels="labels_pie" series="series_pie" options="option_pie" legend="true" colours="colours"></canvas>
+      <!-- <canvas id="base" class="chart-base" chart-type="type" data="data_pie" labels="labels_pie" legend="true"></canvas> -->
+    </div>
+  </div>
+</div>
+

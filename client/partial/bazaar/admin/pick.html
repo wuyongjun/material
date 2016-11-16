@@ -1,0 +1,116 @@
+<div ng-controller="BazaarDetailCtrl">
+	<div class="tabs-left">
+		<ul class="nav nav-tabs col-sm-2 col-md-2 col-lg-2">
+			<li d-sref="'pick_bazaar'">
+				<a ui-sref="pick_bazaar">招领</a>
+			</li>
+		</ul>
+	</div>
+	<div ui-view>
+		<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9">
+			<div class="activity-button-bar">
+				<div class="btn-group" ng-show="user.role.name === 'UN_ADMIN'">
+					<a class="btn btn-default" ui-sref="activity_university.bazaar">
+						<i class="fa fa-reply"></i> 返回</a>
+				</div>
+				<div class="btn-group" ng-show="user.role.name === 'IWX_ADMIN'">
+					<a class="btn btn-default" ui-sref="activity_iWX.bazaar">
+						<i class="fa fa-reply"></i> 返回</a>
+				</div>
+			</div>
+			<div class="row">
+				<form class="form-horizontal" name="pickForm" enctype="multipart/form-data">
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="topic">标题</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" name="topic" ng-model="bazaar.topic"  placeholder="捡到什么了？起个醒目的标题吧！5~20个字最佳。">
+						</div>
+					</div><br/>
+					<div class="row">
+						<div class="col-md-10">
+							<fieldset>
+								<legend>
+									<h5>拍几张照片告诉失主吧</h5>
+								</legend>
+								<div class="row" ng-if="bazaar_id === '-1'">
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="images">图片</label>
+										<div class="col-md-5">
+											<div class="fileinput fileinput-new" data-provides="fileinput">
+												<span class="btn btn-default btn-file">
+													<span class="fileinput-new">请选择图片，最多上传6张</span>
+													<span class="fileinput-exists">重新选择</span>
+													<input type="file" name="images" multiple
+														data-files="bazaar.images">
+												</span>
+												<div ng-repeat="image in bazaar.images">
+													<i class="fa fa-times timeline-file-remove"
+														ng-click="removeImageFile('create', bazaar.images, $index)"></i>{{image.name || image.path}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" ng-if="bazaar_id !== '-1'">
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="newImages">图片</label>
+										<div class="col-md-5">
+											<div class="fileinput fileinput-new" data-provides="fileinput">
+												<span class="btn btn-default btn-file">
+													<span class="fileinput-new">请选择图片，最多上传6张</span>
+													<span class="fileinput-exists">重新选择</span>
+													<input type="file" name="newImages" multiple
+														data-files="bazaar.newImages">
+												</span>
+												<div ng-repeat="image in bazaar.newImages">
+													<i class="fa fa-times timeline-file-remove"
+														ng-click="removeImageFile('update', bazaar.newImages, $index)"></i>{{image.name || image.path}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div ng-if="bazaar_id !== '-1'" class="row">
+									<div class="form-group">
+										<label class="col-md-2 control-label" for="">已上传</label>
+										<div class="col-md-8">
+											<div class="fileinput fileinput-new" data-provides="fileinput">
+												<span ng-repeat="image in bazaar.images">
+													<span class="thumbnail">
+														<img ng-src="{{image}}" style="width: 178px;" ng-click="viewImage(image)">
+														<i class="fa fa-times timeline-file-remove" ng-click="removeImageFile('exist', bazaar.images, $index)" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'"></i>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div><br/>
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="content">物品详情</label>
+						<div class="col-md-8">
+							<textarea class="form-control" name="content" placeholder="什么时间，在哪里捡到的？物品的外观特征？" rows="8"
+							ng-model="bazaar.content"></textarea>
+						</div>
+					</div><br/>
+					<div class="row" ng-if="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+						<div class="col-md-6">
+							<button ng-show="bazaar_id === '-1'" class="btn btn-default pull-right" ui-sref="create_bazaar">取&nbsp;消</button>
+							<button ng-hide="bazaar_id === '-1'" class="btn btn-default pull-right" ui-sref="activity.bazaar({ id: user.managed_community.id, currentPage: 1, page: page })">
+								取&nbsp;消
+							</button>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-info pull-right" ng-click="save_bazaar(0)">仅保存</button>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-primary pull-right" ng-click="save_bazaar(1)">保存并发布</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

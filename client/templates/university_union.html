@@ -1,0 +1,40 @@
+<!--校团委web页面-->
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>青年民大</title>
+		<link href="/static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/static/styles/university_union.css">
+		<link rel="shortcut icon" type="text/css" href="/static/favicon.ico">
+	</head>
+	<body id="container">
+		<!--置顶活动海报，形式为轮播-->
+		<div class="banner">
+			<ul id="top_list"></ul>
+		</div>
+		<div id="banner_split" class="split" style="display: none;"></div>
+		<!--菜单-->
+		<div id="menu" class="menu">
+			<div class="menu_activity">
+				<p>活动<font id="act_number"></font></p>
+				<div class="menu_select_a"></div>
+			</div>
+			<div class="menu_org">
+				<p>社团<font id="org_number"></font></p>
+				<div class="menu_select_o"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!--该部分为活动部分-->
+		<div id="activity"></div>
+		<!--该部分为组织列表部分-->
+		<div id="org" style="display: none"></div>
+	</body>
+	<script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="/static/bower_components/jquery.event.move/js/jquery.event.move.js"></script>
+	<script type="text/javascript" src="/static/bower_components/jquery.event.swipe/js/jquery.event.swipe.js"></script>
+	<script type="text/javascript" src="/static/bower_components/jquery.unslider/src/unslider.js"></script>
+	<script type="text/javascript" src="/static/scripts/university_union.js"></script>
+</html>

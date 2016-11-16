@@ -1,0 +1,80 @@
+<!-- 投票插件 -->
+<div class="col-lg-offset-3 md-offset-3 col-sm-offset-3 col-lg-8  col-md-8 col- col-sm-9"
+    ng-controller="SignInCtrl">
+  <div class="activity-button-bar">
+    <div class="btn-group">
+      <!-- 返回操作将返回到活动概况页面 -->
+      <a class="btn btn-default" ui-sref="activity_item({ id: activity.id })">
+        <i class="fa fa-reply"></i> 返回</a>
+      <a ng-show="sign_big_screen" class="btn btn-default" target="_blank" ng-href="{{'/app/sign_in_screen/#' + sign_in.id}}">
+        <i class="fa fa-desktop"></i> 大屏幕</a>&nbsp;&nbsp;
+    </div>
+    <div class="btn-group" ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+      <!--添加完成本次签到按钮-->
+      <a class="btn btn-primary" ng-click="complete_sign_in()" data-toggle="tooltip" data-placement="bottom" title="手机客户端用户无法继续进行签到，但签到功能仍然在手机客户端展示。" tool-tip>
+        <i class="glyphicon glyphicon-stop"></i> 结束本次签到</a>
+      <a class="btn btn-danger" ng-click="delete()" data-toggle="tooltip" data-placement="bottom" title="彻底删除签到功能，之前保存的签到内容全部清空。" tool-tip>
+        <i class="fa fa-close"></i> 删除签到功能</a>
+      <a class="btn btn-warning" ng-click="close()" data-toggle="tooltip" data-placement="bottom" title="暂时将签到功能从手机客户端下架不显示，再次打开签到功能时，之前保存的签到内容依旧存在，可继续编辑。" tool-tip>
+        <i class="fa fa-eye"></i> 暂时关闭本次签到</a>
+    </div>
+    <div class="btn-group" ng-if="sign_in && sign_in.id && sign_in.id > 0">
+      <a class="btn btn-default" ng-click="viewresult()">
+        <i class="fa fa-share"></i> 查看签到结果</a>
+    </div>
+  </div>
+  <!--添加查看历史签到列表按钮
+  <div style="margin-bottom:10px;">
+    <a class="btn btn-default" ng-click="history_sign_in()" data-placement="bottom" title="如果社团进行多轮签到，可以在这里查看历次签到数据统计。" tool-tip>
+      <i class="glyphicon glyphicon-list"></i> 查看历史签到</a>
+  </div>-->
+  <div>
+    <form role="form" enctype="multipart/form-data">
+      <div class="panel panel-default form-horizontal">
+        <div class="panel-heading">
+          <div class="panel-title">签到概况</div>
+        </div>
+        <div class="panel-body">
+          <!-- <form-input data-title="'标题'" data-name="'title'">
+            <input ng-model="sign_in.title" class="form-control" type="text">
+          </form-input> -->
+          <form-input data-title="'签到结束时间'" data-name="'sign_in_end_time'">
+            <datetimepicker datetime="sign_in.sign_in_end_time" starttime="sign_in.sign_in_start_time"></datetimepicker>
+          </form-input>
+          <form-input data-title="'赞助商名称'" data-name="'sponsor_name'">
+            <input ng-model="sign_in.sponsor_name" class="form-control" type="text" placeholder="请将赞助商名称限制在15个汉字以内" regexp="sponser_name" blur>
+          </form-input>
+          <form-input data-title="'赞助商Logo'" data-name="'sponsor_logo'">
+              <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div ng-if="sign_in.sponsor_logo" class="fileinput-new thumbnail">
+                  <img ng-src="{{sign_in.sponsor_logo.substring(0)}}" style="width: 178px;">
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                <div ng-show="user.role.name === 'ADMIN' || user.role.name === 'USER'">
+                  <span class="btn btn-default btn-file" data-toggle="tooltip" data-placement="bottom" title="图片大小不能超过1M" tool-tip>
+                    <span class="fileinput-new">选择照片</span>
+                    <span class="fileinput-exists">更换</span>
+                    <input type="file" name="sponsor_logo" data-file="sign_in.sponsor_logo">
+                  </span>
+                  <a href="#" class="btn btn-default fileinput-exists"
+                      data-dismiss="fileinput">删除</a>
+                </div>
+              </div>
+          </form-input>
+        </div>
+        <button class="btn btn-primary form-control form-submit-button" type="submit" ng-click="create()" ng-hide="update">创&nbsp;建</button>
+        <button class="btn btn-primary form-control form-submit-button" type="submit" ng-click="change()" ng-show="update">更&nbsp;新</button>
+      </div>
+      <div class="panel panel-default form-horizontal" ng-show="sign_in_qrcode">
+        <div class="panel-heading">
+          <div class="panel-title">签到二维码</div>
+        </div>
+        <div class="panel-body">
+          <form-input data-title="'签到二维码'" data-name="'logo'">
+            <i-qrcode data="sign_in" user="user"></i-qrcode>
+          </form-input>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
